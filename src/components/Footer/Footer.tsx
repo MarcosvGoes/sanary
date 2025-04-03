@@ -1,10 +1,15 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
 
-    const date = new Date()
-    const year = date.getFullYear()
+    const [year, setYear] = useState<number | null>(null);
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
 
     return (
         <footer className="bg-[#14274A] shadow-[0_10px_20px_rgb(0,0,0,0.9)] w-full bottom-0">
@@ -30,7 +35,7 @@ export default function Footer() {
                 <hr className="lg:hidden" />
                 <div className="flex flex-col gap-5 items-start lg:text-lg font-semibold text-muted">
                     <Link href="/rooms">Acomodações</Link>
-                    <Link href="/facilities">Facilidades</Link>
+                    <Link href="/facilities">Instalações</Link>
                     <Link href="/contact">Contatos</Link>
                 </div>
 

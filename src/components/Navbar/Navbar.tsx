@@ -1,4 +1,4 @@
-"use client"; // Importante para componentes interativos
+'use client'
 
 import Image from "next/image";
 import Link from "next/link";
@@ -18,26 +18,26 @@ export default function Navbar() {
     return (
         <>
             {/* Navbar Desktop */}
-            <nav className="bg-background hidden lg:flex items-center justify-around fixed w-full z-50">
+            <nav className="bg-transparent hidden lg:flex justify-around fixed w-full z-50 pb-2">
                 <Link href="/">
                     <Image
                         width={180}
                         height={180}
                         alt="sanary logo"
                         src="/assets/full-logo.png"
-                        className="p-5 bg-white shadow-[0_1px_5px_var(--border)] hover:bg-border transition duration-75 rounded-b-3xl"
+                        className="p-5 bg-background shadow-[0_1px_5px_var(--border)] hover:bg-border transition duration-75 rounded-b-3xl"
                     />
                 </Link>
-                <ul className="flex font-semibold gap-x-3 py-5 lg:gap-x-18 lg:text-xl">
-                    <Link href="/"><li>Início</li></Link>
-                    <Link href="/rooms"><li>Acomodações</li></Link>
-                    <Link href="/facilities"><li>Facilidades</li></Link>
-                    <Link href="/contact"><li>Contato</li></Link>
+                <ul className="flex font-bold pt-6 gap-x-14 h-20 text-xl bg-background px-10 shadow-[0_1px_5px_var(--border)] rounded-b-3xl">
+                    <Link href="/"><li className="hover:text-muted-foreground duration-100 transition-all">Início</li></Link>
+                    <Link href="/rooms"><li className="hover:text-muted-foreground duration-100 transition-all">Acomodações</li></Link>
+                    <Link href="/facilities"><li className="hover:text-muted-foreground duration-100 transition-all">Instalações</li></Link>
+                    <Link href="/contact"><li className="hover:text-muted-foreground duration-100 transition-all">Contato</li></Link>
                 </ul>
             </nav>
 
             {/* Navbar Mobile */}
-            <nav className="flex lg:hidden w-full justify-between fixed z-50 pb-2 px-5 items-center bg-background">
+            <nav className="flex lg:hidden w-full justify-between fixed z-50 pb-2 px-5 items-center bg-transparent">
                 <Link href="/">
                     <Image
                         width={100}
@@ -66,7 +66,7 @@ export default function Navbar() {
 
                         <button onClick={() => handleNavigate("/")}>Início</button>
                         <button onClick={() => handleNavigate("/rooms")}>Acomodações</button>
-                        <button onClick={() => handleNavigate("/facilities")}>Facilidades</button>
+                        <button onClick={() => handleNavigate("/facilities")}>Instalações</button>
                         <button onClick={() => handleNavigate("/contact")}>Contato</button>
                     </SheetContent>
                 </Sheet>

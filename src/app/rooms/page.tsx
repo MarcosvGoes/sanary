@@ -1,24 +1,30 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Beef, CookingPot, User } from "lucide-react";
+import { Beef, CookingPot } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Rooms() {
     return (
-        <main className="min-h-screen py-32 max-w-[80%] mx-auto">
-            <div>
-                <h1 className="text-3xl font-bold text-center">Nossos quartos</h1>
-                <p className="text-xs font-medium text-center mt-4">Nossos quartos são suítes aconchegantes, climatizadas e equipadas com cama de casal e chuveiro eletrônico. Todos quartos contam com uma vista deslumbrante para o mar. Para maior comodidade, também aceitamos reservas via Airbnb.</p>
+        <main className="min-h-screen py-32 md:py-40 lg:py-60 max-w-[80%] mx-auto">
+            <div className="lg:px-20">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center">Nossos quartos</h1>
+                <p className="text-xs md:text-sm lg:text-base font-medium text-center mt-4">Nossos quartos são suítes aconchegantes, climatizadas e equipadas com cama de casal e chuveiro eletrônico. Todos quartos contam com uma vista deslumbrante para o mar. Para maior comodidade, também aceitamos reservas via Airbnb.</p>
             </div>
 
-            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md">
+            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md max-w-[800px] mx-auto">
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room.png" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room.png" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room.png" layout="responsive" /></CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room.png" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room.png" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room.png" className="object-cover" fill />
+                        </CarouselItem>
                     </CarouselContent>
                     <CarouselPrevious className="ml-14" />
                     <CarouselNext className="mr-14" />
@@ -31,7 +37,7 @@ export default function Rooms() {
                 <div>
                     <Accordion type="single" collapsible className="px-5">
                         <AccordionItem value="item-1">
-                            <AccordionTrigger><span className="gap-x-2 items-center flex text-md"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
+                            <AccordionTrigger><span className="gap-x-2 items-center flex text-md md:text-lg"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
                             <AccordionContent>
                                 <span className="flex items-center gap-x-2 text-sm font-semibold"><i className="text-lg uil uil-users-alt" />2 pessoas</span>
                                 <span className="flex items-center gap-x-2 text-sm font-semibold"><i className="text-lg uil uil-user-plus" />1 Adicional</span>
@@ -58,12 +64,18 @@ export default function Rooms() {
                 </div>
             </div>
 
-            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md">
+            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md max-w-[800px] mx-auto">
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room-2.png" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room-2.png" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/room-2.png" layout="responsive" /></CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room-2.png" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room-2.png" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/room-2.png" className="object-cover" fill />
+                        </CarouselItem>
                     </CarouselContent>
                     <CarouselPrevious className="ml-14" />
                     <CarouselNext className="mr-14" />
@@ -75,7 +87,7 @@ export default function Rooms() {
 
                 <Accordion type="single" collapsible className="px-5">
                     <AccordionItem value="item-1">
-                        <AccordionTrigger><span className="gap-x-2 items-center flex text-md"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
+                            <AccordionTrigger><span className="gap-x-2 items-center flex text-md md:text-lg"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
                         <AccordionContent>
                             <span className="flex items-center gap-x-2 text-sm font-semibold"><i className="text-lg uil uil-users-alt" />2 pessoas</span>
                             <span className="flex items-center gap-x-2 text-sm font-semibold"><i className="text-lg uil uil-user-plus" />2 Adicional</span>
@@ -103,16 +115,24 @@ export default function Rooms() {
                 </div>
             </div>
 
-            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md">
+            <div className="shadow-[0_3px_10px_rgb(20,39,74,0.2)] mt-10 rounded-md max-w-[800px] mx-auto">
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/cobertura.avif" className="max-h-60" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/cobertura.avif" className="max-h-60" layout="responsive" /></CarouselItem>
-                        <CarouselItem><Image width={100} height={100} alt="room image" src="/assets/cobertura.avif" className="max-h-60" layout="responsive" /></CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/cobertura.avif" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/cobertura.avif" className="object-cover" fill />
+                        </CarouselItem>
+                        <CarouselItem className="relative w-full h-[300px] md:h-[500px]">
+                            <Image alt="room image" src="/assets/rooms/cobertura.avif" className="object-cover" fill />
+                        </CarouselItem>
                     </CarouselContent>
+
                     <CarouselPrevious className="ml-14" />
                     <CarouselNext className="mr-14" />
                 </Carousel>
+
 
                 <div className="bg-[#14274A] text-center py-1">
                     <span className="text-white font-bold text-xl">Cobertura</span>
@@ -120,7 +140,7 @@ export default function Rooms() {
 
                 <Accordion type="single" collapsible className="px-5">
                     <AccordionItem value="item-1">
-                        <AccordionTrigger><span className="gap-x-2 items-center flex text-md"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
+                            <AccordionTrigger><span className="gap-x-2 items-center flex text-md md:text-lg"><i className="uil uil-plus-circle text-md" /> Detalhes do quarto</span></AccordionTrigger>
                         <AccordionContent>
                             <span className="flex items-center gap-x-2 text-sm font-semibold"><i className="text-lg uil uil-users-alt" />2 pessoas</span>
                             <span className="flex items-center gap-x-2 text-sm font-semibold"><Beef size={18} />Área de churrasco</span>
