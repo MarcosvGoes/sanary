@@ -18,8 +18,9 @@ export default function Home() {
         <section className="max-w-[80%] md:max-w-[70%] mx-auto relative z-10 h-full flex flex-col justify-center py-40">
           <div className="text-muted">
             <h3 className="font-medium text-3xl md:text-4xl lg:text-5xl">BEM VINDO A</h3>
-            <h2 className="font-bold text-4xl md:text-5xl lg:text-6xl">POUSADA</h2>
-            <h1 className="font-semibold text-4xl md:text-5xl lg:text-6xl">SANARY</h1>
+            <h2 className="font-bold text-4xl md:text-5xl lg:text-6xl">RIVIERA</h2>
+            <h1 className="font-semibold text-4xl md:text-5xl lg:text-5xl">SANARY</h1>
+            <h2 className="font-bold text-4xl md:text-5xl lg:text-4xl">POUSADA</h2>
           </div>
 
           <div className="mt-5 grid">

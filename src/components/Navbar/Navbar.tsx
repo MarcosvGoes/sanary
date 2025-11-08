@@ -19,14 +19,18 @@ export default function Navbar() {
         <>
             {/* Navbar Desktop */}
             <nav className="bg-transparent hidden lg:flex justify-around fixed w-full z-50 pb-2">
-                <Link href="/">
+                <Link href="/" className="px-7 pb-5 pt-2 bg-black hover:bg-black/90 transition duration-75 rounded-b-3xl shadow-[0_1px_5px_var(--border)]">
                     <Image
-                        width={180}
-                        height={180}
+                        width={60}
+                        height={60}
                         alt="sanary logo"
-                        src="/assets/full-logo.png"
-                        className="p-5 bg-background shadow-[0_1px_5px_var(--border)] hover:bg-border transition duration-75 rounded-b-3xl"
+                        src="/assets/logos/logo-1.png"
+                        className="mx-auto"
                     />
+                         <div className="text-[#EFBF04] text-center">
+                            <h1 className="text-2xl font-normal">Riviera</h1>
+                            <h2 className="text-2xl font-normal">Sanary</h2>
+                        </div>
                 </Link>
                 <ul className="flex font-bold pt-6 gap-x-14 h-20 text-xl bg-background px-10 shadow-[0_1px_5px_var(--border)] rounded-b-3xl">
                     <Link href="/"><li className="hover:text-muted-foreground duration-100 transition-all">Início</li></Link>
@@ -38,14 +42,15 @@ export default function Navbar() {
 
             {/* Navbar Mobile */}
             <nav className="flex lg:hidden w-full justify-between fixed z-50 pb-2 px-5 items-center bg-transparent">
-                <Link href="/">
+                <Link href="/" className="ml-5">
                     <Image
                         width={100}
                         height={100}
                         alt="sanary logo"
-                        src="/assets/full-logo.png"
-                        className="p-5 ml-5 bg-white shadow-[0_1px_5px_var(--border)] hover:bg-border transition duration-75 rounded-b-3xl"
+                        src="/assets/logos/logo-1.png"
+                        className=" bg-black shadow-[0_1px_5px_var(--border)] hover:bg-black/90 transition duration-75 rounded-b-3xl"
                     />
+                   
                 </Link>
 
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
