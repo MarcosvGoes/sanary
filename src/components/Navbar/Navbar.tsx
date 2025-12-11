@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Mail, Phone } from "lucide-react";
+import { email, mobilePhone } from "@/utils/contacts";
+import { Button } from "../ui/button";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,40 +20,36 @@ export default function Navbar() {
 
     return (
         <>
-            {/* Navbar Desktop */}
-            <nav className="bg-transparent hidden lg:flex justify-around fixed w-full z-50 pb-2">
-                <Link href="/" className="px-7 pb-5 pt-2 bg-black hover:bg-black/90 transition duration-75 rounded-b-3xl shadow-[0_1px_5px_var(--border)]">
-                    <Image
-                        width={60}
-                        height={60}
-                        alt="sanary logo"
-                        src="/assets/logos/logo-1.png"
-                        className="mx-auto"
-                    />
-                         <div className="text-[#EFBF04] text-center">
-                            <h1 className="text-2xl font-normal">Riviera</h1>
-                            <h2 className="text-2xl font-normal">Sanary</h2>
-                        </div>
+            <nav className="fixed top-0 w-full py-3.5 md:flex justify-around hidden border-b border bg-background z-50 border-black">
+                <Link href="/" className="flex flex-col items-center hover:bg-black/80 bg-black rounded-full px-1 py-0.5">
+                    <Image width={50} height={50} alt="logo" src={'/assets/logos/logo-1.png'} />
                 </Link>
-                <ul className="flex font-bold pt-6 gap-x-14 h-20 text-xl bg-background px-10 shadow-[0_1px_5px_var(--border)] rounded-b-3xl">
-                    <Link href="/"><li className="hover:text-muted-foreground duration-100 transition-all">Início</li></Link>
-                    <Link href="/rooms"><li className="hover:text-muted-foreground duration-100 transition-all">Acomodações</li></Link>
-                    <Link href="/facilities"><li className="hover:text-muted-foreground duration-100 transition-all">Instalações</li></Link>
-                    <Link href="/contact"><li className="hover:text-muted-foreground duration-100 transition-all">Contato</li></Link>
-                </ul>
+
+                <section className="flex items-center justify-between gap-x-5 lg:gap-x-10">
+                    <ul className="flex font-medium gap-x-5 text-base bg-background">
+                        <Link className="border-r pr-5 border-black" href="/rooms"><li>Acomodações</li></Link>
+                        <Link className="border-r pr-5 border-black" href="/facilities"><li>Instalações</li></Link>
+                        <Link href="/contact"><li>Contato</li></Link>
+                    </ul>
+                    <div>
+                        <Link href="https://airbnb.com.br" target="_blank">
+                            <Button className="cursor-pointer items-center border-r-none rounded-l-full py-5 border-black" variant={"outline"}>
+                                <p>RESERVAR</p> <Image src="/assets/icones/airbnb-color.svg" alt="logo airbnb" width={20} height={20} />
+                            </Button>
+                        </Link>
+                        <Link target="_blank" href={`https://wa.me/55${mobilePhone}?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informações.`}>
+                            <Button className="cursor-pointer items-center border-l-none rounded-r-full py-5 border-black" variant={"outline"}>
+                                <p>RESERVAR</p> <i className="uil uil-whatsapp text-green-600 text-xl" />
+                            </Button>
+                        </Link>
+                    </div>
+                </section>
             </nav>
 
             {/* Navbar Mobile */}
-            <nav className="flex lg:hidden w-full justify-between fixed z-50 pb-2 px-5 items-center bg-transparent">
-                <Link href="/" className="ml-5">
-                    <Image
-                        width={100}
-                        height={100}
-                        alt="sanary logo"
-                        src="/assets/logos/logo-1.png"
-                        className=" bg-black shadow-[0_1px_5px_var(--border)] hover:bg-black/90 transition duration-75 rounded-b-3xl"
-                    />
-                   
+            <nav className="flex md:hidden w-full justify-between fixed z-50 pb-2 px-5 items-center bg-background">
+                <Link href="/" className="flex flex-col items-center hover:bg-black/80 bg-black rounded-full px-1 py-0.5 my-2">
+                    <Image width={50} height={50} alt="logo" src={'/assets/logos/logo-1.png'} />
                 </Link>
 
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -61,13 +60,9 @@ export default function Navbar() {
                         <SheetClose className="absolute top-5 right-5 text-2xl transition" asChild>
                             <i className="uil uil-times" />
                         </SheetClose>
-                        <Image
-                            width={100}
-                            height={100}
-                            alt="sanary logo"
-                            src="/assets/full-logo.png"
-                            className="p-5 bg-white shadow-[0_1px_5px_var(--border)] hover:bg-border transition duration-75 rounded-b-3xl fixed top-0"
-                        />
+                        <Link href="/" className="flex flex-col items-center hover:bg-black/80 bg-black rounded-full top-2 fixed left-4 px-1 py-0.5">
+                            <Image width={50} height={50} alt="logo" src={'/assets/logos/logo-1.png'} />
+                        </Link>
 
                         <button onClick={() => handleNavigate("/")}>Início</button>
                         <button onClick={() => handleNavigate("/rooms")}>Acomodações</button>

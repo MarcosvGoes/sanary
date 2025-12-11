@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { mobilePhone } from "@/utils/contacts";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,32 +7,30 @@ export default function Home() {
   return (
     <main className="relative">
       <div className="relative h-screen">
-        <div
-          className="absolute inset-0 bg-[url(/assets/nova-almeida2.jpg)] bg-center bg-cover"
-          style={{
-            filter: "brightness(0.6)"
-          }}
-        />
-
-        <div className="absolute inset-0 bg-black/30" />
-
         <section className="max-w-[80%] md:max-w-[70%] mx-auto relative z-10 h-full flex flex-col justify-center py-40">
-          <div className="text-muted">
+          <div>
             <h3 className="font-medium text-3xl md:text-4xl lg:text-5xl">BEM VINDO A</h3>
+            <h2 className="font-bold text-4xl md:text-5xl lg:text-4xl">POUSADA</h2>
             <h2 className="font-bold text-4xl md:text-5xl lg:text-6xl">RIVIERA</h2>
             <h1 className="font-semibold text-4xl md:text-5xl lg:text-5xl">SANARY</h1>
-            <h2 className="font-bold text-4xl md:text-5xl lg:text-4xl">POUSADA</h2>
           </div>
 
           <div className="mt-5 grid">
-            <span className="text-muted font-semibold text-base md:text-lg lg:text-xl">
+            <span className="font-semibold text-base md:text-lg lg:text-xl">
               Agende já sua estadia e viva<br /> momentos inesquecíveis <br /> à beira-mar!
             </span>
-            <Button className="w-40 mx-auto mt-10 font-semibold" variant={"secondary"}>
-              <Link href="/rooms">
-                RESERVA AGORA
+            <div className="mt-10 flex justify-center">
+              <Link href="https://airbnb.com.br" target="_blank">
+                <Button className="cursor-pointer items-center border-r-none rounded-l-full py-5 border-black" variant={"outline"}>
+                  <p>RESERVAR</p> <Image src="/assets/icones/airbnb-color.svg" alt="logo airbnb" width={20} height={20} />
+                </Button>
               </Link>
-            </Button>
+              <Link target="_blank" href={`https://wa.me/55${mobilePhone}?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informações.`}>
+                <Button className="cursor-pointer items-center border-l-none rounded-r-full py-5 border-black" variant={"outline"}>
+                  <p>RESERVAR</p> <i className="uil uil-whatsapp text-green-600 text-xl" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </div>
@@ -46,7 +45,7 @@ export default function Home() {
             <Image
               fill
               alt="image room"
-              src="/assets/rooms/room.png"
+              src="/assets/images/room.png"
               className="object-cover"
             />
           </div>
@@ -61,7 +60,7 @@ export default function Home() {
             <Image
               fill
               alt="Vista das falésias e praia da região"
-              src="/assets/falesias.webp"
+              src="/assets/images/falesias.webp"
               className="object-cover"
             />
           </div>

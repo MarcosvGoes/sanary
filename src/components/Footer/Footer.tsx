@@ -16,17 +16,9 @@ export default function Footer() {
         <footer className="bg-[#14274A] shadow-[0_10px_20px_rgb(0,0,0,0.9)] w-full bottom-0">
             <main className="grid gap-10 items-center p-10 lg:gap-5 lg:grid-cols-3 lg:p-20 lg:max-w-[80%] lg:mx-auto">
 
-                <div className="flex flex-col gap-5 items-start">
-                    <Image width={120} height={120} alt="sanary logo" src="/assets/logos/logo-1.png" className="p-5 bg-black rounded-md" />
-                    <div className="grid font-normal text-md text-muted gap-3">
-                        <Link target="_blank" href="https://www.google.com/maps/place/20%C2%B003'40.9%22S+40%C2%B011'21.6%22W/@-20.0613712,-40.1894942,21z/data=!4m12!1m7!3m6!1s0xb7f1212f95a771:0x7188a3039a1ee50e!2sTemplo+Restaura%C3%A7%C3%A3o+do+Lar!8m2!3d-20.0613341!4d-40.1893002!16s%2Fg%2F11xg14z1y!3m3!8m2!3d-20.061364!4d-40.189325?entry=ttu&g_ep=EgoyMDI1MDMzMC4wIKXMDSoASAFQAw%3D%3D">
-                            Nova Almeida, Serra, ES <br /> 29182-534
-                        </Link>
-                        <Link href={`https://wa.me/+55${mobilePhone}`} target="_blank">
-                            <i className="uil uil-whatsapp" /> <span>+55 27 99961-7036</span>
-                        </Link>
+                    <div className="grid font-normal text-md text-muted gap-3 w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.7399081857907!2d-40.1893002!3d-20.061334100000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xb7f1212f95a771%3A0x7188a3039a1ee50e!2sTemplo%20Restaura%C3%A7%C3%A3o%20do%20Lar!5e0!3m2!1spt-BR!2sbr!4v1765474864896!5m2!1spt-BR!2sbr" className="w-full h-40 rounded-xl" loading="lazy"></iframe>
                     </div>
-                </div>
                 <hr className="lg:hidden" />
                 <div className="flex flex-col gap-5 items-start">
                     <Link target="_blank" className="flex items-center gap-x-2 text-muted font-semibold" href="https://www.facebook.com/share/1Ba2pTtkVY/"><i className="uil uil-facebook-f text-2xl" /><span>Facebook</span></Link>
@@ -39,11 +31,10 @@ export default function Footer() {
                     <Link href="/facilities">Instalações</Link>
                     <Link href="/contact">Contatos</Link>
                 </div>
-
             </main>
 
             <div className="text-center pb-5">
-                <span className="text-muted font-semibold text-xs">© {year} Pousada Sanary. Desenvolvido por <Link href="https://marcosgoesdev.vercel.app" target="_blank">Marcos Goes</Link></span>
+                <span className="text-muted font-semibold text-xs">© {year} Pousada Riviera Sanary. Desenvolvido por <Link href="https://marcosgoesdev.vercel.app" target="_blank">Marcos Goes</Link></span>
             </div>
         </footer>
     )

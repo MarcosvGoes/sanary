@@ -11,8 +11,8 @@ const getPoppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Pousada Sanary",
-  description: "Pousada Sanary",
+  title: "Pousada Riviera Sanary",
+  description: "Pousada Riviera Sanary",
 };
 
 export default function RootLayout({

@@ -1,21 +1,75 @@
 import { Button } from "@/components/ui/button";
 import { email, mobilePhone } from "@/utils/contacts";
 import Link from "next/link";
+import { Mail } from "lucide-react";
 
 export default function Contact() {
-    return (
-        <main className="min-h-screen py-32 md:py-40 lg:py-60 max-w-[1200px] mx-auto">
-            <div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-10">ESTAMOS AQUI PARA VOCÊ</h1>
-            <p className="text-base md:text-lg lg:text-xl font-medium text-center mt-4">
-                    Levamos a experiência dos nossos hóspedes a sério. Se você tiver qualquer dúvida, solicitação ou sugestão, entre em contato conosco. Teremos o maior prazer em atendê-lo o mais rápido possível.
-                </p>
-            </div>
+  return (
+    <main className="min-h-screen pt-32 pb-20 md:pt-40 lg:pt-52 max-w-[900px] mx-auto px-6 flex flex-col items-center">
+      
+      {/* Título */}
+      <div className="text-center max-w-[750px]">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#14274A] drop-shadow-sm">
+          Estamos aqui para você
+        </h1>
 
-            <div className="grid md:grid-cols-2 lg:max-w-[500px] md:gap-5 lg:gap-10 mx-auto gap-2 mt-10">
-                <Link target="_blank" className="flex items-center gap-x-2" href={`mailto:${email}`}><Button className="w-full py-5"><i className="uil uil-envelope-edit" />E-mail</Button></Link>
-                <Link target="_blank" className="flex items-center gap-x-2" href={`https://wa.me/+55${mobilePhone}`}><Button className="w-full py-5 bg-[#31D24E]"><i className="uil uil-whatsapp" />WhatsApp</Button></Link>
-            </div>
-        </main>
-    )
+        <p className="text-sm md:text-base lg:text-lg font-medium mt-5 text-neutral-700 leading-relaxed">
+          Levamos a experiência dos nossos hóspedes a sério.  
+          Se você tiver qualquer dúvida, solicitação ou sugestão, entre em contato conosco.
+          Será um prazer atendê-lo o mais rápido possível.
+        </p>
+      </div>
+
+      {/* Cartões de contato */}
+      <div className="grid md:grid-cols-2 gap-4 md:gap-6 w-full max-w-[500px] mt-14">
+
+        {/* Email */}
+        <Link
+          target="_blank"
+          href={`mailto:${email}`}
+          className="w-full"
+        >
+          <Button
+            className="
+              cursor-pointer w-full py-6 text-lg font-semibold rounded-xl
+              bg-gradient-to-br from-[#f0f4ff] to-[#d7e0ff]
+              text-[#14274A]
+              border border-[#c8d1f0]
+              shadow-[0_2px_10px_rgba(20,39,74,0.15)]
+              hover:scale-[1.02] active:scale-[0.97]
+              transition-all
+              flex items-center justify-center gap-3
+            "
+          >
+            <Mail size={22} />
+            Enviar e-mail
+          </Button>
+        </Link>
+
+        <Link
+          target="_blank"
+          href={`https://wa.me/55${mobilePhone}`}
+          className="w-full"
+        >
+          <Button
+            className="
+              cursor-pointer w-full py-6 text-lg font-semibold rounded-xl
+              bg-[#25D366] text-white
+              shadow-[0_4px_15px_rgba(37,211,102,0.35)]
+              hover:brightness-110 hover:scale-[1.02] active:scale-[0.97]
+              transition-all
+              flex items-center justify-center gap-3
+            "
+          >
+            <i className="uil uil-whatsapp text-white text-xl" />
+            WhatsApp
+          </Button>
+        </Link>
+      </div>
+
+      <p className="text-xs md:text-sm text-neutral-600 mt-8">
+        Retornamos normalmente dentro de minutos.
+      </p>
+    </main>
+  );
 }
