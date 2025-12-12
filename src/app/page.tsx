@@ -18,7 +18,7 @@ export default function Home() {
           </span>
 
         </div>
-        <div className="flex justify-center z-50 -mt-6 relative">
+        <div className="flex justify-center z-40 -mt-6 relative">
           <Link href="https://airbnb.com.br" target="_blank">
             <Button className="cursor-pointer items-center border-r-none rounded-l-full py-5 md:p-6 border-black" variant={"outline"}>
               <p>RESERVAR</p> <Image src="/assets/icones/airbnb-color.svg" alt="logo airbnb" width={20} height={20} />
