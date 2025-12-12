@@ -28,7 +28,6 @@ export default function Footer() {
                 <hr className="lg:hidden" />
                 <div className="flex flex-col gap-5 items-start lg:text-lg font-semibold text-muted">
                     <Link href="/rooms">Acomodações</Link>
-                    <Link href="/facilities">Instalações</Link>
                     <Link href="/contact">Contatos</Link>
                 </div>
             </main>

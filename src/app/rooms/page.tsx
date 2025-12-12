@@ -199,8 +199,8 @@ function RoomCard({ room }: { room: (typeof roomsData)[0] }) {
 
 export default function Page() {
   return (
-    <main className="min-h-screen py-32 flex flex-col items-center gap-10 max-w-[95%] lg:max-w-[1200px] mx-auto w-full">
-      <div className="lg:px-20 p-5 text-center max-w-[900px]">
+    <main className="min-h-screen py-10 flex flex-col items-center gap-10 max-w-[95%] lg:max-w-[1200px] mx-auto w-full">
+      <div className="lg:px-20 px-5 text-center max-w-[900px]">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">Nossos quartos</h1>
         <p className="text-xs md:text-sm lg:text-base font-medium mt-3">
           Todos os quartos são suítes climatizadas com cama de casal, chuveiro eletrônico e vista para o mar.

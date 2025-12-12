@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Cinzel, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
@@ -9,6 +9,12 @@ const getPoppins = Poppins({
   variable: "--font-poppins-sans",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
 });
+
+export const logoFont = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-eb-garamond",
+  weight: ["400", "500", "600", "700"]
+})
 
 export const metadata: Metadata = {
   title: "Pousada Riviera Sanary",
@@ -36,7 +42,9 @@ export default function RootLayout({
         className={`${getPoppins.variable} antialiased`}
       >
         <Navbar />
-        {children}
+        <div className="pt-[73.52px] md:pt-[70px]">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
