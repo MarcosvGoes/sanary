@@ -37,7 +37,7 @@ export default function Home() {
         <HomeCarousel />
       </section>
 
-      <section className="mx-3 mt-10 md:mt-20 md:gap-5 md:mb-10 flex flex-col max-w-[1000px] max-h-[800px] md:mx-auto">
+      <section className="mx-3 mt-10 md:mt-20 md:gap-5 mb-10 flex flex-col max-w-[1000px] max-h-[800px] md:mx-auto">
         <h1 className="text-center mt-10 mb-5 text-xl md:text-3xl font-semibold">Destinos populares</h1>
         <TourismCarousel />
       </section>

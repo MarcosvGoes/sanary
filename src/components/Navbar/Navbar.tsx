@@ -25,14 +25,14 @@ export default function Navbar() {
 
 
                 <section className="flex items-center justify-between gap-x-5">
+                    <Link href="https://airbnb.com.br" target="_blank">
+                        <Button className="cursor-pointer items-center border rounded-full p-3 md:p-5 hover:bg-background hover:border-foreground hover:border hover:text-foreground" variant={"default"}>
+                            <p>RESERVAR</p> <Image src="/assets/icones/airbnb-color.svg" alt="logo airbnb" width={20} height={20} />
+                        </Button>
+                    </Link>
                     <Link target="_blank" href={`https://wa.me/55${mobilePhone}?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informações.`}>
                         <Button className="cursor-pointer items-center rounded-full p-3 md:p-5 border-black" variant={"outline"}>
                             <p>RESERVAR</p> <i className="uil uil-whatsapp text-green-600 text-xl" />
-                        </Button>
-                    </Link>
-                    <Link href="https://airbnb.com.br" target="_blank">
-                        <Button className="cursor-pointer items-center rounded-full p-3 md:p-5 hover:bg-background hover:border-foreground hover:border hover:text-foreground" variant={"default"}>
-                            <p>RESERVAR</p> <Image src="/assets/icones/airbnb-color.svg" alt="logo airbnb" width={20} height={20} />
                         </Button>
                     </Link>
                 </section>
