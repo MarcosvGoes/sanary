@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { email, mobilePhone } from "@/shared/utils/contacts";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
 
 export default function Contact() {
   return (

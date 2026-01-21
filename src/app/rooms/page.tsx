@@ -3,22 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { Beef, CookingPot, Tv, Users, Thermometer, Waves, Bed, Refrigerator } from "lucide-react";
 import { mobilePhone } from "@/shared/utils/contacts";
+import { Button } from "@/shared/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/shared/components/ui/carousel";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@radix-ui/react-accordion";
 
 const roomsData = [
   {
