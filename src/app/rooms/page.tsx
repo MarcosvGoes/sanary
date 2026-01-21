@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Beef, CookingPot, Tv, Users, Thermometer, Waves, Bed, Refrigerator } from "lucide-react";
-import { mobilePhone } from "@/utils/contacts";
+import { mobilePhone } from "@/shared/utils/contacts";
 
 const roomsData = [
   {

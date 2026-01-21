@@ -1,10 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { mobilePhone } from "@/utils/contacts";
+import { mobilePhone } from "@/shared/utils/contacts";
 import Image from "next/image";
 import Link from "next/link";
 import { logoFont } from "./layout";
-import { HomeCarousel } from "@/components/HomeCarousel/HomeCarousel";
-import { TourismCarousel } from "@/components/TourismCarousel/TourismCarousel";
+import { Metadata } from "next";
+import { HomeCarousel } from "@/shared/components/HomeCarousel/HomeCarousel";
+import { TourismCarousel } from "@/shared/components/TourismCarousel/TourismCarousel";
+import { Button } from "@/shared/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Pousada Riviera Sanary",
+  description: "Pousada Riviera Sanary",
+};
+
 
 export default function Home() {
   return (

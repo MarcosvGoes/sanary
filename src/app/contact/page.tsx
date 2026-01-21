@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { email, mobilePhone } from "@/utils/contacts";
+import { email, mobilePhone } from "@/shared/utils/contacts";
 import Link from "next/link";
 import { Mail } from "lucide-react";
 

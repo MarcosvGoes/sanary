@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import { Cinzel, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/shared/components/Footer/Footer";
+import Navbar from "@/shared/components/Navbar/Navbar";
 
 const getPoppins = Poppins({
   subsets: ["latin"],
@@ -15,11 +14,6 @@ export const logoFont = Cinzel({
   variable: "--font-eb-garamond",
   weight: ["400", "500", "600", "700"]
 })
-
-export const metadata: Metadata = {
-  title: "Pousada Riviera Sanary",
-  description: "Pousada Riviera Sanary",
-};
 
 export default function RootLayout({
   children,
