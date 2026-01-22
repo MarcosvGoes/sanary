@@ -32,26 +32,11 @@ model User {
     houseNumber    String?
     birthDate      DateTime?
     accounts       Account[]
-    notifications  Notifications[]
     bookings       Booking[]
     paymentData UserPaymentData? @relation("UserPaymentData")
     sessions    Session[]
 
     @@map("user")
-}
-
-model Notifications {
-    id          String    @id @default(uuid())
-    userId      String
-    title       String
-    description String?
-    readAt      DateTime?
-    createdAt   DateTime  @default(now())
-    redirectUrl String?
-    user        User      @relation(fields: [userId], references: [id])
-
-    @@index([userId, createdAt])
-    @@index([userId, readAt])
 }
 
 model Payments {
@@ -73,6 +58,7 @@ model Payments {
     invoiceId             String?          @unique
     invoiceStatus         String?
     userPaymentData       UserPaymentData? @relation(fields: [userPaymentDataId], references: [id])
+    @@map("payments")
 }
 
 model UserPaymentData {
@@ -87,6 +73,7 @@ model UserPaymentData {
     updatedAt       DateTime   @updatedAt
     user            User       @relation("UserPaymentData", fields: [userId], references: [id], onDelete: Cascade)
     Payments        Payments[]
+    @@map("userPaymentData")
 }
 
 model Booking {
@@ -107,6 +94,7 @@ model Booking {
     updatedAt DateTime @updatedAt
 
     @@index([userId])
+    @@map("booking")
 }
 
 model Guest {
@@ -121,6 +109,7 @@ model Guest {
     bookingId String
 
     createdAt DateTime @default(now())
+    @@map("guest")
 }
 
 model Session {
