@@ -24,15 +24,12 @@ model User {
     cep            String?
     street         String?
     number         String?
+    nacionality          String?
     complement     String?
     neighborhood   String?
     city           String?
     state          String?
     houseNumber    String?
-    profession     String?
-    civilStatus    String?
-    stateOfBirth   String?
-    cityOfBirth    String?
     birthDate      DateTime?
     accounts       Account[]
     notifications  Notifications[]

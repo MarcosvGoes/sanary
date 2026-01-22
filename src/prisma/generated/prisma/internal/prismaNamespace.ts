@@ -1133,15 +1133,12 @@ export const UserScalarFieldEnum = {
   cep: 'cep',
   street: 'street',
   number: 'number',
+  nacionality: 'nacionality',
   complement: 'complement',
   neighborhood: 'neighborhood',
   city: 'city',
   state: 'state',
   houseNumber: 'houseNumber',
-  profession: 'profession',
-  civilStatus: 'civilStatus',
-  stateOfBirth: 'stateOfBirth',
-  cityOfBirth: 'cityOfBirth',
   birthDate: 'birthDate'
 } as const
 

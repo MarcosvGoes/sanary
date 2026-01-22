@@ -25,6 +25,10 @@ export const auth = betterAuth({
         type: "string",
         required: false,
       },
+      email: {
+        type: "string",
+        required: true,
+      },
       cpf: {
         type: "string",
         required: false,
@@ -45,24 +49,8 @@ export const auth = betterAuth({
         type: "string",
         required: false,
       },
-      profession: {
-        type: "string",
-        required: false,
-      },
-      incomeValue: {
-        type: "number",
-        required: false,
-      },
       birthDate: {
         type: "date",
-        required: false,
-      },
-      stateOfBirth: {
-        type: "string",
-        required: false,
-      },
-      cityOfBirth: {
-        type: "string",
         required: false,
       },
       cep: {
@@ -73,7 +61,7 @@ export const auth = betterAuth({
         type: "string",
         required: false,
       },
-      number: {
+      houseNumber: {
         type: "string",
         required: false,
       },

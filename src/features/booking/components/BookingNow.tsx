@@ -1,26 +1,33 @@
 "use client"
 
-import { Controller, useFieldArray } from "react-hook-form"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/shared/components/ui/card"
+import { Controller, FieldPath, useFieldArray } from "react-hook-form"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/shared/components/ui/card"
 import { Button } from "@/shared/components/ui/button"
 import { Input } from "@/shared/components/ui/input"
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/components/ui/field"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select"
 import { toast } from "sonner"
-import { BookingSchema, bookingSchema, userFields } from "../schema/bookingSchema"
-import { ArrowRight, Ban, Trash, UserPlus } from "lucide-react"
-import { formatCPF } from "@/shared/utils/cpfValidator"
+import { BookingSchema, bookingSchema } from "../schema/bookingSchema"
+import { ArrowLeft, ArrowRight, Baby, Ban, CreditCard, FileText, Trash, User, UserPlus } from "lucide-react"
+import { formatCPF, maskCPF } from "@/shared/utils/cpfValidator"
 import { Textarea } from "@/shared/components/ui/textarea"
 import { useZodForm } from "@/shared/hooks/useZodForm"
 import { createBook } from "../actions/createBook"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react";
 import { brazilStates } from "@/shared/utils/state"
+import { fetchAddressByCep } from "@/shared/utils/fetchAddressByCep"
+import { formatAndMaskPhoneNumber } from "@/shared/utils/formatAndMaskPhoneNumber"
+import Link from "next/link"
+import { authClient } from "@/features/auth/auth-client"
+import { Countrys } from "@/shared/utils/countrys"
+import { createCharge } from "@/features/billing/actions/createCharge"
 
 
-export default function BookingNow(session: any) {
+export default function BookingNow({ session }: { session: any }) {
     const [step, setStep] = useState(0);
-
+    const [onSubmiting, setOnSubmitting] = useState(false)
+    
     const form = useZodForm(bookingSchema, {
         defaultValues: {
             checkIn: "",
@@ -37,39 +44,48 @@ export default function BookingNow(session: any) {
             ],
 
             user: {
-                name: "",
-                email: "",
-                phoneNumber: "",
-                cpf: "",
-                documentNumber: "",
-                documentType: "",
-                ufEmitter: "",
-                cep: "",
-                street: "",
-                number: "",
-                complement: "",
-                neighborhood: "",
-                city: "",
-                state: "",
-                profession: "",
-                civilStatus: "",
-                stateOfBirth: "",
-                cityOfBirth: "",
-                birthDate: "",
+                name: session.user.name ?? "",
+                email: session.user.email ?? "",
+                phoneNumber: session.user.phoneNumber ?? "",
+                cpf: session.user.cpf ?? "",
+                documentNumber: session.user.documentNumber ?? "",
+                documentType: session.user.documentType ?? "",
+                ufEmitter: session.user.ufEmitter ?? "",
+                nacionality: session.user.nacionality ?? "Brasil",
+                cep: session.user.cep ?? "",
+                street: session.user.street ?? "",
+                number: session.user.number ?? "",
+                complement: session.user.complement ?? "",
+                neighborhood: session.user.neighborhood ?? "",
+                city: session.user.city ?? "",
+                state: session.user.state ?? "",
+                birthDate: session.user.birthDate ?? "",
             },
         },
     })
 
-
-    const stepFields: Record<number, Array<keyof BookingSchema>> = {
+    const stepFields: Record<number, FieldPath<BookingSchema>[]> = {
         0: [
             "checkIn",
             "checkOut",
             "guests",
             "notes",
         ],
-        1: [],
-        2: [],
+        1: [
+            "user.name",
+            "user.email",
+            "user.phoneNumber",
+            "user.cpf",
+            "user.documentNumber",
+            "user.documentType",
+            "user.ufEmitter",
+            "user.nacionality",
+            "user.street",
+            "user.neighborhood",
+            "user.city",
+            "user.state",
+            "user.houseNumber",
+        ],
     };
 
     async function nextStep() {
@@ -103,34 +119,81 @@ export default function BookingNow(session: any) {
         }),
     };
 
-
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "guests",
     })
 
+    const watchCep = form.watch("user.cep");
+
+    useEffect(() => {
+        const formattedCep = watchCep.replace(/\D/g, "");
+
+        if (formattedCep?.length === 8) {
+            (async () => {
+                const data = await fetchAddressByCep(formattedCep);
+                if (!data) return;
+
+                form.setValue("user.street", data.street || "");
+                form.setValue("user.neighborhood", data.neighborhood || "");
+                form.setValue("user.city", data.city || "");
+                form.setValue("user.state", data.state || "");
+            })();
+        }
+    }, [watchCep, form]);
+
     async function onSubmit(data: BookingSchema) {
+        setOnSubmitting(true)
         try {
+            try {
+                const updateUser = await authClient.updateUser({
+                    name: data.user.name,
+                    phoneNumber: data.user.phoneNumber,
+                    cpf: data.user.cpf,
+                    documentNumber: data.user.documentNumber,
+                    documentType: data.user.documentType,
+                    ufEmitter: data.user.ufEmitter,
+                    cep: data.user.cep,
+                    street: data.user.street,
+                    houseNumber: data.user.houseNumber,
+                    complement: data.user.complement,
+                    neighborhood: data.user.neighborhood,
+                    city: data.user.city,
+                    state: data.user.state,
+                    birthDate: data.user.birthDate,
+                    nacionality: data.user.nacionality,
+                })
+                console.log('Update successful:', updateUser)
+            } catch (error) {
+                console.error('Update error details:', error)
+                // Isso deve mostrar qual campo específico está causando o problema
+            }
+
             const processedData = {
                 ...data,
                 guests: data.guests
                     .filter(guest => guest.birthDate)
                     .map(guest => ({
                         ...guest,
-                        birthDate: new Date(guest.birthDate as string),
                     })),
             }
-            await createBook(processedData)
 
-            toast.success("Reserva criada com sucesso!")
+            const value = 100
+            const createBookingRes = await createBook(processedData)
+            const createChargeRes = await createCharge(session.user.id, value)
 
-            form.reset()
+            if (!createBookingRes || createChargeRes) {
+                toast.success("Reserva criada com sucesso!")
+                { nextStep }
+            }
+
         } catch (err) {
             console.error(err)
             toast.error("Erro ao criar reserva")
+        } finally {
+            setOnSubmitting(false)
         }
     }
-
 
     return (
         <Card className="w-full max-w-2xl mx-auto mb-10">
@@ -331,9 +394,11 @@ export default function BookingNow(session: any) {
                                     )}
                                 />
 
-                                <Button type="button" className="w-full clear-start cursor-pointer flex items-center gap-x-2 rounded-full" onClick={nextStep}>
+                                <Button type="button" className="w-full cursor-pointer flex items-center gap-x-2 rounded-full" onClick={nextStep}>
                                     Continuar <ArrowRight />
                                 </Button>
+
+
                             </motion.div>
                         )}
 
@@ -365,8 +430,33 @@ export default function BookingNow(session: any) {
                                                 </label>
                                                 <Input
                                                     {...field}
-                                                    className="rounded-full h-12"
+                                                    className="rounded-full h-12 px-5"
                                                     placeholder="Digite o nome completo"
+                                                />
+                                                <FieldError errors={[fieldState.error]} />
+                                            </Field>
+                                        )}
+                                    />
+
+
+                                    <Controller
+                                        name="user.cpf"
+                                        control={form.control}
+                                        render={({ field, fieldState }) => (
+                                            <Field data-invalid={fieldState.invalid} className="relative">
+                                                <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                    CPF
+                                                </label>
+                                                <Input
+                                                    className="rounded-full h-12"
+                                                    placeholder="CPF"
+                                                    value={formatCPF(field.value)}
+                                                    onChange={(e) => {
+                                                        const onlyDigits = e.target.value.replace(/\D/g, "")
+                                                        field.onChange(onlyDigits)
+                                                    }}
+                                                    onBlur={field.onBlur}
+                                                    ref={field.ref}
                                                 />
                                                 <FieldError errors={[fieldState.error]} />
                                             </Field>
@@ -384,7 +474,7 @@ export default function BookingNow(session: any) {
                                                 <Input
                                                     {...field}
                                                     type="email"
-                                                    className="rounded-full h-12"
+                                                    className="rounded-full h-12 px-5"
                                                     placeholder="email@exemplo.com"
                                                 />
                                                 <FieldError errors={[fieldState.error]} />
@@ -401,14 +491,80 @@ export default function BookingNow(session: any) {
                                                     Telefone
                                                 </label>
                                                 <Input
-                                                    {...field}
-                                                    className="rounded-full h-12"
+                                                    value={formatAndMaskPhoneNumber(field.value)}
+                                                    onChange={(e) => {
+                                                        const onlyDigits = e.target.value.replace(/\D/g, "")
+                                                        field.onChange(onlyDigits)
+                                                    }}
+                                                    onBlur={field.onBlur}
+                                                    ref={field.ref}
+                                                    className="rounded-full h-12 px-5"
                                                     placeholder="(00) 00000-0000"
                                                 />
                                                 <FieldError errors={[fieldState.error]} />
                                             </Field>
                                         )}
                                     />
+
+                                    <div className="flex w-full">
+                                        <Controller
+                                            name="user.documentType"
+                                            control={form.control}
+                                            render={({ field, fieldState }) => (
+                                                <Field className="relative w-1/2"
+                                                    data-invalid={fieldState.invalid}
+                                                >
+                                                    <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                        Tipo de documento
+                                                    </label>
+
+                                                    <Select value={field.value} onValueChange={field.onChange}>
+                                                        <SelectTrigger className="rounded-l-full !h-12 w-full px-5">
+                                                            <SelectValue placeholder="RG" />
+                                                        </SelectTrigger>
+                                                        <SelectContent position="popper" className="max-h-60">
+                                                            <SelectItem value="rg">RG</SelectItem>
+                                                            <SelectItem value="cnh">CNH</SelectItem>
+                                                            <SelectItem value="passaporte">Passaporte</SelectItem>
+                                                            <SelectItem value="rne">RNE</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+
+                                                    <FieldError errors={[fieldState.error]} />
+                                                </Field>
+                                            )}
+                                        />
+
+                                        <Controller
+                                            name="user.nacionality"
+                                            control={form.control}
+                                            render={({ field, fieldState }) => (
+                                                <Field className="relative w-1/2"
+                                                >
+                                                    <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                        Nacionalidade
+                                                    </label>
+
+                                                    <Select value={field.value} onValueChange={field.onChange}>
+                                                        <SelectTrigger className="rounded-r-full !h-12 w-full px-5">
+                                                            <SelectValue />
+                                                        </SelectTrigger>
+                                                        <SelectContent position="popper" className="max-h-60">
+                                                            <div className="max-h-40 overflow-y-auto">
+                                                                {Countrys.map(pais => (
+                                                                    <SelectItem key={pais} value={pais}>
+                                                                        {pais}
+                                                                    </SelectItem>
+                                                                ))}
+                                                            </div>
+                                                        </SelectContent>
+                                                    </Select>
+
+                                                    <FieldError errors={[fieldState.error]} />
+                                                </Field>
+                                            )}
+                                        />
+                                    </div>
 
                                     <div className="flex w-full">
                                         <Controller
@@ -425,7 +581,7 @@ export default function BookingNow(session: any) {
 
                                                     <Input
                                                         {...field}
-                                                        className="rounded-l-full h-12 w-full"
+                                                        className="rounded-l-full h-12 w-full px-5"
                                                     />
 
                                                     <FieldError errors={[fieldState.error]} />
@@ -444,7 +600,7 @@ export default function BookingNow(session: any) {
                                                     </label>
 
                                                     <Select value={field.value} onValueChange={field.onChange}>
-                                                        <SelectTrigger className="rounded-r-full !h-12 w-full">
+                                                        <SelectTrigger className="rounded-r-full !h-12 w-full px-5">
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent position="popper" className="max-h-60">
@@ -460,55 +616,176 @@ export default function BookingNow(session: any) {
                                                 </Field>
                                             )}
                                         />
-
-
                                     </div>
 
                                     <Controller
-                                        name="user.documentType"
+                                        name={`user.birthDate`}
+                                        control={form.control}
+                                        render={({ field, fieldState }) => (
+                                            <div className="flex-[3] relative">
+                                                <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">Data de nascimento</label>
+                                                <Input
+                                                    type="date"
+                                                    className="rounded-full h-12"
+                                                    {...field}
+                                                />
+                                                <FieldError errors={[fieldState.error]} />
+                                            </div>
+                                        )}
+                                    />
+
+                                    <div className="flex items-center gap-x-2 w-full">
+                                        <hr className="w-2/5" />
+                                        <span className="w-1/5 text-xs text-center">Endereço</span>
+                                        <hr className="w-2/5" />
+                                    </div>
+
+                                    <div className="flex w-full">
+                                        <Controller
+                                            name="user.cep"
+                                            control={form.control}
+                                            render={({ field, fieldState }) => (
+                                                <Field
+                                                    data-invalid={fieldState.invalid}
+                                                    className="relative w-2/3"
+                                                >
+                                                    <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                        CEP
+                                                    </label>
+
+                                                    <Input
+                                                        {...field}
+                                                        className="rounded-l-full h-12 w-full px-5"
+                                                    />
+
+                                                    <FieldError errors={[fieldState.error]} />
+                                                </Field>
+                                            )}
+                                        />
+
+                                        <Controller
+                                            name="user.houseNumber"
+                                            control={form.control}
+                                            render={({ field, fieldState }) => (
+                                                <Field
+                                                    data-invalid={fieldState.invalid}
+                                                    className="relative w-1/3"
+                                                >
+                                                    <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                        Número
+                                                    </label>
+
+                                                    <Input
+                                                        {...field}
+                                                        className="rounded-r-full h-12 w-full px-5"
+                                                    />
+
+                                                    <FieldError errors={[fieldState.error]} />
+                                                </Field>
+                                            )}
+                                        />
+                                    </div>
+
+                                    <Controller
+                                        name="user.street"
                                         control={form.control}
                                         render={({ field, fieldState }) => (
                                             <Field
                                                 data-invalid={fieldState.invalid}
+                                                className="relative"
                                             >
                                                 <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
-                                                    Tipo
+                                                    Rua
                                                 </label>
 
-                                                <Select value={field.value} onValueChange={field.onChange}>
-                                                    <SelectTrigger className="rounded-r-full !h-12 w-full">
-                                                        <SelectValue placeholder="RG" />
-                                                    </SelectTrigger>
-                                                    <SelectContent position="popper" className="max-h-60">
-                                                        <SelectItem value="rg">RG</SelectItem>
-                                                        <SelectItem value="cnh">CNH</SelectItem>
-                                                        <SelectItem value="passaporte">Passaporte</SelectItem>
-                                                        <SelectItem value="rne">RNE</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-
+                                                <Input
+                                                    {...field}
+                                                    className="rounded-full h-12 w-full px-5"
+                                                />
                                                 <FieldError errors={[fieldState.error]} />
                                             </Field>
                                         )}
                                     />
 
+                                    <Controller
+                                        name="user.neighborhood"
+                                        control={form.control}
+                                        render={({ field, fieldState }) => (
+                                            <Field
+                                                data-invalid={fieldState.invalid}
+                                                className="relative"
+                                            >
+                                                <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                    Bairro
+                                                </label>
+
+                                                <Input
+                                                    {...field}
+                                                    className="rounded-full h-12 w-full px-5"
+                                                />
+                                                <FieldError errors={[fieldState.error]} />
+                                            </Field>
+                                        )}
+                                    />
+
+                                    <Controller
+                                        name="user.city"
+                                        control={form.control}
+                                        render={({ field, fieldState }) => (
+                                            <Field
+                                                data-invalid={fieldState.invalid}
+                                                className="relative"
+                                            >
+                                                <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                    Cidade
+                                                </label>
+
+                                                <Input
+                                                    {...field}
+                                                    className="rounded-full h-12 w-full px-5"
+                                                />
+                                                <FieldError errors={[fieldState.error]} />
+                                            </Field>
+                                        )}
+                                    />
+
+                                    <Controller
+                                        name="user.state"
+                                        control={form.control}
+                                        render={({ field, fieldState }) => (
+                                            <Field
+                                                data-invalid={fieldState.invalid}
+                                                className="relative"
+                                            >
+                                                <label className="absolute text-[10px] ml-2 px-1 bg-white -top-[7px] rounded-full max-w-fit">
+                                                    Estado
+                                                </label>
+
+                                                <Input
+                                                    {...field}
+                                                    className="rounded-full h-12 w-full px-5"
+                                                />
+                                                <FieldError errors={[fieldState.error]} />
+                                            </Field>
+                                        )}
+                                    />
                                 </FieldGroup>
 
 
                                 <div className="gap-4 grid-cols-2 grid">
                                     <Button
-                                        className="rounded-full h-10"
+                                        className="w-full cursor-pointer flex items-center gap-x-2 rounded-full h-10"
                                         type="button"
                                         variant={"outline"}
                                         onClick={prevStep}
                                     >
-                                        Cancelar
+                                        <ArrowLeft /> Voltar
                                     </Button>
 
-                                    <Button type="button" className="w-full clear-start cursor-pointer flex items-center gap-x-2 rounded-full"
-                                        onClick={nextStep}
+                                    <Button className="w-full cursor-pointer flex items-center gap-x-2 rounded-full h-10"
+                                        disabled={onSubmiting}
                                     >
-                                        Continuar <ArrowRight />
+                                        Reservar
                                     </Button>
                                 </div>
                             </motion.div>
@@ -525,66 +802,92 @@ export default function BookingNow(session: any) {
                                 transition={{ duration: 0.18 }}
                                 className="space-y-6"
                             >
-                                <FieldGroup className="gap-6">
-                                    {[
-                                        ["name", "Nome completo"],
-                                        ["email", "Email"],
-                                        ["phoneNumber", "Telefone"],
-                                        ["cpf", "CPF"],
-                                        ["documentNumber", "Documento"],
-                                        ["documentType", "Tipo de documento"],
-                                        ["ufEmitter", "UF emissor"],
-                                        ["cep", "CEP"],
-                                        ["street", "Rua"],
-                                        ["number", "Número"],
-                                        ["complement", "Complemento"],
-                                        ["neighborhood", "Bairro"],
-                                        ["city", "Cidade"],
-                                        ["state", "Estado"],
-                                        ["birthDate", "Data de nascimento", "date"],
-                                    ].map(([name, label, type]) => (
-                                        <Controller
-                                            key={name}
-                                            name={name as string}
-                                            control={form.control}
-                                            render={({ field, fieldState }) => (
-                                                <Field data-invalid={fieldState.invalid} className="relative">
-                                                    <FieldLabel
-                                                        className="max-w-fit absolute bg-white left-6 -top-2 inline-flex px-2 text-xs text-muted-foreground pointer-events-none">
-                                                        {label}
-                                                    </FieldLabel>
-                                                    <Input
-                                                        className="rounded-full h-12"
-                                                        {...field}
-                                                        type={type ?? "text"}
-                                                        value={field.value ?? ""}
-                                                        aria-invalid={fieldState.invalid}
-                                                    />
-                                                    {fieldState.error && (
-                                                        <FieldError errors={[fieldState.error]} />
-                                                    )}
-                                                </Field>
-                                            )}
-                                        />
-                                    ))}
-                                </FieldGroup>
+                                {/* 
+                                <Tabs defaultValue="bookingNow">
+                                  <TabsList className="grid grid-cols-3 font-medium my-4 md:my-6 w-full">
+                                        <TabsTrigger value="pix" className="shadow-none data-[state=active]:text-blue-500 md:text-xl lg:text-2xl cursor-pointer">
+                                            <Image src={"/assets/icones/pix.svg"} alt="pix" height={16} width={16} />
+                                            Pix
+                                        </TabsTrigger>
+                                        <TabsTrigger value="creditCard" className="shadow-none data-[state=active]:text-blue-500 md:text-xl lg:text-2xl cursor-pointer">
+                                            <CreditCard />
+                                            Cartão de crédito
+                                        </TabsTrigger>
+                                        <TabsTrigger value="boleto" className="shadow-none data-[state=active]:text-blue-500 md:text-xl lg:text-2xl cursor-pointer">
+                                            <FileText />
+                                            Boleto
+                                        </TabsTrigger>
+                                    </TabsList>
 
-                                <div className="gap-4 grid-cols-2 grid">
-                                    <Button
-                                        className="rounded-full h-10"
-                                        type="button"
-                                        variant={"outline"}
-                                        onClick={prevStep}
-                                    >
-                                        Cancelar
-                                    </Button>
+                                    <TabsContent value="pix">
+                                        <Pix />
+                                    </TabsContent>
 
-                                    <Button type="button" className="w-full clear-start cursor-pointer flex items-center gap-x-2 rounded-full"
-                                        onClick={nextStep}
-                                    >
-                                        Reservar
-                                    </Button>
+                                    <TabsContent value="boleto">
+                                        <Boleto />
+                                    </TabsContent>
+
+                                     <TabsContent value="creditCard">
+                                        <BillCreditCard />
+                                    </TabsContent>
+                                </Tabs>
+  */}
+
+
+                                <div>
+                                    <div>
+                                        <h1 className="text-lg font-medium text-center">Pré-reserva realizada com sucesso</h1>
+                                        <p className="text-[10px] font-medium text-muted-foreground text-center">Realize o pagamento em até 24h para garantir sua reserva</p>
+                                    </div>
+                                    <Card className="my-2 p-5 gap-3">
+                                        <div className="flex items-center gap-x-5 text-sm">
+                                            <span>
+                                                <p className="font-medium text-base">Check-in</p>
+                                                <p>27/08/2026</p>
+                                            </span>
+                                            <span>-</span>
+                                            <span>
+                                                <p className="font-medium text-base">Check-out</p>
+                                                <p>29/08/2026</p>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h1 className="font-medium text-base">Responsável pela reserva</h1>
+                                            <ul>
+                                                <li>{session.user.name}</li>
+                                                <li>{maskCPF(session.user.cpf)}</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h1 className="font-medium text-base">Hóspedes</h1>
+                                            <ul>
+                                                <li>Antonio Fereira Silva</li>
+                                                <li>Sandra Regina catizane Goes</li>
+                                                <li>Ravi</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h1 className="font-medium text-base">Faixa etária</h1>
+                                            <ul>
+                                                <li className="flex items-center gap-x-2"><User size={14} /> 2x adultos</li>
+                                                <li className="flex items-center gap-x-2"><Baby size={14} /> 1x bebê</li>
+                                            </ul>
+                                        </div>
+                                        <hr className="border border-dashed" />
+                                        <h1 className="text-xl text-green-800 font-semibold">R$ {1000},00</h1>
+                                    </Card>
+                                    <p className="text-[10px] text-muted-foreground font-medium mt-2">*Caso não realize o pagamento em até 24h, a data da reserva será disponibilizada</p>
+
+                                    <div>
+                                        <Link href={"invoiceUrl"}>
+                                            <Button className="text-white bg-blue-500 rounded-full w-full max-w-[300px] flex mx-auto mt-5">
+                                                Realizar pagamento
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 </div>
+
+
                             </motion.div>
                         )}
                     </AnimatePresence>

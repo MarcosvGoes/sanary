@@ -40,15 +40,12 @@ export type UserMinAggregateOutputType = {
   cep: string | null
   street: string | null
   number: string | null
+  nacionality: string | null
   complement: string | null
   neighborhood: string | null
   city: string | null
   state: string | null
   houseNumber: string | null
-  profession: string | null
-  civilStatus: string | null
-  stateOfBirth: string | null
-  cityOfBirth: string | null
   birthDate: Date | null
 }
 
@@ -68,15 +65,12 @@ export type UserMaxAggregateOutputType = {
   cep: string | null
   street: string | null
   number: string | null
+  nacionality: string | null
   complement: string | null
   neighborhood: string | null
   city: string | null
   state: string | null
   houseNumber: string | null
-  profession: string | null
-  civilStatus: string | null
-  stateOfBirth: string | null
-  cityOfBirth: string | null
   birthDate: Date | null
 }
 
@@ -96,15 +90,12 @@ export type UserCountAggregateOutputType = {
   cep: number
   street: number
   number: number
+  nacionality: number
   complement: number
   neighborhood: number
   city: number
   state: number
   houseNumber: number
-  profession: number
-  civilStatus: number
-  stateOfBirth: number
-  cityOfBirth: number
   birthDate: number
   _all: number
 }
@@ -126,15 +117,12 @@ export type UserMinAggregateInputType = {
   cep?: true
   street?: true
   number?: true
+  nacionality?: true
   complement?: true
   neighborhood?: true
   city?: true
   state?: true
   houseNumber?: true
-  profession?: true
-  civilStatus?: true
-  stateOfBirth?: true
-  cityOfBirth?: true
   birthDate?: true
 }
 
@@ -154,15 +142,12 @@ export type UserMaxAggregateInputType = {
   cep?: true
   street?: true
   number?: true
+  nacionality?: true
   complement?: true
   neighborhood?: true
   city?: true
   state?: true
   houseNumber?: true
-  profession?: true
-  civilStatus?: true
-  stateOfBirth?: true
-  cityOfBirth?: true
   birthDate?: true
 }
 
@@ -182,15 +167,12 @@ export type UserCountAggregateInputType = {
   cep?: true
   street?: true
   number?: true
+  nacionality?: true
   complement?: true
   neighborhood?: true
   city?: true
   state?: true
   houseNumber?: true
-  profession?: true
-  civilStatus?: true
-  stateOfBirth?: true
-  cityOfBirth?: true
   birthDate?: true
   _all?: true
 }
@@ -283,15 +265,12 @@ export type UserGroupByOutputType = {
   cep: string | null
   street: string | null
   number: string | null
+  nacionality: string | null
   complement: string | null
   neighborhood: string | null
   city: string | null
   state: string | null
   houseNumber: string | null
-  profession: string | null
-  civilStatus: string | null
-  stateOfBirth: string | null
-  cityOfBirth: string | null
   birthDate: Date | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -332,15 +311,12 @@ export type UserWhereInput = {
   cep?: Prisma.StringNullableFilter<"User"> | string | null
   street?: Prisma.StringNullableFilter<"User"> | string | null
   number?: Prisma.StringNullableFilter<"User"> | string | null
+  nacionality?: Prisma.StringNullableFilter<"User"> | string | null
   complement?: Prisma.StringNullableFilter<"User"> | string | null
   neighborhood?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
   state?: Prisma.StringNullableFilter<"User"> | string | null
   houseNumber?: Prisma.StringNullableFilter<"User"> | string | null
-  profession?: Prisma.StringNullableFilter<"User"> | string | null
-  civilStatus?: Prisma.StringNullableFilter<"User"> | string | null
-  stateOfBirth?: Prisma.StringNullableFilter<"User"> | string | null
-  cityOfBirth?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
@@ -365,15 +341,12 @@ export type UserOrderByWithRelationInput = {
   cep?: Prisma.SortOrderInput | Prisma.SortOrder
   street?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrderInput | Prisma.SortOrder
+  nacionality?: Prisma.SortOrderInput | Prisma.SortOrder
   complement?: Prisma.SortOrderInput | Prisma.SortOrder
   neighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   houseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  profession?: Prisma.SortOrderInput | Prisma.SortOrder
-  civilStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
-  cityOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   notifications?: Prisma.NotificationsOrderByRelationAggregateInput
@@ -401,15 +374,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cep?: Prisma.StringNullableFilter<"User"> | string | null
   street?: Prisma.StringNullableFilter<"User"> | string | null
   number?: Prisma.StringNullableFilter<"User"> | string | null
+  nacionality?: Prisma.StringNullableFilter<"User"> | string | null
   complement?: Prisma.StringNullableFilter<"User"> | string | null
   neighborhood?: Prisma.StringNullableFilter<"User"> | string | null
   city?: Prisma.StringNullableFilter<"User"> | string | null
   state?: Prisma.StringNullableFilter<"User"> | string | null
   houseNumber?: Prisma.StringNullableFilter<"User"> | string | null
-  profession?: Prisma.StringNullableFilter<"User"> | string | null
-  civilStatus?: Prisma.StringNullableFilter<"User"> | string | null
-  stateOfBirth?: Prisma.StringNullableFilter<"User"> | string | null
-  cityOfBirth?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
@@ -434,15 +404,12 @@ export type UserOrderByWithAggregationInput = {
   cep?: Prisma.SortOrderInput | Prisma.SortOrder
   street?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrderInput | Prisma.SortOrder
+  nacionality?: Prisma.SortOrderInput | Prisma.SortOrder
   complement?: Prisma.SortOrderInput | Prisma.SortOrder
   neighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   houseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  profession?: Prisma.SortOrderInput | Prisma.SortOrder
-  civilStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  stateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
-  cityOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -468,15 +435,12 @@ export type UserScalarWhereWithAggregatesInput = {
   cep?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   street?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   number?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  nacionality?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   complement?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   neighborhood?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   state?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   houseNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  profession?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  civilStatus?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  stateOfBirth?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  cityOfBirth?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
@@ -496,15 +460,12 @@ export type UserCreateInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
@@ -529,15 +490,12 @@ export type UserUncheckedCreateInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -562,15 +520,12 @@ export type UserUpdateInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
@@ -595,15 +550,12 @@ export type UserUncheckedUpdateInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -628,15 +580,12 @@ export type UserCreateManyInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
 }
 
@@ -656,15 +605,12 @@ export type UserUpdateManyMutationInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -684,15 +630,12 @@ export type UserUncheckedUpdateManyInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -712,15 +655,12 @@ export type UserCountOrderByAggregateInput = {
   cep?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  nacionality?: Prisma.SortOrder
   complement?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   houseNumber?: Prisma.SortOrder
-  profession?: Prisma.SortOrder
-  civilStatus?: Prisma.SortOrder
-  stateOfBirth?: Prisma.SortOrder
-  cityOfBirth?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
 }
 
@@ -740,15 +680,12 @@ export type UserMaxOrderByAggregateInput = {
   cep?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  nacionality?: Prisma.SortOrder
   complement?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   houseNumber?: Prisma.SortOrder
-  profession?: Prisma.SortOrder
-  civilStatus?: Prisma.SortOrder
-  stateOfBirth?: Prisma.SortOrder
-  cityOfBirth?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
 }
 
@@ -768,15 +705,12 @@ export type UserMinOrderByAggregateInput = {
   cep?: Prisma.SortOrder
   street?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  nacionality?: Prisma.SortOrder
   complement?: Prisma.SortOrder
   neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
   houseNumber?: Prisma.SortOrder
-  profession?: Prisma.SortOrder
-  civilStatus?: Prisma.SortOrder
-  stateOfBirth?: Prisma.SortOrder
-  cityOfBirth?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
 }
 
@@ -891,15 +825,12 @@ export type UserCreateWithoutNotificationsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
@@ -923,15 +854,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
@@ -971,15 +899,12 @@ export type UserUpdateWithoutNotificationsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
@@ -1003,15 +928,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
@@ -1035,15 +957,12 @@ export type UserCreateWithoutPaymentDataInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
@@ -1067,15 +986,12 @@ export type UserUncheckedCreateWithoutPaymentDataInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -1115,15 +1031,12 @@ export type UserUpdateWithoutPaymentDataInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
@@ -1147,15 +1060,12 @@ export type UserUncheckedUpdateWithoutPaymentDataInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -1179,15 +1089,12 @@ export type UserCreateWithoutSessionsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
@@ -1211,15 +1118,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -1259,15 +1163,12 @@ export type UserUpdateWithoutSessionsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
@@ -1291,15 +1192,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -1323,15 +1221,12 @@ export type UserCreateWithoutAccountsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
@@ -1355,15 +1250,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
@@ -1403,15 +1295,12 @@ export type UserUpdateWithoutAccountsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
@@ -1435,15 +1324,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
@@ -1467,15 +1353,12 @@ export type UserCreateWithoutBookingsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
@@ -1499,15 +1382,12 @@ export type UserUncheckedCreateWithoutBookingsInput = {
   cep?: string | null
   street?: string | null
   number?: string | null
+  nacionality?: string | null
   complement?: string | null
   neighborhood?: string | null
   city?: string | null
   state?: string | null
   houseNumber?: string | null
-  profession?: string | null
-  civilStatus?: string | null
-  stateOfBirth?: string | null
-  cityOfBirth?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -1547,15 +1427,12 @@ export type UserUpdateWithoutBookingsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
@@ -1579,15 +1456,12 @@ export type UserUncheckedUpdateWithoutBookingsInput = {
   cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  civilStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stateOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cityOfBirth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -1669,15 +1543,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cep?: boolean
   street?: boolean
   number?: boolean
+  nacionality?: boolean
   complement?: boolean
   neighborhood?: boolean
   city?: boolean
   state?: boolean
   houseNumber?: boolean
-  profession?: boolean
-  civilStatus?: boolean
-  stateOfBirth?: boolean
-  cityOfBirth?: boolean
   birthDate?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
@@ -1703,15 +1574,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   cep?: boolean
   street?: boolean
   number?: boolean
+  nacionality?: boolean
   complement?: boolean
   neighborhood?: boolean
   city?: boolean
   state?: boolean
   houseNumber?: boolean
-  profession?: boolean
-  civilStatus?: boolean
-  stateOfBirth?: boolean
-  cityOfBirth?: boolean
   birthDate?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1731,15 +1599,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   cep?: boolean
   street?: boolean
   number?: boolean
+  nacionality?: boolean
   complement?: boolean
   neighborhood?: boolean
   city?: boolean
   state?: boolean
   houseNumber?: boolean
-  profession?: boolean
-  civilStatus?: boolean
-  stateOfBirth?: boolean
-  cityOfBirth?: boolean
   birthDate?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1759,19 +1624,16 @@ export type UserSelectScalar = {
   cep?: boolean
   street?: boolean
   number?: boolean
+  nacionality?: boolean
   complement?: boolean
   neighborhood?: boolean
   city?: boolean
   state?: boolean
   houseNumber?: boolean
-  profession?: boolean
-  civilStatus?: boolean
-  stateOfBirth?: boolean
-  cityOfBirth?: boolean
   birthDate?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "phoneNumber" | "cpf" | "documentNumber" | "documentType" | "ufEmitter" | "cep" | "street" | "number" | "complement" | "neighborhood" | "city" | "state" | "houseNumber" | "profession" | "civilStatus" | "stateOfBirth" | "cityOfBirth" | "birthDate", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "phoneNumber" | "cpf" | "documentNumber" | "documentType" | "ufEmitter" | "cep" | "street" | "number" | "nacionality" | "complement" | "neighborhood" | "city" | "state" | "houseNumber" | "birthDate", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
@@ -1808,15 +1670,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cep: string | null
     street: string | null
     number: string | null
+    nacionality: string | null
     complement: string | null
     neighborhood: string | null
     city: string | null
     state: string | null
     houseNumber: string | null
-    profession: string | null
-    civilStatus: string | null
-    stateOfBirth: string | null
-    cityOfBirth: string | null
     birthDate: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -2261,15 +2120,12 @@ export interface UserFieldRefs {
   readonly cep: Prisma.FieldRef<"User", 'String'>
   readonly street: Prisma.FieldRef<"User", 'String'>
   readonly number: Prisma.FieldRef<"User", 'String'>
+  readonly nacionality: Prisma.FieldRef<"User", 'String'>
   readonly complement: Prisma.FieldRef<"User", 'String'>
   readonly neighborhood: Prisma.FieldRef<"User", 'String'>
   readonly city: Prisma.FieldRef<"User", 'String'>
   readonly state: Prisma.FieldRef<"User", 'String'>
   readonly houseNumber: Prisma.FieldRef<"User", 'String'>
-  readonly profession: Prisma.FieldRef<"User", 'String'>
-  readonly civilStatus: Prisma.FieldRef<"User", 'String'>
-  readonly stateOfBirth: Prisma.FieldRef<"User", 'String'>
-  readonly cityOfBirth: Prisma.FieldRef<"User", 'String'>
   readonly birthDate: Prisma.FieldRef<"User", 'DateTime'>
 }
     

@@ -1,50 +1,62 @@
-import { z } from "zod"
+import { Countrys } from "@/shared/utils/countrys";
+import { z } from "zod";
 
 export const bookingSchema = z.object({
-  checkIn: z.coerce.date().min(1),
-  checkOut: z.coerce.date().min(1),
+  checkIn: z.coerce.date({ error: "Campo obrigatório" }).min(1),
+  checkOut: z.coerce.date({ error: "Campo obrigatório" }).min(1),
 
   notes: z.string().optional(),
 
-  guests: z.array(
-    z.object({
-      name: z.string().min(1),
-      cpf: z.string().length(11),
-      birthDate: z.string().optional(),
-      type: z.enum(["adult", "elderly", "child", "baby"]),
-    })
-  ).min(1),
+  guests: z
+    .array(
+      z.object({
+        name: z.string().min(1, { error: "Campo obrigatório" }),
+        cpf: z
+          .string({ error: "Campo obrigatório" })
+          .length(11, { error: "Mínimo de 11 caracteres" }),
+        birthDate: z.coerce.date({ error: "Campo obrigatório" }),
+        type: z.enum(["adult", "elderly", "child", "baby"]),
+      }),
+    )
+    .min(1),
 
   user: z.object({
-    name: z.string().min(1),
-    email: z.string().email(),
-    phoneNumber: z.string().min(8),
-    cpf: z.string().length(11),
+    name: z
+      .string({ error: "Campo obrigatório" })
+      .min(1, { error: "Campo obrigatório" }),
+    email: z
+      .string({ error: "Campo obrigatório" })
+      .email({ error: "Campo obrigatório" }),
+    phoneNumber: z.string({ error: "Campo obrigatório" }).min(8),
+    cpf: z
+      .string({ error: "Campo obrigatório" })
+      .length(11, { error: "Mínimo de 11 caracteres" }),
 
-    documentNumber: z.string().optional(),
-    documentType: z.string().optional(),
-    ufEmitter: z.string().optional(),
+    documentNumber: z.string({ error: "Campo obrigatório" }),
+    documentType: z.string({ error: "Campo obrigatório" }),
+    ufEmitter: z.string({ error: "Campo obrigatório" }),
 
-    cep: z.string().optional(),
-    street: z.string().optional(),
-    number: z.string().optional(),
-    complement: z.string().optional(),
-    neighborhood: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
+    cep: z.string({ error: "Campo obrigatório" }),
+    street: z.string({ error: "Campo obrigatório" }),
+    houseNumber: z.string({ error: "Campo obrigatório" }),
+    complement: z.string({ error: "Campo obrigatório" }),
+    neighborhood: z.string({ error: "Campo obrigatório" }),
+    city: z.string({ error: "Campo obrigatório" }),
+    state: z.string({ error: "Campo obrigatório" }),
 
-    birthDate: z.string().optional(),
+    birthDate: z.coerce.date({ error: "Campo obrigatório" }),
+    nacionality: z.string().refine((val) => Countrys.includes(val), {
+      error: "Nacionalidade inválida",
+    }),
   }),
-})
+});
 
 export type CreateBookInput = Omit<BookingSchema, "checkIn" | "checkOut"> & {
-  checkIn: Date
-  checkOut: Date
-}
+  checkIn: Date;
+  checkOut: Date;
+};
 
-
-export type BookingSchema = z.infer<typeof bookingSchema>
-
+export type BookingSchema = z.infer<typeof bookingSchema>;
 
 export const userFields = [
   ["name", "Nome completo"],
@@ -62,4 +74,4 @@ export const userFields = [
   ["city", "Cidade"],
   ["state", "Estado"],
   ["birthDate", "Data de nascimento", "date"],
-] as const
+] as const;

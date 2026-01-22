@@ -4,6 +4,7 @@ import { auth } from "@/features/auth/auth";
 import { headers } from "next/headers";
 import { db } from "../../../../prisma";
 import { BookingStatus } from "@/prisma/generated/prisma/enums";
+import { createCustomer } from "@/features/billing/actions/createCustomer";
 
 export async function createBook(values: {
   checkIn: Date;
@@ -23,6 +24,8 @@ export async function createBook(values: {
   if (!session) {
     return
   }
+
+  createCustomer()
 
   const booking = await db.booking.create({
     data: {
