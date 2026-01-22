@@ -8,7 +8,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select"
 import { toast } from "sonner"
 import { BookingSchema, bookingSchema } from "../schema/bookingSchema"
-import { ArrowLeft, ArrowRight, Baby, Ban, CreditCard, FileText, Trash, User, UserPlus } from "lucide-react"
+import { ArrowLeft, ArrowRight, Baby, Ban, Loader2, Trash, User, UserPlus, UserRoundMinus, UserRoundPlus } from "lucide-react"
 import { formatCPF, maskCPF } from "@/shared/utils/cpfValidator"
 import { Textarea } from "@/shared/components/ui/textarea"
 import { useZodForm } from "@/shared/hooks/useZodForm"
@@ -22,12 +22,14 @@ import Link from "next/link"
 import { authClient } from "@/features/auth/auth-client"
 import { Countrys } from "@/shared/utils/countrys"
 import { createCharge } from "@/features/billing/actions/createCharge"
+import { createCustomer } from "@/features/billing/actions/createCustomer"
 
 
 export default function BookingNow({ session }: { session: any }) {
     const [step, setStep] = useState(0);
     const [onSubmiting, setOnSubmitting] = useState(false)
-    
+    const [charge, setCharge] = useState<any>(null);
+
     const form = useZodForm(bookingSchema, {
         defaultValues: {
             checkIn: "",
@@ -54,7 +56,7 @@ export default function BookingNow({ session }: { session: any }) {
                 nacionality: session.user.nacionality ?? "Brasil",
                 cep: session.user.cep ?? "",
                 street: session.user.street ?? "",
-                number: session.user.number ?? "",
+                houseNumber: session.user.houseNumber ?? "",
                 complement: session.user.complement ?? "",
                 neighborhood: session.user.neighborhood ?? "",
                 city: session.user.city ?? "",
@@ -63,6 +65,13 @@ export default function BookingNow({ session }: { session: any }) {
             },
         },
     })
+
+    type AgeCount = {
+        adult: number
+        elderly: number
+        child: number
+        baby: number
+    }
 
     const stepFields: Record<number, FieldPath<BookingSchema>[]> = {
         0: [
@@ -87,6 +96,7 @@ export default function BookingNow({ session }: { session: any }) {
             "user.houseNumber",
         ],
     };
+
 
     async function nextStep() {
         let fields = stepFields[step] || [];
@@ -119,6 +129,41 @@ export default function BookingNow({ session }: { session: any }) {
         }),
     };
 
+    const ageConfig = {
+        adult: {
+            label: "Adultos",
+            icon: User,
+        },
+        elderly: {
+            label: "Idosos",
+            icon: UserRoundPlus,
+        },
+        child: {
+            label: "Crianças",
+            icon: UserRoundMinus,
+        },
+        baby: {
+            label: "Bebês",
+            icon: Baby,
+        },
+    }
+
+    const guests = form.watch("guests") ?? []
+
+    const ageCount: AgeCount = guests.reduce(
+        (acc: any, guest: any) => {
+            acc[guest.type]++
+            return acc
+        },
+        {
+            adult: 0,
+            elderly: 0,
+            child: 0,
+            baby: 0,
+        }
+    )
+
+
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "guests",
@@ -143,57 +188,55 @@ export default function BookingNow({ session }: { session: any }) {
     }, [watchCep, form]);
 
     async function onSubmit(data: BookingSchema) {
-        setOnSubmitting(true)
+        setOnSubmitting(true);
+
         try {
-            try {
-                const updateUser = await authClient.updateUser({
-                    name: data.user.name,
-                    phoneNumber: data.user.phoneNumber,
-                    cpf: data.user.cpf,
-                    documentNumber: data.user.documentNumber,
-                    documentType: data.user.documentType,
-                    ufEmitter: data.user.ufEmitter,
-                    cep: data.user.cep,
-                    street: data.user.street,
-                    houseNumber: data.user.houseNumber,
-                    complement: data.user.complement,
-                    neighborhood: data.user.neighborhood,
-                    city: data.user.city,
-                    state: data.user.state,
-                    birthDate: data.user.birthDate,
-                    nacionality: data.user.nacionality,
-                })
-                console.log('Update successful:', updateUser)
-            } catch (error) {
-                console.error('Update error details:', error)
-                // Isso deve mostrar qual campo específico está causando o problema
+            const updateUserRes = await authClient.updateUser({
+                name: data.user.name,
+                phoneNumber: data.user.phoneNumber,
+                cpf: data.user.cpf,
+                documentNumber: data.user.documentNumber,
+                documentType: data.user.documentType,
+                ufEmitter: data.user.ufEmitter,
+                cep: data.user.cep,
+                street: data.user.street,
+                houseNumber: data.user.houseNumber,
+                complement: data.user.complement,
+                neighborhood: data.user.neighborhood,
+                city: data.user.city,
+                state: data.user.state,
+                birthDate: data.user.birthDate,
+                nacionality: data.user.nacionality,
+            });
+
+            if (!updateUserRes) {
+                throw new Error("Falha ao atualizar usuário");
             }
 
             const processedData = {
                 ...data,
                 guests: data.guests
                     .filter(guest => guest.birthDate)
-                    .map(guest => ({
-                        ...guest,
-                    })),
-            }
+                    .map(guest => ({ ...guest })),
+            };
 
-            const value = 100
-            const createBookingRes = await createBook(processedData)
-            const createChargeRes = await createCharge(session.user.id, value)
+            const value = 100;
+            await createBook(processedData);
+            await createCustomer(session)
+            const createChargeRes = await createCharge(session.user.id, value);
+            setCharge(createChargeRes);
 
-            if (!createBookingRes || createChargeRes) {
-                toast.success("Reserva criada com sucesso!")
-                { nextStep }
-            }
+            nextStep();
+            toast.success("Reserva criada com sucesso!");
 
-        } catch (err) {
-            console.error(err)
-            toast.error("Erro ao criar reserva")
+        } catch (err: any) {
+            console.error("Erro no onSubmit:", err);
+            toast.error(err?.message || "Erro ao criar reserva");
         } finally {
-            setOnSubmitting(false)
+            setOnSubmitting(false);
         }
     }
+
 
     return (
         <Card className="w-full max-w-2xl mx-auto mb-10">
@@ -785,7 +828,7 @@ export default function BookingNow({ session }: { session: any }) {
                                     <Button className="w-full cursor-pointer flex items-center gap-x-2 rounded-full h-10"
                                         disabled={onSubmiting}
                                     >
-                                        Reservar
+                                        {onSubmiting ? <span className="flex gap-x-2 items-center"><Loader2 className="w-4 h-4 animate-spin" />Reservar</span> : "Reservar"}
                                     </Button>
                                 </div>
                             </motion.div>
@@ -843,12 +886,20 @@ export default function BookingNow({ session }: { session: any }) {
                                         <div className="flex items-center gap-x-5 text-sm">
                                             <span>
                                                 <p className="font-medium text-base">Check-in</p>
-                                                <p>27/08/2026</p>
+                                                <p>{new Date(form.watch("checkIn")).toLocaleDateString("pt-BR", {
+                                                    day: "2-digit",
+                                                    month: "2-digit",
+                                                    year: "numeric"
+                                                })}</p>
                                             </span>
                                             <span>-</span>
                                             <span>
                                                 <p className="font-medium text-base">Check-out</p>
-                                                <p>29/08/2026</p>
+                                                <p>{new Date(form.watch("checkOut")).toLocaleDateString("pt-BR", {
+                                                    day: "2-digit",
+                                                    month: "2-digit",
+                                                    year: "numeric"
+                                                })}</p>
                                             </span>
                                         </div>
                                         <div>
@@ -860,17 +911,39 @@ export default function BookingNow({ session }: { session: any }) {
                                         </div>
                                         <div>
                                             <h1 className="font-medium text-base">Hóspedes</h1>
-                                            <ul>
-                                                <li>Antonio Fereira Silva</li>
-                                                <li>Sandra Regina catizane Goes</li>
-                                                <li>Ravi</li>
+
+                                            <ul className="list-disc ml-5 space-y-1">
+                                                {form.watch("guests").length === 0 && (
+                                                    <li className="list-none text-muted-foreground">
+                                                        Nenhum hóspede adicionado
+                                                    </li>
+                                                )}
+
+                                                {form.watch("guests").map((guest: any, index: any) => (
+                                                    <li key={index}>
+                                                        {guest.name || `Hóspede ${index + 1}`}
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
+
                                         <div>
                                             <h1 className="font-medium text-base">Faixa etária</h1>
-                                            <ul>
-                                                <li className="flex items-center gap-x-2"><User size={14} /> 2x adultos</li>
-                                                <li className="flex items-center gap-x-2"><Baby size={14} /> 1x bebê</li>
+
+                                            <ul className="space-y-1">
+                                                {Object.entries(ageCount).map(([type, count]) => {
+                                                    if (count === 0) return null
+
+                                                    const Icon = ageConfig[type as keyof typeof ageConfig].icon
+                                                    const label = ageConfig[type as keyof typeof ageConfig].label
+
+                                                    return (
+                                                        <li key={type} className="flex items-center gap-x-2 text-sm">
+                                                            <Icon size={14} />
+                                                            {count}x {label}
+                                                        </li>
+                                                    )
+                                                })}
                                             </ul>
                                         </div>
                                         <hr className="border border-dashed" />
@@ -879,11 +952,16 @@ export default function BookingNow({ session }: { session: any }) {
                                     <p className="text-[10px] text-muted-foreground font-medium mt-2">*Caso não realize o pagamento em até 24h, a data da reserva será disponibilizada</p>
 
                                     <div>
-                                        <Link href={"invoiceUrl"}>
-                                            <Button className="text-white bg-blue-500 rounded-full w-full max-w-[300px] flex mx-auto mt-5">
-                                                Realizar pagamento
-                                            </Button>
-                                        </Link>
+                                        {charge?.invoiceUrl && (
+                                            <a href={charge.invoiceUrl} target="_blank" rel="noopener noreferrer">
+                                                <Button
+                                                    type="button"
+                                                    className="text-white bg-blue-500 rounded-full w-full max-w-[300px] flex mx-auto mt-5"
+                                                >
+                                                    Realizar pagamento
+                                                </Button>
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
 

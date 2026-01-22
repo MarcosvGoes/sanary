@@ -55,11 +55,11 @@ export const ModelName = {
   Notifications: 'Notifications',
   Payments: 'Payments',
   UserPaymentData: 'UserPaymentData',
+  Booking: 'Booking',
+  Guest: 'Guest',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification',
-  Booking: 'Booking',
-  Guest: 'Guest'
+  Verification: 'Verification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -157,6 +157,33 @@ export const UserPaymentDataScalarFieldEnum = {
 export type UserPaymentDataScalarFieldEnum = (typeof UserPaymentDataScalarFieldEnum)[keyof typeof UserPaymentDataScalarFieldEnum]
 
 
+export const BookingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  checkIn: 'checkIn',
+  checkOut: 'checkOut',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
+
+
+export const GuestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  cpf: 'cpf',
+  birthDate: 'birthDate',
+  type: 'type',
+  bookingId: 'bookingId',
+  createdAt: 'createdAt'
+} as const
+
+export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
+
+
 export const SessionScalarFieldEnum = {
   id: 'id',
   expiresAt: 'expiresAt',
@@ -165,8 +192,7 @@ export const SessionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  userId: 'userId',
-  impersonatedBy: 'impersonatedBy'
+  userId: 'userId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -201,33 +227,6 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
-
-
-export const BookingScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  checkIn: 'checkIn',
-  checkOut: 'checkOut',
-  notes: 'notes',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
-
-
-export const GuestScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  cpf: 'cpf',
-  birthDate: 'birthDate',
-  type: 'type',
-  bookingId: 'bookingId',
-  createdAt: 'createdAt'
-} as const
-
-export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
 
 
 export const SortOrder = {

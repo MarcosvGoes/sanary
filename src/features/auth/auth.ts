@@ -25,10 +25,6 @@ export const auth = betterAuth({
         type: "string",
         required: false,
       },
-      email: {
-        type: "string",
-        required: true,
-      },
       cpf: {
         type: "string",
         required: false,

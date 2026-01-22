@@ -38,6 +38,16 @@ export type Payments = Prisma.PaymentsModel
  */
 export type UserPaymentData = Prisma.UserPaymentDataModel
 /**
+ * Model Booking
+ * 
+ */
+export type Booking = Prisma.BookingModel
+/**
+ * Model Guest
+ * 
+ */
+export type Guest = Prisma.GuestModel
+/**
  * Model Session
  * 
  */
@@ -52,13 +62,3 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
-/**
- * Model Booking
- * 
- */
-export type Booking = Prisma.BookingModel
-/**
- * Model Guest
- * 
- */
-export type Guest = Prisma.GuestModel

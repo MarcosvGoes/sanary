@@ -19,10 +19,6 @@ export async function createCharge(userId: string, value: number) {
     select: { customerId: true },
   });
 
-  if (paymentData?.customerId) {
-    return { id: paymentData.customerId };
-  }
-
   const user = await db.user.findUnique({
     where: { id: userId },
   });
@@ -39,12 +35,12 @@ export async function createCharge(userId: string, value: number) {
     description: "Pousada Riviera Sanary",
   };
 
-  const response = await fetch(`${asaasBaseUrl}/v3/customers`, {
+  const response = await fetch(`${asaasBaseUrl}/v3/payments`, {
     method: "POST",
     headers: {
-      accept: "appliction/json",
+      accept: "application/json",
       "Content-Type": "application/json",
-      access_token: `${process.env.ASAAS_API_KEY}`,
+      access_token: `$${process.env.ASAAS_API_KEY}`,
     },
     body: JSON.stringify(body),
   });

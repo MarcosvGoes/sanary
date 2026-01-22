@@ -2,14 +2,8 @@
 
 import { asaasBaseUrl } from "@/shared/utils/basesUrl";
 import { db } from "../../../../prisma";
-import { auth } from "@/features/auth/auth";
-import { headers } from "next/headers";
 
-export async function createCustomer() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
+export async function createCustomer(session: any) {
   if (!session?.user?.id) {
     throw new Error("Usuário não autenticado");
   }
@@ -17,7 +11,7 @@ export async function createCustomer() {
   const asaasHeaders = {
     accept: "application/json",
     "content-type": "application/json",
-    access_token: `$${process.env.ASAAS_API_KEY || ""}`,
+    access_token: `$${process.env.ASAAS_API_KEY ?? ""}`,
   };
 
   const userId = session.user.id;
@@ -35,13 +29,19 @@ export async function createCustomer() {
     where: { id: userId },
   });
 
-  if (!user?.cpf || !user.name) {
-    throw new Error("Dados insuficientes para registrar cliente");
+  if (!user) {
+    throw new Error("Usuário não encontrado");
   }
 
   const body = {
     name: user.name,
     cpfCnpj: user.cpf,
+    mobilePhone: user.phoneNumber,
+    address: user.street,
+    addressNumber: user.houseNumber,
+    complement: user.complement ?? "",
+    province: user.neighborhood,
+    postalCode: user.cep,
     notificationDisabled: true,
   };
 
