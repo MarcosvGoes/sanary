@@ -6,6 +6,10 @@ import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Card } from "@/shared/components/ui/card"
 import { Button } from "@/shared/components/ui/button"
+import { Spinner } from "@/shared/components/ui/spinner"
+import { Guest, GuestType } from "@/prisma/generated/prisma/client"
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/components/ui/popover"
+import { EllipsisVertical } from "lucide-react"
 
 /* =======================
    TIPOS
@@ -18,7 +22,7 @@ type Booking = {
   status: BookingStatus
   checkIn: string
   checkOut: string
-  guests: any[]
+  guests: Guest[]
 }
 
 type BookingAction = {
@@ -67,10 +71,40 @@ const bookingStatusConfig: Record<
   },
 }
 
+const guestTypeLabel: Record<GuestType, string> = {
+  adult: "Adulto",
+  child: "Criança",
+  elderly: "Idoso",
+  baby: "Bebê",
+}
+
+function getGuestSummary(guests: Guest[]) {
+  const countMap = guests.reduce<Record<GuestType, number>>(
+    (acc, guest) => {
+      acc[guest.type]++
+      return acc
+    },
+    {
+      adult: 0,
+      child: 0,
+      elderly: 0,
+      baby: 0,
+    }
+  )
+
+  return Object.entries(countMap)
+    .filter(([, count]) => count > 0)
+    .map(
+      ([type, count]) =>
+        `${count}x ${guestTypeLabel[type as GuestType]}${count > 1 ? "s" : ""}`
+    )
+    .join(", ")
+}
+
 const bookingActionsMap: Record<BookingStatus, BookingAction[]> = {
   PENDING: [
     {
-      label: "Confirmar pagamento",
+      label: "Realizar pagamento",
       onClick: () => console.log("confirmar pagamento"),
     },
     {
@@ -122,7 +156,7 @@ export default function MyBookings({ session }: { session: any }) {
     load()
   }, [])
 
-  if (loading) return <p>Carregando reservas...</p>
+  if (loading) return <p><Spinner className="size-10 flex mx-auto w-full my-10" /></p>
 
   if (bookings.length === 0) {
     return <p className="text-muted-foreground">Você ainda não possui reservas.</p>
@@ -137,9 +171,30 @@ export default function MyBookings({ session }: { session: any }) {
         return (
           <Card
             key={booking.id}
-            className="border rounded-xl px-5 py-3 gap-3 bg-white shadow-sm"
+            className="border rounded-xl p-5 gap-3 bg-white shadow-sm"
           >
-            <span className="text-[10px]">Id da reserva: {booking.id}</span>
+            <div className="flex items-center justify-between">
+              <span className="text-[10px]">Id da reserva: {booking.id}</span>
+              <Popover>
+                <PopoverTrigger>
+                  <EllipsisVertical size={16} />
+                </PopoverTrigger>
+                <PopoverContent>
+                  {actions.map((action: BookingAction, index: number) => (
+                    <Button
+                      key={index}
+                      size="sm"
+                      className="rounded-full text-sm"
+                      variant={action.variant ?? "default"}
+                      disabled={action.disabled}
+                      onClick={action.onClick}
+                    >
+                      {action.label}
+                    </Button>
+                  ))}
+                </PopoverContent>
+              </Popover>
+            </div>
 
             <div className={`flex items-center gap-x-2 font-medium ${statusConfig.text}`}>
               <span
@@ -167,22 +222,24 @@ export default function MyBookings({ session }: { session: any }) {
               </span>
             </div>
 
-            <span>Hóspedes: {booking.guests.length}</span>
+            <div className="text-sm space-y-1 grid">
+              <span className="font-semibold text-base">
+                Hóspedes
+              </span>
+              <span className="font-medium">
+                {getGuestSummary(booking.guests)}
+              </span>
 
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              {actions.map((action: BookingAction, index: number) => (
-                <Button
-                  key={index}
-                  size="sm"
-                  className="rounded-full text-sm"
-                  variant={action.variant ?? "default"}
-                  disabled={action.disabled}
-                  onClick={action.onClick}
-                >
-                  {action.label}
-                </Button>
-              ))}
+              <div className="text-muted-foreground flex flex-col text-sm">
+                {booking.guests.map((guest) => (
+                  <span key={guest.id}>
+                    {guest.name}
+                  </span>
+                ))}
+              </div>
+
             </div>
+
           </Card>
         )
       })}
