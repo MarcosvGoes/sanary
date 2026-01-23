@@ -5,15 +5,9 @@ import { getBooks } from "@/features/booking/actions/getBooks"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Card } from "@/shared/components/ui/card"
-import { Button } from "@/shared/components/ui/button"
 import { Spinner } from "@/shared/components/ui/spinner"
 import { Guest, GuestType } from "@/prisma/generated/prisma/client"
-import { Popover, PopoverContent, PopoverTrigger } from "@/shared/components/ui/popover"
-import { EllipsisVertical } from "lucide-react"
-
-/* =======================
-   TIPOS
-======================= */
+import { redirect } from "next/navigation"
 
 type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED"
 
@@ -24,17 +18,6 @@ type Booking = {
   checkOut: string
   guests: Guest[]
 }
-
-type BookingAction = {
-  label: string
-  variant?: "default" | "outline" | "destructive"
-  disabled?: boolean
-  onClick?: () => void
-}
-
-/* =======================
-   CONFIGS
-======================= */
 
 const bookingStatusConfig: Record<
   BookingStatus,
@@ -124,8 +107,10 @@ export default function MyBookings({ session }: { session: any }) {
   if (loading) return <p><Spinner className="size-10 flex mx-auto w-full my-10" /></p>
 
   if (bookings.length === 0) {
-    return <p className="text-muted-foreground">Você ainda não possui reservas.</p>
+    return <p className="text-muted-foreground text-center my-5">Você ainda não possui reservas.</p>
   }
+
+  if (!session) redirect("/")
 
   return (
     <div className="space-y-4 pb-4 px-0">
@@ -135,7 +120,7 @@ export default function MyBookings({ session }: { session: any }) {
         return (
           <Card
             key={booking.id}
-            className="border rounded-xl p-5 gap-3 max-w-[500px] min-w-[300px] md:mx-auto bg-white shadow-sm"
+            className="border rounded-xl p-5 gap-3 max-w-[500px] min-w-[350px] md:mx-auto bg-white shadow-sm"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px]">Id da reserva: {booking.id}</span>

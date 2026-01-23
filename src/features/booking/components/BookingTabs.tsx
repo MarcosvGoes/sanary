@@ -16,11 +16,11 @@ export default function BookingTabs({ session }: { session: any }) {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="bookingNow">
+      <TabsContent className="max-w-[95%] mx-auto" value="bookingNow">
         <BookingNow session={session} />
       </TabsContent>
 
-      <TabsContent value="myBookings">
+      <TabsContent className="max-w-[95%] mx-auto" value="myBookings">
         <MyBookings session={session} />
       </TabsContent>
     </Tabs>
