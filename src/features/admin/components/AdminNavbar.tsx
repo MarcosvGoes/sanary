@@ -16,13 +16,7 @@ export default function AdminNavbar() {
                     </Link>
                 </li>
                 <li>
-                    <Link href={"/guests"} className={`flex flex-col items-center text-sm ${pathname === "/guests" ? 'text-blue-600' : ""}`}>
-                        <Users size={18} />
-                        Hóspedes
-                    </Link>
-                </li>
-                <li>
-                    <Link href={"/admin-rooms"} className={`flex flex-col items-center text-sm ${pathname === "/guests" ? 'text-blue-600' : ""}`}>
+                    <Link href={"/admin-rooms"} className={`flex flex-col items-center text-sm ${pathname === "/admin-rooms" ? 'text-blue-600' : ""}`}>
                         <BedDouble size={18} />
                         Quartos
                     </Link>
