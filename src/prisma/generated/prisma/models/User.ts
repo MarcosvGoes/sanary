@@ -319,7 +319,6 @@ export type UserWhereInput = {
   houseNumber?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
-  notifications?: Prisma.NotificationsListRelationFilter
   bookings?: Prisma.BookingListRelationFilter
   paymentData?: Prisma.XOR<Prisma.UserPaymentDataNullableScalarRelationFilter, Prisma.UserPaymentDataWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
@@ -349,7 +348,6 @@ export type UserOrderByWithRelationInput = {
   houseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
-  notifications?: Prisma.NotificationsOrderByRelationAggregateInput
   bookings?: Prisma.BookingOrderByRelationAggregateInput
   paymentData?: Prisma.UserPaymentDataOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
@@ -382,7 +380,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   houseNumber?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
-  notifications?: Prisma.NotificationsListRelationFilter
   bookings?: Prisma.BookingListRelationFilter
   paymentData?: Prisma.XOR<Prisma.UserPaymentDataNullableScalarRelationFilter, Prisma.UserPaymentDataWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
@@ -468,7 +465,6 @@ export type UserCreateInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
@@ -498,7 +494,6 @@ export type UserUncheckedCreateInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
@@ -528,7 +523,6 @@ export type UserUpdateInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
@@ -558,7 +552,6 @@ export type UserUncheckedUpdateInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -739,20 +732,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type UserCreateNestedOneWithoutNotificationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
-  upsert?: Prisma.UserUpsertWithoutNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-}
-
 export type UserCreateNestedOneWithoutPaymentDataInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentDataInput, Prisma.UserUncheckedCreateWithoutPaymentDataInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentDataInput
@@ -809,138 +788,6 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
-export type UserCreateWithoutNotificationsInput = {
-  id?: string
-  name: string
-  email: string
-  emailVerified: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  phoneNumber?: string | null
-  cpf?: string | null
-  documentNumber?: string | null
-  documentType?: string | null
-  ufEmitter?: string | null
-  cep?: string | null
-  street?: string | null
-  number?: string | null
-  nacionality?: string | null
-  complement?: string | null
-  neighborhood?: string | null
-  city?: string | null
-  state?: string | null
-  houseNumber?: string | null
-  birthDate?: Date | string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
-  paymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutNotificationsInput = {
-  id?: string
-  name: string
-  email: string
-  emailVerified: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  phoneNumber?: string | null
-  cpf?: string | null
-  documentNumber?: string | null
-  documentType?: string | null
-  ufEmitter?: string | null
-  cep?: string | null
-  street?: string | null
-  number?: string | null
-  nacionality?: string | null
-  complement?: string | null
-  neighborhood?: string | null
-  city?: string | null
-  state?: string | null
-  houseNumber?: string | null
-  birthDate?: Date | string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
-  paymentData?: Prisma.UserPaymentDataUncheckedCreateNestedOneWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutNotificationsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-}
-
-export type UserUpsertWithoutNotificationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-}
-
-export type UserUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ufEmitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
-  paymentData?: Prisma.UserPaymentDataUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ufEmitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nacionality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  complement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
-  paymentData?: Prisma.UserPaymentDataUncheckedUpdateOneWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-}
-
 export type UserCreateWithoutPaymentDataInput = {
   id?: string
   name: string
@@ -965,7 +812,6 @@ export type UserCreateWithoutPaymentDataInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
@@ -994,7 +840,6 @@ export type UserUncheckedCreateWithoutPaymentDataInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1039,7 +884,6 @@ export type UserUpdateWithoutPaymentDataInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
@@ -1068,7 +912,6 @@ export type UserUncheckedUpdateWithoutPaymentDataInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1097,7 +940,6 @@ export type UserCreateWithoutBookingsInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
@@ -1126,7 +968,6 @@ export type UserUncheckedCreateWithoutBookingsInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1171,7 +1012,6 @@ export type UserUpdateWithoutBookingsInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
@@ -1200,7 +1040,6 @@ export type UserUncheckedUpdateWithoutBookingsInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1229,7 +1068,6 @@ export type UserCreateWithoutSessionsInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutUserInput
 }
@@ -1258,7 +1096,6 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   houseNumber?: string | null
   birthDate?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataUncheckedCreateNestedOneWithoutUserInput
 }
@@ -1303,7 +1140,6 @@ export type UserUpdateWithoutSessionsInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUpdateOneWithoutUserNestedInput
 }
@@ -1332,7 +1168,6 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -1360,7 +1195,6 @@ export type UserCreateWithoutAccountsInput = {
   state?: string | null
   houseNumber?: string | null
   birthDate?: Date | string | null
-  notifications?: Prisma.NotificationsCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
@@ -1389,7 +1223,6 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   state?: string | null
   houseNumber?: string | null
   birthDate?: Date | string | null
-  notifications?: Prisma.NotificationsUncheckedCreateNestedManyWithoutUserInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   paymentData?: Prisma.UserPaymentDataUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
@@ -1434,7 +1267,6 @@ export type UserUpdateWithoutAccountsInput = {
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  notifications?: Prisma.NotificationsUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
@@ -1463,7 +1295,6 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  notifications?: Prisma.NotificationsUncheckedUpdateManyWithoutUserNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   paymentData?: Prisma.UserPaymentDataUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -1476,14 +1307,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 
 export type UserCountOutputType = {
   accounts: number
-  notifications: number
   bookings: number
   sessions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   bookings?: boolean | UserCountOutputTypeCountBookingsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
 }
@@ -1503,13 +1332,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AccountWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationsWhereInput
 }
 
 /**
@@ -1551,7 +1373,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   houseNumber?: boolean
   birthDate?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   bookings?: boolean | Prisma.User$bookingsArgs<ExtArgs>
   paymentData?: boolean | Prisma.User$paymentDataArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1636,7 +1457,6 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "phoneNumber" | "cpf" | "documentNumber" | "documentType" | "ufEmitter" | "cep" | "street" | "number" | "nacionality" | "complement" | "neighborhood" | "city" | "state" | "houseNumber" | "birthDate", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   bookings?: boolean | Prisma.User$bookingsArgs<ExtArgs>
   paymentData?: boolean | Prisma.User$paymentDataArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1649,7 +1469,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
-    notifications: Prisma.$NotificationsPayload<ExtArgs>[]
     bookings: Prisma.$BookingPayload<ExtArgs>[]
     paymentData: Prisma.$UserPaymentDataPayload<ExtArgs> | null
     sessions: Prisma.$SessionPayload<ExtArgs>[]
@@ -2072,7 +1891,6 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bookings<T extends Prisma.User$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paymentData<T extends Prisma.User$paymentDataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentDataArgs<ExtArgs>>): Prisma.Prisma__UserPaymentDataClient<runtime.Types.Result.GetResult<Prisma.$UserPaymentDataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2536,30 +2354,6 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
-}
-
-/**
- * User.notifications
- */
-export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Notifications
-   */
-  select?: Prisma.NotificationsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Notifications
-   */
-  omit?: Prisma.NotificationsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NotificationsInclude<ExtArgs> | null
-  where?: Prisma.NotificationsWhereInput
-  orderBy?: Prisma.NotificationsOrderByWithRelationInput | Prisma.NotificationsOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationsWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationsScalarFieldEnum | Prisma.NotificationsScalarFieldEnum[]
 }
 
 /**

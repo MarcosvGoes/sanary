@@ -9,22 +9,22 @@ datasource db {
 }
 
 model User {
-    id             String          @id @default(uuid())
+    id             String           @id @default(uuid())
     name           String
-    email          String          @unique
+    email          String           @unique
     emailVerified  Boolean
     image          String?
-    createdAt      DateTime        @default(now())
-    updatedAt      DateTime        @updatedAt
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
     phoneNumber    String?
-    cpf            String?         @unique
+    cpf            String?          @unique
     documentNumber String?
     documentType   String?
     ufEmitter      String?
     cep            String?
     street         String?
     number         String?
-    nacionality          String?
+    nacionality    String?
     complement     String?
     neighborhood   String?
     city           String?
@@ -33,8 +33,8 @@ model User {
     birthDate      DateTime?
     accounts       Account[]
     bookings       Booking[]
-    paymentData UserPaymentData? @relation("UserPaymentData")
-    sessions    Session[]
+    paymentData    UserPaymentData? @relation("UserPaymentData")
+    sessions       Session[]
 
     @@map("user")
 }
@@ -58,6 +58,7 @@ model Payments {
     invoiceId             String?          @unique
     invoiceStatus         String?
     userPaymentData       UserPaymentData? @relation(fields: [userPaymentDataId], references: [id])
+
     @@map("payments")
 }
 
@@ -73,6 +74,7 @@ model UserPaymentData {
     updatedAt       DateTime   @updatedAt
     user            User       @relation("UserPaymentData", fields: [userId], references: [id], onDelete: Cascade)
     Payments        Payments[]
+
     @@map("userPaymentData")
 }
 
@@ -81,6 +83,9 @@ model Booking {
 
     userId String
     user   User   @relation(fields: [userId], references: [id])
+
+    roomId String
+    room   Room   @relation(fields: [roomId], references: [id])
 
     checkIn  DateTime
     checkOut DateTime
@@ -94,6 +99,7 @@ model Booking {
     updatedAt DateTime @updatedAt
 
     @@index([userId])
+    @@index([roomId])
     @@map("booking")
 }
 
@@ -109,57 +115,75 @@ model Guest {
     bookingId String
 
     createdAt DateTime @default(now())
+
     @@map("guest")
 }
 
-model Session {
-  id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Room {
+    id          String  @id @default(cuid())
+    title       String
+    description String?
 
-  @@unique([token])
-  @@index([userId])
-  @@map("session")
+    price    Float
+    capacity Int
+
+    images RoomImage[]
+
+    bookings Booking[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("room")
+}
+
+model Session {
+    id        String   @id
+    expiresAt DateTime
+    token     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    ipAddress String?
+    userAgent String?
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([token])
+    @@index([userId])
+    @@map("session")
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+    id                    String    @id
+    accountId             String
+    providerId            String
+    userId                String
+    user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    accessToken           String?
+    refreshToken          String?
+    idToken               String?
+    accessTokenExpiresAt  DateTime?
+    refreshTokenExpiresAt DateTime?
+    scope                 String?
+    password              String?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
 
-  @@index([userId])
-  @@map("account")
+    @@index([userId])
+    @@map("account")
 }
 
 model Verification {
-  id         String   @id
-  identifier String
-  value      String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+    id         String   @id
+    identifier String
+    value      String
+    expiresAt  DateTime
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 
-  @@index([identifier])
-  @@map("verification")
+    @@index([identifier])
+    @@map("verification")
 }
-
 
 enum GuestType {
     adult
@@ -172,4 +196,14 @@ enum BookingStatus {
     PENDING
     CONFIRMED
     CANCELED
+}
+
+model RoomImage {
+    id  String @id @default(cuid())
+    url String
+
+    roomId String
+    room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+    @@map("room_image")
 }

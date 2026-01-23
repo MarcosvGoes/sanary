@@ -2,6 +2,7 @@ import { Cinzel, Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "@/shared/components/Footer/Footer";
 import Navbar from "@/shared/components/Navbar/Navbar";
+import { Toaster } from "sonner";
 
 const getPoppins = Poppins({
   subsets: ["latin"],
@@ -37,10 +38,26 @@ export default function RootLayout({
         className={`${getPoppins.variable} antialiased`}
       >
         <Navbar />
-        <div className="pt-[73.52px] md:pt-[70px]">
+        <div className="pt-[62px] md:pt-[70px]">
           {children}
         </div>
         <Footer />
+        <Toaster
+            position="top-right"
+            duration={4000}
+            visibleToasts={3}
+            toastOptions={{
+              unstyled: true,
+              classNames: {
+                toast:
+                  "group toast h-15 w-full flex gap-x-3 items-center bg-background rounded-xs p-4 pr-6 shadow-lg",
+                title: "font-semibold text-sm",
+                description: "text-xs opacity-80",
+                success: "bg-card/90 text-accent-foreground",
+                error: "bg-card/90 text-accent-foreground",
+              },
+            }}
+          />
       </body>
     </html>
   );

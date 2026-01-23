@@ -52,14 +52,15 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Notifications: 'Notifications',
   Payments: 'Payments',
   UserPaymentData: 'UserPaymentData',
   Booking: 'Booking',
   Guest: 'Guest',
+  Room: 'Room',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  RoomImage: 'RoomImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -106,19 +107,6 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const NotificationsScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  title: 'title',
-  description: 'description',
-  readAt: 'readAt',
-  createdAt: 'createdAt',
-  redirectUrl: 'redirectUrl'
-} as const
-
-export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
-
-
 export const PaymentsScalarFieldEnum = {
   id: 'id',
   paymentId: 'paymentId',
@@ -160,6 +148,7 @@ export type UserPaymentDataScalarFieldEnum = (typeof UserPaymentDataScalarFieldE
 export const BookingScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  roomId: 'roomId',
   checkIn: 'checkIn',
   checkOut: 'checkOut',
   notes: 'notes',
@@ -182,6 +171,19 @@ export const GuestScalarFieldEnum = {
 } as const
 
 export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
+
+
+export const RoomScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  price: 'price',
+  capacity: 'capacity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {
@@ -227,6 +229,15 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const RoomImageScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  roomId: 'roomId'
+} as const
+
+export type RoomImageScalarFieldEnum = (typeof RoomImageScalarFieldEnum)[keyof typeof RoomImageScalarFieldEnum]
 
 
 export const SortOrder = {

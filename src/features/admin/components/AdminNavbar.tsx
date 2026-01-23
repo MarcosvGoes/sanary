@@ -1,6 +1,6 @@
 "use client"
 
-import { BookMarked, Users } from "lucide-react";
+import { BedDouble, BookMarked, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,6 +19,12 @@ export default function AdminNavbar() {
                     <Link href={"/guests"} className={`flex flex-col items-center text-sm ${pathname === "/guests" ? 'text-blue-600' : ""}`}>
                         <Users size={18} />
                         Hóspedes
+                    </Link>
+                </li>
+                <li>
+                    <Link href={"/admin-rooms"} className={`flex flex-col items-center text-sm ${pathname === "/guests" ? 'text-blue-600' : ""}`}>
+                        <BedDouble size={18} />
+                        Quartos
                     </Link>
                 </li>
             </ul>

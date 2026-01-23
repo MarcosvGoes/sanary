@@ -9,12 +9,13 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/Notifications'
 export type * from './models/Payments'
 export type * from './models/UserPaymentData'
 export type * from './models/Booking'
 export type * from './models/Guest'
+export type * from './models/Room'
 export type * from './models/Session'
 export type * from './models/Account'
 export type * from './models/Verification'
+export type * from './models/RoomImage'
 export type * from './commonInputTypes'

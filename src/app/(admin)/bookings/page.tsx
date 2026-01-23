@@ -1,32 +1,85 @@
+
 import { getAllBookings } from "@/features/admin/actions/getAllBookings"
+import CancelBookingButton from "@/features/admin/components/CancelBookingButton"
+import { Button } from "@/shared/components/ui/button"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/components/ui/dialog"
 import { formatCPF } from "@/shared/utils/cpfValidator"
 import { formatAndMaskPhoneNumber } from "@/shared/utils/formatAndMaskPhoneNumber"
 import { formatCep } from "@/shared/utils/formatCEP"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Mail, SquareArrowOutUpRight } from "lucide-react"
+import { Mail } from "lucide-react"
 import Image from "next/image"
+
+type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED"
+
+const bookingStatusConfig: Record<
+  BookingStatus,
+  {
+    label: string
+    dot: string
+    border: string
+    text: string
+  }
+> = {
+  PENDING: {
+    label: "Pagamento pendente",
+    dot: "bg-orange-500",
+    border: "border-orange-300",
+    text: "text-orange-600",
+  },
+  CONFIRMED: {
+    label: "Reserva confirmada",
+    dot: "bg-green-600",
+    border: "border-green-300",
+    text: "text-green-600",
+  },
+  CANCELED: {
+    label: "Reserva cancelada",
+    dot: "bg-red-600",
+    border: "border-red-300",
+    text: "text-red-600",
+  },
+  REFUNDED: {
+    label: "Pagamento reembolsado",
+    dot: "bg-blue-600",
+    border: "border-blue-300",
+    text: "text-blue-600",
+  },
+}
+
 
 export default async function Bookings() {
   const bookings = await getAllBookings()
-
   return (
-    <div className="max-w-7xl mx-auto px-6 space-y-6">
-      <h1 className="text-2xl font-semibold">Todas as reservas</h1>
+    <div className="max-w-7xl mx-auto px-6 md:py-10 space-y-6">
+      <h1 className="text-2xl font-semibold text-center">Todas as reservas</h1>
 
       {bookings.map((booking) => (
         <div
           key={booking.id}
-          className="border rounded-xl p-5 bg-white shadow-sm space-y-4"
+          className={`border ${booking.status === "CANCELED" ? "border-destructive" : ""} max-w-[500px] md:mx-auto rounded-xl p-5 bg-white shadow-sm space-y-4`}
         >
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">
-              Reserva ID: {booking.id}
+          <div>
+            <span className="text-muted-foreground text-xs">
+              ID: {booking.id}
             </span>
-            <span className="font-medium">
-              Status: {booking.status}
-            </span>
+
+            <div
+              className={`flex items-center gap-x-2 font-medium ${bookingStatusConfig[booking.status].text}`}
+            >
+              <span
+                className={`
+        w-2.5 h-2.5 rounded-full
+        border-2 text-xs
+        ${bookingStatusConfig[booking.status].dot}
+        ${bookingStatusConfig[booking.status].border}
+      `}
+              />
+              <span>{bookingStatusConfig[booking.status].label}</span>
+            </div>
           </div>
+
 
           <div className="flex gap-x-6 text-sm">
             <span>
@@ -44,7 +97,6 @@ export default async function Bookings() {
             <p className="font-semibold text-lg">Usuário responsável</p>
 
             <p>Nome: {booking.user.name}</p>
-            <p>Email: {booking.user.email}</p>
 
             {booking.user.email && (
               <div className="flex items-center justify-between">
@@ -53,9 +105,8 @@ export default async function Bookings() {
                 <a
                   target="_blank"
                   href={`mailto:${booking.user.email}`}
-                  className="p-1"
                 >
-                  <Mail size={20} />
+                  <Mail size={16} strokeWidth={3} className="mr-0.5 text-blue-600" />
                 </a>
               </div>
             )}
@@ -63,7 +114,7 @@ export default async function Bookings() {
             {booking.user.phoneNumber && (
               <div className="flex items-center justify-between">
                 <p>Telefone: {formatAndMaskPhoneNumber(booking.user.phoneNumber)}</p>
-                <a target="_blank" href={`https://wa.me/${booking.user.phoneNumber}`}><Image src={"/assets/icones/whatsapp.svg"} width={20} height={20} alt={"whatsapp icon"} /></a>
+                <a target="_blanl" href={`https://wa.me/${booking.user.phoneNumber}`}><Image src={"/assets/icones/whatsapp.svg"} width={20} height={20} alt={"whatsapp icon"} /></a>
               </div>
             )}
 
@@ -227,6 +278,41 @@ export default async function Bookings() {
                 )}
               </>
             )}
+          </div>
+
+          <div>
+            {booking.status !== "CANCELED" ? (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="mt-2 w-full cursor-pointer">
+                    Cancelar reserva
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>
+                      Deseja realmente cancelar a reserva ?
+                    </DialogTitle>
+                    <DialogDescription>
+                      Esta ação é irreversível, após o cancelamento o usúario deverá reservar novamente.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid grid-cols-2 gap-3">
+                    <DialogClose asChild>
+                      <Button className="cursor-pointer" variant={"outline"}>
+                        Sair
+                      </Button>
+                    </DialogClose>
+                    <CancelBookingButton bookingId={booking.id} />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            )
+              :
+              <Button className="mt-2 w-full" disabled variant={"destructive"}>
+                Reserva cancelada
+              </Button>
+            }
           </div>
         </div>
       ))}

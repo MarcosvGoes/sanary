@@ -101,41 +101,6 @@ function getGuestSummary(guests: Guest[]) {
     .join(", ")
 }
 
-const bookingActionsMap: Record<BookingStatus, BookingAction[]> = {
-  PENDING: [
-    {
-      label: "Realizar pagamento",
-      onClick: () => console.log("confirmar pagamento"),
-    },
-    {
-      label: "Cancelar reserva",
-      variant: "destructive",
-      onClick: () => console.log("cancelar"),
-    },
-  ],
-
-  CONFIRMED: [
-    {
-      label: "Editar reserva",
-      variant: "outline",
-      onClick: () => console.log("editar"),
-    },
-    {
-      label: "Reembolsar",
-      variant: "destructive",
-      onClick: () => console.log("reembolsar"),
-    },
-  ],
-
-  REFUNDED: [
-    {
-      label: "Reembolsado",
-      disabled: true,
-    },
-  ],
-
-  CANCELED: [],
-}
 
 export default function MyBookings({ session }: { session: any }) {
   const [bookings, setBookings] = useState<Booking[]>([])
@@ -163,37 +128,17 @@ export default function MyBookings({ session }: { session: any }) {
   }
 
   return (
-    <div className="space-y-4 pb-4">
+    <div className="space-y-4 pb-4 px-0">
       {bookings.map((booking) => {
         const statusConfig = bookingStatusConfig[booking.status]
-        const actions = bookingActionsMap[booking.status]
 
         return (
           <Card
             key={booking.id}
-            className="border rounded-xl p-5 gap-3 bg-white shadow-sm"
+            className="border rounded-xl p-5 gap-3 max-w-[500px] md:mx-auto bg-white shadow-sm"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px]">Id da reserva: {booking.id}</span>
-              <Popover>
-                <PopoverTrigger>
-                  <EllipsisVertical size={16} />
-                </PopoverTrigger>
-                <PopoverContent>
-                  {actions.map((action: BookingAction, index: number) => (
-                    <Button
-                      key={index}
-                      size="sm"
-                      className="rounded-full text-sm"
-                      variant={action.variant ?? "default"}
-                      disabled={action.disabled}
-                      onClick={action.onClick}
-                    >
-                      {action.label}
-                    </Button>
-                  ))}
-                </PopoverContent>
-              </Popover>
             </div>
 
             <div className={`flex items-center gap-x-2 font-medium ${statusConfig.text}`}>

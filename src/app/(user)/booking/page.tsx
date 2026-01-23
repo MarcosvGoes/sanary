@@ -7,13 +7,11 @@ export default async function Booking() {
     headers: await headers(),
   })
 
-  /*if (!session) {
+  if (!session) {
     throw new Error("Unauthorized")
-  }*/
+  }
 
   return (
-    <div className="max-w-[95%] mx-auto">
-      <BookingTabs session={session} />
-    </div>
+    <BookingTabs session={session} />
   )
 }

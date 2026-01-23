@@ -73,26 +73,6 @@ export function TourismCarousel() {
                         </div>
                     </div>
                 </div>
-
-                <div className="min-w-full flex-shrink-0">
-                    <div className="relative h-[40vh] md:h-[60vh]">
-                        <Image
-                            fill
-                            src="/assets/images/tourism-3.webp"
-                            alt="Quarto com vista para o mar"
-                            className="w-full h-full object-cover object-[50%_25%]"
-                        />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <div className="text-center text-white flex flex-col justify-between h-full py-5">
-                                <h2 className="text-2xl md:text-4xl font-semibold">
-                                    Maior buda da América Latina
-                                </h2>
-                                <p className="text-xs">O maior Buda da América Latina é o Buda Gigante de Ibiraçu, no Espírito Santo, com 35 metros de altura,<br />localizado no Mosteiro Zen Morro da Vargem.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     )

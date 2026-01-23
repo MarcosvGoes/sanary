@@ -7,7 +7,7 @@ import MyBookings from "./MyBookings"
 export default function BookingTabs({ session }: { session: any }) {
   return (
     <Tabs defaultValue="bookingNow">
-      <TabsList className="grid grid-cols-2 font-medium my-4 md:my-6 w-full">
+      <TabsList className="grid grid-cols-2 font-medium mb-4 md:mb-6 w-full rounded-none border-b  shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
         <TabsTrigger value="bookingNow" className="shadow-none data-[state=active]:text-blue-500 md:text-xl lg:text-2xl cursor-pointer">
           Reserve agora
         </TabsTrigger>
@@ -16,11 +16,11 @@ export default function BookingTabs({ session }: { session: any }) {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="bookingNow">
+      <TabsContent className="max-w-[95%] mx-auto" value="bookingNow">
         <BookingNow session={session} />
       </TabsContent>
 
-      <TabsContent value="myBookings">
+      <TabsContent className="max-w-[95%] mx-auto" value="myBookings">
         <MyBookings session={session} />
       </TabsContent>
     </Tabs>

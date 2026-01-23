@@ -7,6 +7,8 @@ export const bookingSchema = z.object({
 
   notes: z.string().optional(),
 
+  roomId: z.string(),
+
   guests: z
     .array(
       z.object({

@@ -13,25 +13,86 @@ import { formatCPF, maskCPF } from "@/shared/utils/cpfValidator"
 import { Textarea } from "@/shared/components/ui/textarea"
 import { useZodForm } from "@/shared/hooks/useZodForm"
 import { createBook } from "../actions/createBook"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion } from "motion/react";
 import { brazilStates } from "@/shared/utils/state"
 import { fetchAddressByCep } from "@/shared/utils/fetchAddressByCep"
 import { formatAndMaskPhoneNumber } from "@/shared/utils/formatAndMaskPhoneNumber"
-import Link from "next/link"
 import { authClient } from "@/features/auth/auth-client"
 import { Countrys } from "@/shared/utils/countrys"
 import { createCharge } from "@/features/billing/actions/createCharge"
 import { createCustomer } from "@/features/billing/actions/createCustomer"
-
+import { getAllRooms } from "@/features/admin/actions/getAllRooms"
+import { getRoomUnavailableIntervals } from "../actions/roomDateAvailable"
+import { format } from 'date-fns';
+import { Calendar } from "@/shared/components/ui/calendar"
+import { DateRange } from "react-day-picker"
 
 export default function BookingNow({ session }: { session: any }) {
     const [step, setStep] = useState(0);
     const [onSubmiting, setOnSubmitting] = useState(false)
     const [charge, setCharge] = useState<any>(null);
+    const [loadingRooms, setLoadingRooms] = useState(true)
+    const [rooms, setRooms] = useState<{ id: string; name: string; price: number }[]>([])
+    const [disabledIntervals, setDisabledIntervals] = useState<{ from: string, to: string }[]>([]);
+    const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined);
+
+    function getTodayISO() {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return today.toISOString().split("T")[0]
+    }
+
+    useEffect(() => {
+        async function fetchRooms() {
+            try {
+                const roomsData = await getAllRooms()
+
+                const formattedRooms = roomsData.map(room => ({
+                    id: room.id,
+                    name: room.title,
+                    price: room.price,
+                }))
+
+                setRooms(formattedRooms)
+            } catch (err) {
+                console.error(err)
+                toast.error("Erro ao carregar quartos")
+            } finally {
+                setLoadingRooms(false)
+            }
+        }
+        fetchRooms()
+    }, [])
+
+    const disabledDays = useMemo(() => {
+        const beforeToday = { before: new Date() };
+        const ranges = disabledIntervals.map((r) => ({ from: new Date(r.from), to: new Date(r.to) }));
+        return [beforeToday, ...ranges];
+    }, [disabledIntervals]);
+
+    function handleSelectRange(range: DateRange | undefined) {
+        setSelectedRange(range);
+
+        if (!range || !range.from) {
+            form.setValue("checkIn", "");
+            form.setValue("checkOut", "");
+            return;
+        }
+
+        const fromIso = format(range.from, "yyyy-MM-dd");
+        form.setValue("checkIn", fromIso);
+
+        if (range.to) {
+            form.setValue("checkOut", format(range.to, "yyyy-MM-dd"));
+        } else {
+            form.setValue("checkOut", "");
+        }
+    }
 
     const form = useZodForm(bookingSchema, {
         defaultValues: {
+            roomId: "",
             checkIn: "",
             checkOut: "",
             notes: "",
@@ -44,7 +105,6 @@ export default function BookingNow({ session }: { session: any }) {
                     type: "adult",
                 },
             ],
-
             user: {
                 name: session.user.name ?? "",
                 email: session.user.email ?? "",
@@ -61,10 +121,73 @@ export default function BookingNow({ session }: { session: any }) {
                 neighborhood: session.user.neighborhood ?? "",
                 city: session.user.city ?? "",
                 state: session.user.state ?? "",
-                birthDate: session.user.birthDate ?? "",
+                birthDate: session.user.birthDate
+                    ? new Date(session.user.birthDate).toISOString().split("T")[0]
+                    : "",
             },
         },
     })
+
+    useEffect(() => {
+        const roomId = form.getValues("roomId");
+        if (!roomId) {
+            setDisabledIntervals([]);
+            return;
+        }
+
+        let cancelled = false;
+        (async () => {
+            try {
+                const intervals = await getRoomUnavailableIntervals({ roomId });
+                if (cancelled) return;
+                setDisabledIntervals(intervals || []);
+            } catch (err) {
+                console.error("Erro ao buscar datas indisponíveis:", err);
+                setDisabledIntervals([]);
+            }
+        })();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [form.watch("roomId")]);
+
+    const checkIn = form.watch("checkIn")
+    const selectedRoom = rooms.find(r => r.id === form.watch("roomId"));
+    const today = getTodayISO()
+    const checkOut = form.getValues("checkOut")
+
+    let numberOfDays = 0;
+    if (checkIn && checkOut) {
+        const inDate = new Date(checkIn);
+        const outDate = new Date(checkOut);
+        // diferença em ms
+        const diffTime = outDate.getTime() - inDate.getTime();
+        numberOfDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // converte para dias
+    }
+
+    const totalValue = (selectedRoom?.price ?? 0) * numberOfDays;
+
+    function getMinCheckoutDate() {
+        if (!checkIn) return ""
+
+        const date = new Date(checkIn)
+        date.setDate(date.getDate() + 1)
+        return date.toISOString().split("T")[0]
+    }
+
+    useEffect(() => {
+        const checkOut = form.getValues("checkOut")
+
+        if (!checkIn || !checkOut) return
+
+        const checkInDate = new Date(checkIn)
+        const checkOutDate = new Date(checkOut)
+
+        if (checkOutDate <= checkInDate) {
+            form.setValue("checkOut", "")
+        }
+    }, [checkIn, form])
 
     type AgeCount = {
         adult: number
@@ -163,7 +286,6 @@ export default function BookingNow({ session }: { session: any }) {
         }
     )
 
-
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "guests",
@@ -214,16 +336,35 @@ export default function BookingNow({ session }: { session: any }) {
             }
 
             const processedData = {
-                ...data,
+                roomId: data.roomId,
+                checkIn: new Date(data.checkIn),
+                checkOut: new Date(data.checkOut),
+                notes: data.notes,
                 guests: data.guests
                     .filter(guest => guest.birthDate)
-                    .map(guest => ({ ...guest })),
-            };
+                    .map(guest => ({
+                        name: guest.name,
+                        cpf: guest.cpf,
+                        birthDate: new Date(guest.birthDate),
+                        type: guest.type,
+                    })),
+            }
 
-            const value = 100;
-            await createBook(processedData);
+            const selectedRoomId = data.roomId;
+            const selectedRoom = rooms.find(r => r.id === selectedRoomId);
+
+            const dailyPrice = selectedRoom?.price ?? 0;
+
+            const checkInDate = new Date(data.checkIn);
+            const checkOutDate = new Date(data.checkOut);
+
+            const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
+            const numberOfNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            const totalValue = dailyPrice * numberOfNights;
             await createCustomer(session)
-            const createChargeRes = await createCharge(session.user.id, value);
+            const createChargeRes = await createCharge(session.user.id, totalValue);
+            await createBook(processedData);
             setCharge(createChargeRes);
 
             nextStep();
@@ -236,7 +377,6 @@ export default function BookingNow({ session }: { session: any }) {
             setOnSubmitting(false);
         }
     }
-
 
     return (
         <Card className="w-full max-w-2xl mx-auto mb-10">
@@ -274,30 +414,67 @@ export default function BookingNow({ session }: { session: any }) {
                             >
 
                                 {/* Datas */}
-                                <FieldGroup className="grid grid-cols-2 gap-4">
+                                <FieldGroup>
                                     <Controller
-                                        name="checkIn"
+                                        name="roomId"
                                         control={form.control}
                                         render={({ field, fieldState }) => (
                                             <Field className="gap-2" data-invalid={fieldState.invalid}>
-                                                <FieldLabel>Check-in</FieldLabel>
-                                                <Input type="date" className="rounded-full" {...field} />
+                                                <FieldLabel>Quarto</FieldLabel>
+                                                <Select
+                                                    onValueChange={(v) => {
+                                                        field.onChange(v);
+                                                        // limpa seleção anterior quando trocar de quarto
+                                                        setSelectedRange(undefined);
+                                                        form.setValue("checkIn", "");
+                                                        form.setValue("checkOut", "");
+                                                    }}
+                                                    value={field.value}
+                                                    disabled={loadingRooms}
+                                                >
+                                                    <SelectTrigger className="rounded-full w-full !h-10">
+                                                        <SelectValue placeholder={loadingRooms ? "Carregando quartos..." : "Selecione um quarto"} />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="max-h-60 overflow-y-auto" position="popper">
+                                                        {rooms.map((room) => (
+                                                            <SelectItem key={room.id} value={room.id}>
+                                                                {room.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
                                                 <FieldError errors={[fieldState.error]} />
                                             </Field>
                                         )}
                                     />
 
-                                    <Controller
-                                        name="checkOut"
-                                        control={form.control}
-                                        render={({ field, fieldState }) => (
-                                            <Field className="gap-2" data-invalid={fieldState.invalid}>
-                                                <FieldLabel>Check-out</FieldLabel>
-                                                <Input type="date" className="rounded-full" {...field} />
-                                                <FieldError errors={[fieldState.error]} />
-                                            </Field>
-                                        )}
-                                    />
+                                    <div className="w-full">
+                                        <Field>
+                                            <FieldLabel>Período (selecione check-in e check-out)</FieldLabel>
+                                            <div className="border rounded-md p-3 flex">
+                                                <Calendar
+                                                    className="border rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                                                    mode="range"
+                                                    selected={selectedRange}
+                                                    onSelect={(r) => handleSelectRange(r as DateRange | undefined)}
+                                                    disabled={disabledDays}
+                                                    fromDate={new Date()}
+                                                />
+                                                <div className="flex justify-around w-full text-sm mx-auto items-center">
+                                                    <div>
+                                                        <div className="text-xs text-muted-foreground">Check-in</div>
+                                                        <div className="font-medium">{form.getValues("checkIn") || "—"}</div>
+                                                        <span className="font-medium">14:00 - 20:00</span>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs text-muted-foreground">Check-out</div>
+                                                        <div className="font-medium">{form.getValues("checkOut") || "—"}</div>
+                                                        <span className="font-medium">12:00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Field>
+                                    </div>
                                 </FieldGroup>
 
                                 {/* Hóspedes */}
@@ -883,6 +1060,10 @@ export default function BookingNow({ session }: { session: any }) {
                                         <p className="text-[10px] font-medium text-muted-foreground text-center">Realize o pagamento em até 24h para garantir sua reserva</p>
                                     </div>
                                     <Card className="my-2 p-5 gap-3">
+                                        <span>
+                                            <p>{selectedRoom?.name ?? ""}</p>
+                                        </span>
+
                                         <div className="flex items-center gap-x-5 text-sm">
                                             <span>
                                                 <p className="font-medium text-base">Check-in</p>
@@ -947,25 +1128,28 @@ export default function BookingNow({ session }: { session: any }) {
                                             </ul>
                                         </div>
                                         <hr className="border border-dashed" />
-                                        <h1 className="text-xl text-green-800 font-semibold">R$ {1000},00</h1>
+                                        <h1 className="text-xl text-green-800 font-semibold">
+                                            R$ {totalValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                                        </h1>
+                                        <p className="text-[10px] text-muted-foreground font-medium mt-2">
+                                            *Caso não realize o pagamento em até 24h, a data da reserva será disponibilizada
+                                        </p>
+
+
+                                        <div>
+                                            {charge?.invoiceUrl && (
+                                                <a href={charge.invoiceUrl} target="_blank" rel="noopener noreferrer">
+                                                    <Button
+                                                        type="button"
+                                                        className="text-white cursor-pointer bg-blue-500 rounded-full w-full max-w-[300px] flex mx-auto mt-5"
+                                                    >
+                                                        Realizar pagamento
+                                                    </Button>
+                                                </a>
+                                            )}
+                                        </div>
                                     </Card>
-                                    <p className="text-[10px] text-muted-foreground font-medium mt-2">*Caso não realize o pagamento em até 24h, a data da reserva será disponibilizada</p>
-
-                                    <div>
-                                        {charge?.invoiceUrl && (
-                                            <a href={charge.invoiceUrl} target="_blank" rel="noopener noreferrer">
-                                                <Button
-                                                    type="button"
-                                                    className="text-white bg-blue-500 rounded-full w-full max-w-[300px] flex mx-auto mt-5"
-                                                >
-                                                    Realizar pagamento
-                                                </Button>
-                                            </a>
-                                        )}
-                                    </div>
                                 </div>
-
-
                             </motion.div>
                         )}
                     </AnimatePresence>

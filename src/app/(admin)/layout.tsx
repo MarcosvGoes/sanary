@@ -3,7 +3,7 @@
 import { auth } from "@/features/auth/auth"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
-import AdminNavbar from "@/features/admin/components/Admin"
+import AdminNavbar from "@/features/admin/components/AdminNavbar"
 
 export default async function AdminLayout({
   children,
@@ -20,7 +20,7 @@ export default async function AdminLayout({
 
   return (
     <>
-      <div className="pt-[73.52px] md:pt-[70px]">
+      <div className="pt-4">
         {children}
       </div>
       <AdminNavbar />
