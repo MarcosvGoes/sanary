@@ -329,7 +329,6 @@ export default function BookingNow({ session }: { session: any }) {
             })),
         };
 
-        // charge flow
         const selectedRoomId = data.roomId;
         const selectedRoomLocal = rooms.find((r) => r.id === selectedRoomId);
         const dailyPrice = selectedRoomLocal?.price ?? 0;
@@ -343,7 +342,6 @@ export default function BookingNow({ session }: { session: any }) {
         await createCustomer(session);
         const createChargeRes = await createCharge(session.user.id, total);
 
-        // create booking record
         await createBook(processedData);
 
         setCharge(createChargeRes);

@@ -35,8 +35,14 @@ model User {
     bookings       Booking[]
     paymentData    UserPaymentData? @relation("UserPaymentData")
     sessions       Session[]
+    role           UserRole         @default(user)
 
     @@map("user")
+}
+
+enum UserRole {
+    user
+    admin
 }
 
 model Payments {

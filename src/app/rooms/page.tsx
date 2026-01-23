@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@radix-ui/react-accordion";
 import { Beef, CookingPot, Tv, Users, Thermometer, Waves, Bed, Refrigerator } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { Carousel, CarouselItem } from "@/shared/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/shared/components/ui/carousel";
 import SocialButtonSignin from "@/features/auth/components/SocialButtonSignin";
 import { getAllRooms } from "@/features/admin/actions/getAllRooms";
 import { Card } from "@/shared/components/ui/card";
@@ -73,24 +73,30 @@ export default function RoomsPage() {
           key={room.id}
           className="shadow-lg w-full py-0 rounded-md gap-0 max-w-[800px] overflow-hidden bg-white/10 backdrop-blur-md"
         >
-          <Carousel className="w-full h-[300px] md:h-[500px]">
-            {room.images?.length
-              ? room.images.map((img) => (
-                <CarouselItem key={img.id} className="relative w-full h-full">
-                  <Image
-                    src={img.url}
-                    alt={room.title}
-                    fill
-                    className="object-cover"
-                  />
-                </CarouselItem>
-              ))
-              : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
+          <Carousel className="w-full">
+            <CarouselContent>
+              {room.images?.length ? (
+                room.images.map((img) => (
+                  <CarouselItem key={img.id}>
+                    <div className="relative w-full aspect-video">
+                      <Image
+                        src={`https://oobokhduylbaaskwchph.supabase.co/storage/v1/object/public/rooms/${img.url}`}
+                        alt={room.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))
+              ) : (
+                <div className="w-full aspect-video flex items-center justify-center bg-gray-200">
                   <span className="text-gray-500">Sem imagens</span>
                 </div>
-              )
-            }
+              )}
+            </CarouselContent>
+
+            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-1 shadow" />
+            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-1 shadow" />
           </Carousel>
 
           <div className="text-center py-3">
