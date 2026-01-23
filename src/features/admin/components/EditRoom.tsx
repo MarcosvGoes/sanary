@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { DialogClose } from "@/shared/components/ui/dialog"
 import { Spinner } from "@/shared/components/ui/spinner"
+import { Textarea } from "@/shared/components/ui/textarea"
+import { Input } from "@/shared/components/ui/input"
 
 type Props = {
     room: {
@@ -26,13 +28,15 @@ export default function EditRoom({ room }: Props) {
     async function handleSubmit(formData: FormData) {
         setLoading(true)
         try {
-            const data: EditRoomSchema = {
+            const files = formData.getAll("images") as File[];
+            const data = {
                 title: String(formData.get("title")),
                 description: String(formData.get("description")),
                 price: Number(formData.get("price")),
                 capacity: Number(formData.get("capacity")),
+                images: files,
             }
-            await updateRoom(room.id, data)
+            await updateRoom(room.id, data);
             toast("Quarto editado com sucesso")
             router.refresh()
         } catch (e) {
@@ -45,8 +49,19 @@ export default function EditRoom({ room }: Props) {
     return (
         <form action={handleSubmit} className="space-y-4 max-w-md">
             <div>
+                <label>Imagens</label>
+                <Input
+                    type="file"
+                    name="images"
+                    multiple
+                    accept="image/*"
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
+
+            <div>
                 <label>Título</label>
-                <input
+                <Input
                     name="title"
                     defaultValue={room.title}
                     className="w-full border rounded px-3 py-2"
@@ -55,7 +70,7 @@ export default function EditRoom({ room }: Props) {
 
             <div>
                 <label>Descrição</label>
-                <textarea
+                <Textarea
                     name="description"
                     defaultValue={room.description}
                     className="w-full border rounded px-3 py-2"
@@ -64,9 +79,8 @@ export default function EditRoom({ room }: Props) {
 
             <div>
                 <label>Preço</label>
-                <input
+                <Input
                     name="price"
-                    type="number"
                     defaultValue={room.price}
                     className="w-full border rounded px-3 py-2"
                 />
@@ -74,9 +88,8 @@ export default function EditRoom({ room }: Props) {
 
             <div>
                 <label>Capacidade</label>
-                <input
+                <Input
                     name="capacity"
-                    type="number"
                     defaultValue={room.capacity}
                     className="w-full border rounded px-3 py-2"
                 />

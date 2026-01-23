@@ -1,6 +1,7 @@
 import { auth } from "@/features/auth/auth"
 import BookingTabs from "@/features/booking/components/BookingTabs"
 import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 
 export default async function Booking() {
   const session = await auth.api.getSession({
@@ -8,7 +9,7 @@ export default async function Booking() {
   })
 
   if (!session) {
-    throw new Error("Unauthorized")
+    redirect("/")
   }
 
   return (

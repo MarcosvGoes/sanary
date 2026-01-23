@@ -2,15 +2,10 @@
 
 import { auth } from "@/features/auth/auth"
 import { headers } from "next/headers"
-import { createClient } from "@supabase/supabase-js"
 import { randomUUID } from "crypto"
 import { db } from "../../../../prisma"
 import { roomSchema } from "../schemas/addRoomSchema"
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+import { supabase } from "@/shared/lib/createClientSupabase"
 
 export async function addRoom(formData: FormData) {
   const session = await auth.api.getSession({

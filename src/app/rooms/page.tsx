@@ -99,17 +99,17 @@ export default function RoomsPage() {
           {room.description && <p className=" px-5 py-3 text-sm md:text-base">{room.description}</p>}
 
           <div className="p-2">
-            <div className="mt-4 mx-auto grid grid-cols-2 gap-2">
+            <div className="mt-4 mx-auto grid md:grid-cols-2 gap-2">
               <Link
                 target="_blank"
                 href={`https://wa.me/55${mobilePhone}`}
                 className="cursor-pointer"
               >
-                <Button className="text-base py-4.5 border-2 w-full cursor-pointer" variant={"outline"}>
+                <Button className="text-sm py-4.5 border-2 w-full cursor-pointer" variant={"outline"}>
                   Entrar em contato
                 </Button>
               </Link>
-              <SocialButtonSignin classNameLogged="bg-[#14274A] text-white text-lg rounded-md max-w-full" classNameNotLogged="bg-[#14274A] text-lg rounded-md max-w-full text-white" />
+              <SocialButtonSignin classNameLogged="bg-[#14274A] text-white text-sm rounded-md max-w-full" classNameNotLogged="bg-[#14274A] text-lg rounded-md max-w-full text-white" />
             </div>
           </div>
         </Card>

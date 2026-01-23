@@ -63,20 +63,10 @@ export default function Navbar() {
                             <SheetClose asChild>
                                 <Link href="/contact">Contato</Link>
                             </SheetClose>
+                            <SheetClose asChild>
+                                <SocialButtonSignin showSignout classNameLogged="mx-auto flex w-full" />
+                            </SheetClose>
                         </div>
-                        {!session
-                            ?
-                            <SocialButtonSignin showSignout />
-                            :
-                            <Link href={"/booking"}>
-                                <SheetClose asChild>
-                                    <Button className="flex cursor-pointer mx-auto rounded-full bg-white border-muted-foreground" variant={"outline"}>
-                                        Reservar agora
-                                    </Button>
-                                </SheetClose>
-                            </Link>
-                        }
-
                     </SheetContent>
                 </Sheet>
             </nav>

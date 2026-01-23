@@ -135,7 +135,7 @@ export default function MyBookings({ session }: { session: any }) {
         return (
           <Card
             key={booking.id}
-            className="border rounded-xl p-5 gap-3 max-w-[500px] md:mx-auto bg-white shadow-sm"
+            className="border rounded-xl p-5 gap-3 max-w-[500px] min-w-[300px] md:mx-auto bg-white shadow-sm"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px]">Id da reserva: {booking.id}</span>
