@@ -5,7 +5,6 @@ import { Controller, FieldPath, useFieldArray } from "react-hook-form";
 import { AnimatePresence, motion } from "motion/react";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
-
 import {
   Card,
   CardHeader,
@@ -19,7 +18,6 @@ import { Textarea } from "@/shared/components/ui/textarea";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Calendar } from "@/shared/components/ui/calendar";
-
 import {
   ArrowLeft,
   ArrowRight,
@@ -313,7 +311,6 @@ export default function BookingNow({ session }: { session: any }) {
           throw new Error("Falha ao atualizar usuário");
         }
 
-        // prepare booking payload
         const processedData = {
           roomId: data.roomId,
           checkIn: new Date(data.checkIn),

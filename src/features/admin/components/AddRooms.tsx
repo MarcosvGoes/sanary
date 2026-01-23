@@ -5,7 +5,7 @@ import { Button } from "@/shared/components/ui/button"
 import { Input } from "@/shared/components/ui/input"
 import { Textarea } from "@/shared/components/ui/textarea"
 import { toast } from "sonner"
-import { addRoom } from "../actions/addRooms"
+import { addRoom, uploadImages } from "../actions/addRooms"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/shared/components/ui/dialog"
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog"
 import { Plus } from "lucide-react"
@@ -18,15 +18,32 @@ export default function AddRooms() {
         setLoading(true)
 
         try {
-            const formData = new FormData(e.currentTarget)
-            await addRoom(formData)
+            const form = e.currentTarget
+            const formData = new FormData(form)
+
+            const files = formData.getAll("images") as File[]
+
+            const roomId = crypto.randomUUID()
+
+            const imageUrls = await uploadImages(files, roomId)
+
+            await addRoom({
+                title: formData.get("title") as string,
+                description: formData.get("description") as string,
+                price: Number(formData.get("price")) as unknown as number,
+                capacity: Number(formData.get("capacity")) as unknown as number,
+                images: imageUrls,
+            } as any)
+
             toast.success("Quarto criado com sucesso")
+            form.reset()
         } catch (err: any) {
-            toast.error(err.message || "Erro ao criar quarto")
+            toast.error("Erro ao criar quarto")
         } finally {
             setLoading(false)
         }
     }
+
 
     return (
         <Dialog>
