@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { updateRoom } from "../actions/editRoom"
-import { EditRoomSchema } from "../schemas/editRoomSchema"
 import { Button } from "@/shared/components/ui/button"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -10,106 +9,108 @@ import { DialogClose } from "@/shared/components/ui/dialog"
 import { Spinner } from "@/shared/components/ui/spinner"
 import { Textarea } from "@/shared/components/ui/textarea"
 import { Input } from "@/shared/components/ui/input"
+import Image from "next/image"
 
 type Props = {
-    room: {
-        id: string
-        title: string
-        description: string
-        price: number
-        capacity: number
-    }
+  room: {
+    id: string
+    title: string
+    description: string
+    price: number
+    capacity: number
+    images: string[]
+  }
 }
 
 export default function EditRoom({ room }: Props) {
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
+  const [loadingEdit, setLoadingEdit] = useState(false)
+  const [existingImages, setExistingImages] = useState<string[]>(room.images)
+  const [newImages, setNewImages] = useState<File[]>([])
+  const router = useRouter()
 
-    async function handleSubmit(formData: FormData) {
-        setLoading(true)
-        try {
-            const files = formData.getAll("images") as File[];
-            const data = {
-                title: String(formData.get("title")),
-                description: String(formData.get("description")),
-                price: Number(formData.get("price")),
-                capacity: Number(formData.get("capacity")),
-                images: files,
-            }
-            await updateRoom(room.id, data);
-            toast("Quarto editado com sucesso")
-            router.refresh()
-        } catch (e) {
-            console.log(e)
-        } finally {
-            setLoading(false)
-        }
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoadingEdit(true)
+
+    try {
+      const formData = new FormData(e.currentTarget)
+
+      await updateRoom(room.id, {
+        title: String(formData.get("title")),
+        description: String(formData.get("description")),
+        price: Number(formData.get("price")),
+        capacity: Number(formData.get("capacity")),
+        keepImages: existingImages,
+        newImages,
+      })
+
+      toast.success("Quarto editado com sucesso")
+      router.refresh()
+    } catch (err) {
+      console.error(err)
+      toast.error("Erro ao editar quarto")
+    } finally {
+      setLoadingEdit(false)
     }
+  }
 
-    return (
-        <form action={handleSubmit} className="space-y-4 max-w-md">
-            <div>
-                <label>Imagens</label>
-                <Input
-                    type="file"
-                    name="images"
-                    multiple
-                    accept="image/*"
-                    className="w-full border rounded px-3 py-2"
-                />
-            </div>
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
 
-            <div>
-                <label>Título</label>
-                <Input
-                    name="title"
-                    defaultValue={room.title}
-                    className="w-full border rounded px-3 py-2"
-                />
-            </div>
+      {/* Imagens existentes */}
+      <div className="grid grid-cols-3 gap-2">
+        {existingImages.map((url) => (
+          <div key={url} className="relative">
+            <Image
+              src={`https://oobokhduylbaaskwchph.supabase.co/storage/v1/object/public/rooms/${url}`}
+              alt="Imagem do quarto"
+              width={120}
+              height={120}
+              className="h-24 w-full object-cover rounded"
+            />
+            <Button
+              type="button"
+              onClick={() =>
+                setExistingImages((prev) => prev.filter((img) => img !== url))
+              }
+              className="absolute top-1 right-1 bg-black/70 text-white text-xs px-2 rounded"
+            >
+              Remover
+            </Button>
+          </div>
+        ))}
+      </div>
 
-            <div>
-                <label>Descrição</label>
-                <Textarea
-                    name="description"
-                    defaultValue={room.description}
-                    className="w-full border rounded px-3 py-2"
-                />
-            </div>
+      {/* Novas imagens */}
+      <Input
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={(e) =>
+          setNewImages(Array.from(e.target.files ?? []))
+        }
+      />
 
-            <div>
-                <label>Preço</label>
-                <Input
-                    name="price"
-                    defaultValue={room.price}
-                    className="w-full border rounded px-3 py-2"
-                />
-            </div>
+      <Input name="title" defaultValue={room.title} />
+      <Textarea name="description" defaultValue={room.description} />
+      <Input name="price" type="number" defaultValue={room.price} />
+      <Input name="capacity" type="number" defaultValue={room.capacity} />
 
-            <div>
-                <label>Capacidade</label>
-                <Input
-                    name="capacity"
-                    defaultValue={room.capacity}
-                    className="w-full border rounded px-3 py-2"
-                />
-            </div>
+      <div className="grid grid-cols-2 gap-2">
+        <DialogClose asChild>
+          <Button variant="destructive">Fechar</Button>
+        </DialogClose>
 
-            <div className="grid grid-cols-2 gap-2">
-                <DialogClose asChild>
-                    <Button variant={"destructive"}>
-                        Fechar
-                    </Button>
-                </DialogClose>
-                <Button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-black text-white px-4 py-2 w-full"
-                >
-                    {loading ? <span className="flex items-center gap-x-1"><Spinner /> Salvando...</span> : "Salvar alterações"}
-                </Button>
-
-            </div>
-        </form>
-    )
+        <Button type="submit" className="cursor-pointer" disabled={loadingEdit}>
+          {loadingEdit ? (
+            <span className="flex items-center gap-1">
+              <Spinner /> Salvando...
+            </span>
+          ) : (
+            "Salvar alterações"
+          )}
+        </Button>
+      </div>
+    </form>
+  )
 }

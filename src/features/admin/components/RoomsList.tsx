@@ -86,7 +86,11 @@ export default async function RoomsList() {
                                         <EditRoom
                                             room={{
                                                 ...room,
+                                                title: room.title ?? "",
+                                                price: room.price ?? "",
+                                                capacity: room.capacity ?? "",
                                                 description: room.description ?? "",
+                                                images: room.images.map((img) => img.url),
                                             }}
                                         />
                                     </div>

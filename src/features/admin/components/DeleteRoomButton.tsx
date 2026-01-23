@@ -26,7 +26,7 @@ export default function DeleteRoomButton({ roomId, className }: { roomId: string
 
 
     return (
-        <Button variant={"destructive"} disabled={deleting} onClick={handleDeleteProperty} className={`${className}`}>
+        <Button variant={"destructive"} disabled={deleting} onClick={handleDeleteProperty} className={`${className} cursor-pointer text-base`}>
             {deleting ? <span className="flex items-center gap-x-2"> <Spinner /> Deletando... </span> : "Deletar quarto"}
         </Button>
     )
