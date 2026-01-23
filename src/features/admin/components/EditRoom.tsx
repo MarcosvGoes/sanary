@@ -98,7 +98,7 @@ export default function EditRoom({ room }: Props) {
 
       <div className="grid grid-cols-2 gap-2">
         <DialogClose asChild>
-          <Button variant="destructive">Fechar</Button>
+          <Button className="cursor-pointer" variant="destructive">Fechar</Button>
         </DialogClose>
 
         <Button type="submit" className="cursor-pointer" disabled={loadingEdit}>
