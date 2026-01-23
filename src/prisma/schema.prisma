@@ -35,14 +35,12 @@ model User {
     bookings       Booking[]
     paymentData    UserPaymentData? @relation("UserPaymentData")
     sessions       Session[]
-    role           UserRole         @default(user)
+    role           String           @default("user")
+    banned         Boolean          @default(false)
+    banReason      String?
+    banExpires     DateTime?
 
     @@map("user")
-}
-
-enum UserRole {
-    user
-    admin
 }
 
 model Payments {
