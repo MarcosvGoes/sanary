@@ -10,10 +10,15 @@ export async function getAllBookings() {
   });
 
   if (!session || session.user.id !== "pv8fETHJNurooR2cx3Ju1ydLwmvsgRmG") {
-    throw new Error ("Unauthorized")
+    throw new Error("Unauthorized");
   }
 
   const bookings = await db.booking.findMany({
+    where: {
+      status: {
+        not: "BLOCKED",
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },

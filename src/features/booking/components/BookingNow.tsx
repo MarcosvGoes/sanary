@@ -348,7 +348,7 @@ export default function BookingNow({ session }: { session: any }) {
   } as const;
 
   return (
-    <Card className="w-full max-w-[600px] mx-auto mb-10">
+    <Card className="max-w-[500px] mx-auto mb-10">
       <CardHeader className="px-4">
         <CardTitle>Agendar reserva</CardTitle>
         <CardDescription>Informe os dados para realizar sua reserva</CardDescription>
@@ -376,7 +376,7 @@ export default function BookingNow({ session }: { session: any }) {
                 animate={{ x: 0, opacity: 1, scale: 1 }}
                 exit={{ x: -50, opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.18 }}
-                className="space-y-6"
+                className="space-y-6 w-full"
               >
                 {/* Dates & Room */}
                 <FieldGroup>
@@ -887,7 +887,7 @@ export default function BookingNow({ session }: { session: any }) {
                   <div>
                     <h1 className="text-lg font-medium text-center">Pré-reserva realizada com sucesso</h1>
                     <p className="text-[10px] font-medium text-muted-foreground text-center">
-                      Realize o pagamento em até 24h para garantir sua reserva
+                      Realize o pagamento para garantir sua reserva
                     </p>
                   </div>
 
@@ -964,7 +964,7 @@ export default function BookingNow({ session }: { session: any }) {
                       R$ {totalValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </h1>
                     <p className="text-[10px] text-muted-foreground font-medium mt-2">
-                      *Caso não realize o pagamento em até 24h, a data da reserva será disponibilizada
+                      *A data seguirá disponível até que realize o pagamento
                     </p>
 
                     <div>

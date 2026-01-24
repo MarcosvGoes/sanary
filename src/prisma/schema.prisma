@@ -40,25 +40,26 @@ model User {
 }
 
 model Payments {
-    id                    String           @id @default(uuid())
-    paymentId             String?          @unique
+    id        String  @id @default(uuid())
+    paymentId String  @unique
+    bookingId String
+    booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
     userPaymentDataId     String?
     billingType           String?
     description           String?
     invoiceUrl            String?
     transactionReceiptUrl String?
-    userAmount            Float?
     amount                Float
-    discount              Float?
     status                String?
-    createdAt             DateTime?
-    paidAt                DateTime?
     dueDate               DateTime?
-    updatedAt             DateTime         @updatedAt
-    invoiceId             String?          @unique
-    invoiceStatus         String?
-    userPaymentData       UserPaymentData? @relation(fields: [userPaymentDataId], references: [id])
+    paidAt                DateTime?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
 
+    userPaymentData UserPaymentData? @relation(fields: [userPaymentDataId], references: [id])
+
+    @@index([bookingId])
     @@map("payments")
 }
 
@@ -96,8 +97,9 @@ model Booking {
 
     guests Guest[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    payments  Payments[]
 
     @@index([userId])
     @@index([roomId])

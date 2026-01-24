@@ -8,7 +8,3 @@ export const bypass =
 export const asaasBaseUrl = isProduction
   ? "https://api.asaas.com"
   : "https://api-sandbox.asaas.com";
-
-export const zapsignBaseUrl = isProduction
-  ? "https://api.zapsign.com.br"
-  : "https://sandbox.api.zapsign.com.br";

@@ -27,149 +27,123 @@ export type AggregatePayments = {
 }
 
 export type PaymentsAvgAggregateOutputType = {
-  userAmount: number | null
   amount: number | null
-  discount: number | null
 }
 
 export type PaymentsSumAggregateOutputType = {
-  userAmount: number | null
   amount: number | null
-  discount: number | null
 }
 
 export type PaymentsMinAggregateOutputType = {
   id: string | null
   paymentId: string | null
+  bookingId: string | null
   userPaymentDataId: string | null
   billingType: string | null
   description: string | null
   invoiceUrl: string | null
   transactionReceiptUrl: string | null
-  userAmount: number | null
   amount: number | null
-  discount: number | null
   status: string | null
-  createdAt: Date | null
-  paidAt: Date | null
   dueDate: Date | null
+  paidAt: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
-  invoiceId: string | null
-  invoiceStatus: string | null
 }
 
 export type PaymentsMaxAggregateOutputType = {
   id: string | null
   paymentId: string | null
+  bookingId: string | null
   userPaymentDataId: string | null
   billingType: string | null
   description: string | null
   invoiceUrl: string | null
   transactionReceiptUrl: string | null
-  userAmount: number | null
   amount: number | null
-  discount: number | null
   status: string | null
-  createdAt: Date | null
-  paidAt: Date | null
   dueDate: Date | null
+  paidAt: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
-  invoiceId: string | null
-  invoiceStatus: string | null
 }
 
 export type PaymentsCountAggregateOutputType = {
   id: number
   paymentId: number
+  bookingId: number
   userPaymentDataId: number
   billingType: number
   description: number
   invoiceUrl: number
   transactionReceiptUrl: number
-  userAmount: number
   amount: number
-  discount: number
   status: number
-  createdAt: number
-  paidAt: number
   dueDate: number
+  paidAt: number
+  createdAt: number
   updatedAt: number
-  invoiceId: number
-  invoiceStatus: number
   _all: number
 }
 
 
 export type PaymentsAvgAggregateInputType = {
-  userAmount?: true
   amount?: true
-  discount?: true
 }
 
 export type PaymentsSumAggregateInputType = {
-  userAmount?: true
   amount?: true
-  discount?: true
 }
 
 export type PaymentsMinAggregateInputType = {
   id?: true
   paymentId?: true
+  bookingId?: true
   userPaymentDataId?: true
   billingType?: true
   description?: true
   invoiceUrl?: true
   transactionReceiptUrl?: true
-  userAmount?: true
   amount?: true
-  discount?: true
   status?: true
-  createdAt?: true
-  paidAt?: true
   dueDate?: true
+  paidAt?: true
+  createdAt?: true
   updatedAt?: true
-  invoiceId?: true
-  invoiceStatus?: true
 }
 
 export type PaymentsMaxAggregateInputType = {
   id?: true
   paymentId?: true
+  bookingId?: true
   userPaymentDataId?: true
   billingType?: true
   description?: true
   invoiceUrl?: true
   transactionReceiptUrl?: true
-  userAmount?: true
   amount?: true
-  discount?: true
   status?: true
-  createdAt?: true
-  paidAt?: true
   dueDate?: true
+  paidAt?: true
+  createdAt?: true
   updatedAt?: true
-  invoiceId?: true
-  invoiceStatus?: true
 }
 
 export type PaymentsCountAggregateInputType = {
   id?: true
   paymentId?: true
+  bookingId?: true
   userPaymentDataId?: true
   billingType?: true
   description?: true
   invoiceUrl?: true
   transactionReceiptUrl?: true
-  userAmount?: true
   amount?: true
-  discount?: true
   status?: true
-  createdAt?: true
-  paidAt?: true
   dueDate?: true
+  paidAt?: true
+  createdAt?: true
   updatedAt?: true
-  invoiceId?: true
-  invoiceStatus?: true
   _all?: true
 }
 
@@ -261,22 +235,19 @@ export type PaymentsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type PaymentsGroupByOutputType = {
   id: string
-  paymentId: string | null
+  paymentId: string
+  bookingId: string
   userPaymentDataId: string | null
   billingType: string | null
   description: string | null
   invoiceUrl: string | null
   transactionReceiptUrl: string | null
-  userAmount: number | null
   amount: number
-  discount: number | null
   status: string | null
-  createdAt: Date | null
-  paidAt: Date | null
   dueDate: Date | null
+  paidAt: Date | null
+  createdAt: Date
   updatedAt: Date
-  invoiceId: string | null
-  invoiceStatus: string | null
   _count: PaymentsCountAggregateOutputType | null
   _avg: PaymentsAvgAggregateOutputType | null
   _sum: PaymentsSumAggregateOutputType | null
@@ -304,88 +275,79 @@ export type PaymentsWhereInput = {
   OR?: Prisma.PaymentsWhereInput[]
   NOT?: Prisma.PaymentsWhereInput | Prisma.PaymentsWhereInput[]
   id?: Prisma.StringFilter<"Payments"> | string
-  paymentId?: Prisma.StringNullableFilter<"Payments"> | string | null
+  paymentId?: Prisma.StringFilter<"Payments"> | string
+  bookingId?: Prisma.StringFilter<"Payments"> | string
   userPaymentDataId?: Prisma.StringNullableFilter<"Payments"> | string | null
   billingType?: Prisma.StringNullableFilter<"Payments"> | string | null
   description?: Prisma.StringNullableFilter<"Payments"> | string | null
   invoiceUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
   transactionReceiptUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
-  userAmount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   amount?: Prisma.FloatFilter<"Payments"> | number
-  discount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   status?: Prisma.StringNullableFilter<"Payments"> | string | null
-  createdAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
-  invoiceId?: Prisma.StringNullableFilter<"Payments"> | string | null
-  invoiceStatus?: Prisma.StringNullableFilter<"Payments"> | string | null
+  booking?: Prisma.XOR<Prisma.BookingScalarRelationFilter, Prisma.BookingWhereInput>
   userPaymentData?: Prisma.XOR<Prisma.UserPaymentDataNullableScalarRelationFilter, Prisma.UserPaymentDataWhereInput> | null
 }
 
 export type PaymentsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   userPaymentDataId?: Prisma.SortOrderInput | Prisma.SortOrder
   billingType?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionReceiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  userAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
-  invoiceStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  booking?: Prisma.BookingOrderByWithRelationInput
   userPaymentData?: Prisma.UserPaymentDataOrderByWithRelationInput
 }
 
 export type PaymentsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   paymentId?: string
-  invoiceId?: string
   AND?: Prisma.PaymentsWhereInput | Prisma.PaymentsWhereInput[]
   OR?: Prisma.PaymentsWhereInput[]
   NOT?: Prisma.PaymentsWhereInput | Prisma.PaymentsWhereInput[]
+  bookingId?: Prisma.StringFilter<"Payments"> | string
   userPaymentDataId?: Prisma.StringNullableFilter<"Payments"> | string | null
   billingType?: Prisma.StringNullableFilter<"Payments"> | string | null
   description?: Prisma.StringNullableFilter<"Payments"> | string | null
   invoiceUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
   transactionReceiptUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
-  userAmount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   amount?: Prisma.FloatFilter<"Payments"> | number
-  discount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   status?: Prisma.StringNullableFilter<"Payments"> | string | null
-  createdAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
-  invoiceStatus?: Prisma.StringNullableFilter<"Payments"> | string | null
+  booking?: Prisma.XOR<Prisma.BookingScalarRelationFilter, Prisma.BookingWhereInput>
   userPaymentData?: Prisma.XOR<Prisma.UserPaymentDataNullableScalarRelationFilter, Prisma.UserPaymentDataWhereInput> | null
-}, "id" | "paymentId" | "invoiceId">
+}, "id" | "paymentId">
 
 export type PaymentsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   userPaymentDataId?: Prisma.SortOrderInput | Prisma.SortOrder
   billingType?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionReceiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  userAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
-  invoiceStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PaymentsCountOrderByAggregateInput
   _avg?: Prisma.PaymentsAvgOrderByAggregateInput
   _max?: Prisma.PaymentsMaxOrderByAggregateInput
@@ -398,233 +360,195 @@ export type PaymentsScalarWhereWithAggregatesInput = {
   OR?: Prisma.PaymentsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PaymentsScalarWhereWithAggregatesInput | Prisma.PaymentsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Payments"> | string
-  paymentId?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
+  paymentId?: Prisma.StringWithAggregatesFilter<"Payments"> | string
+  bookingId?: Prisma.StringWithAggregatesFilter<"Payments"> | string
   userPaymentDataId?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
   billingType?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
   invoiceUrl?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
   transactionReceiptUrl?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
-  userAmount?: Prisma.FloatNullableWithAggregatesFilter<"Payments"> | number | null
   amount?: Prisma.FloatWithAggregatesFilter<"Payments"> | number
-  discount?: Prisma.FloatNullableWithAggregatesFilter<"Payments"> | number | null
   status?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
-  createdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payments"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payments"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Payments"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payments"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payments"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payments"> | Date | string
-  invoiceId?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
-  invoiceStatus?: Prisma.StringNullableWithAggregatesFilter<"Payments"> | string | null
 }
 
 export type PaymentsCreateInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
+  booking: Prisma.BookingCreateNestedOneWithoutPaymentsInput
   userPaymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutPaymentsInput
 }
 
 export type PaymentsUncheckedCreateInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
+  bookingId: string
   userPaymentDataId?: string | null
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
 }
 
 export type PaymentsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  booking?: Prisma.BookingUpdateOneRequiredWithoutPaymentsNestedInput
   userPaymentData?: Prisma.UserPaymentDataUpdateOneWithoutPaymentsNestedInput
 }
 
 export type PaymentsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.StringFieldUpdateOperationsInput | string
   userPaymentDataId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentsCreateManyInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
+  bookingId: string
   userPaymentDataId?: string | null
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
 }
 
 export type PaymentsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.StringFieldUpdateOperationsInput | string
   userPaymentDataId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   userPaymentDataId?: Prisma.SortOrder
   billingType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   invoiceUrl?: Prisma.SortOrder
   transactionReceiptUrl?: Prisma.SortOrder
-  userAmount?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrder
-  invoiceStatus?: Prisma.SortOrder
 }
 
 export type PaymentsAvgOrderByAggregateInput = {
-  userAmount?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrder
 }
 
 export type PaymentsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   userPaymentDataId?: Prisma.SortOrder
   billingType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   invoiceUrl?: Prisma.SortOrder
   transactionReceiptUrl?: Prisma.SortOrder
-  userAmount?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrder
-  invoiceStatus?: Prisma.SortOrder
 }
 
 export type PaymentsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   userPaymentDataId?: Prisma.SortOrder
   billingType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   invoiceUrl?: Prisma.SortOrder
   transactionReceiptUrl?: Prisma.SortOrder
-  userAmount?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrder
-  invoiceStatus?: Prisma.SortOrder
 }
 
 export type PaymentsSumOrderByAggregateInput = {
-  userAmount?: Prisma.SortOrder
   amount?: Prisma.SortOrder
-  discount?: Prisma.SortOrder
 }
 
 export type PaymentsListRelationFilter = {
@@ -635,14 +559,6 @@ export type PaymentsListRelationFilter = {
 
 export type PaymentsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type FloatFieldUpdateOperationsInput = {
@@ -695,42 +611,78 @@ export type PaymentsUncheckedUpdateManyWithoutUserPaymentDataNestedInput = {
   deleteMany?: Prisma.PaymentsScalarWhereInput | Prisma.PaymentsScalarWhereInput[]
 }
 
+export type PaymentsCreateNestedManyWithoutBookingInput = {
+  create?: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput> | Prisma.PaymentsCreateWithoutBookingInput[] | Prisma.PaymentsUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.PaymentsCreateOrConnectWithoutBookingInput | Prisma.PaymentsCreateOrConnectWithoutBookingInput[]
+  createMany?: Prisma.PaymentsCreateManyBookingInputEnvelope
+  connect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+}
+
+export type PaymentsUncheckedCreateNestedManyWithoutBookingInput = {
+  create?: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput> | Prisma.PaymentsCreateWithoutBookingInput[] | Prisma.PaymentsUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.PaymentsCreateOrConnectWithoutBookingInput | Prisma.PaymentsCreateOrConnectWithoutBookingInput[]
+  createMany?: Prisma.PaymentsCreateManyBookingInputEnvelope
+  connect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+}
+
+export type PaymentsUpdateManyWithoutBookingNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput> | Prisma.PaymentsCreateWithoutBookingInput[] | Prisma.PaymentsUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.PaymentsCreateOrConnectWithoutBookingInput | Prisma.PaymentsCreateOrConnectWithoutBookingInput[]
+  upsert?: Prisma.PaymentsUpsertWithWhereUniqueWithoutBookingInput | Prisma.PaymentsUpsertWithWhereUniqueWithoutBookingInput[]
+  createMany?: Prisma.PaymentsCreateManyBookingInputEnvelope
+  set?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  disconnect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  delete?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  connect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  update?: Prisma.PaymentsUpdateWithWhereUniqueWithoutBookingInput | Prisma.PaymentsUpdateWithWhereUniqueWithoutBookingInput[]
+  updateMany?: Prisma.PaymentsUpdateManyWithWhereWithoutBookingInput | Prisma.PaymentsUpdateManyWithWhereWithoutBookingInput[]
+  deleteMany?: Prisma.PaymentsScalarWhereInput | Prisma.PaymentsScalarWhereInput[]
+}
+
+export type PaymentsUncheckedUpdateManyWithoutBookingNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput> | Prisma.PaymentsCreateWithoutBookingInput[] | Prisma.PaymentsUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.PaymentsCreateOrConnectWithoutBookingInput | Prisma.PaymentsCreateOrConnectWithoutBookingInput[]
+  upsert?: Prisma.PaymentsUpsertWithWhereUniqueWithoutBookingInput | Prisma.PaymentsUpsertWithWhereUniqueWithoutBookingInput[]
+  createMany?: Prisma.PaymentsCreateManyBookingInputEnvelope
+  set?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  disconnect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  delete?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  connect?: Prisma.PaymentsWhereUniqueInput | Prisma.PaymentsWhereUniqueInput[]
+  update?: Prisma.PaymentsUpdateWithWhereUniqueWithoutBookingInput | Prisma.PaymentsUpdateWithWhereUniqueWithoutBookingInput[]
+  updateMany?: Prisma.PaymentsUpdateManyWithWhereWithoutBookingInput | Prisma.PaymentsUpdateManyWithWhereWithoutBookingInput[]
+  deleteMany?: Prisma.PaymentsScalarWhereInput | Prisma.PaymentsScalarWhereInput[]
+}
+
 export type PaymentsCreateWithoutUserPaymentDataInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
+  booking: Prisma.BookingCreateNestedOneWithoutPaymentsInput
 }
 
 export type PaymentsUncheckedCreateWithoutUserPaymentDataInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
+  bookingId: string
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
 }
 
 export type PaymentsCreateOrConnectWithoutUserPaymentDataInput = {
@@ -764,98 +716,205 @@ export type PaymentsScalarWhereInput = {
   OR?: Prisma.PaymentsScalarWhereInput[]
   NOT?: Prisma.PaymentsScalarWhereInput | Prisma.PaymentsScalarWhereInput[]
   id?: Prisma.StringFilter<"Payments"> | string
-  paymentId?: Prisma.StringNullableFilter<"Payments"> | string | null
+  paymentId?: Prisma.StringFilter<"Payments"> | string
+  bookingId?: Prisma.StringFilter<"Payments"> | string
   userPaymentDataId?: Prisma.StringNullableFilter<"Payments"> | string | null
   billingType?: Prisma.StringNullableFilter<"Payments"> | string | null
   description?: Prisma.StringNullableFilter<"Payments"> | string | null
   invoiceUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
   transactionReceiptUrl?: Prisma.StringNullableFilter<"Payments"> | string | null
-  userAmount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   amount?: Prisma.FloatFilter<"Payments"> | number
-  discount?: Prisma.FloatNullableFilter<"Payments"> | number | null
   status?: Prisma.StringNullableFilter<"Payments"> | string | null
-  createdAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payments"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payments"> | Date | string
-  invoiceId?: Prisma.StringNullableFilter<"Payments"> | string | null
-  invoiceStatus?: Prisma.StringNullableFilter<"Payments"> | string | null
 }
 
-export type PaymentsCreateManyUserPaymentDataInput = {
+export type PaymentsCreateWithoutBookingInput = {
   id?: string
-  paymentId?: string | null
+  paymentId: string
   billingType?: string | null
   description?: string | null
   invoiceUrl?: string | null
   transactionReceiptUrl?: string | null
-  userAmount?: number | null
   amount: number
-  discount?: number | null
   status?: string | null
-  createdAt?: Date | string | null
-  paidAt?: Date | string | null
   dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
-  invoiceId?: string | null
-  invoiceStatus?: string | null
+  userPaymentData?: Prisma.UserPaymentDataCreateNestedOneWithoutPaymentsInput
+}
+
+export type PaymentsUncheckedCreateWithoutBookingInput = {
+  id?: string
+  paymentId: string
+  userPaymentDataId?: string | null
+  billingType?: string | null
+  description?: string | null
+  invoiceUrl?: string | null
+  transactionReceiptUrl?: string | null
+  amount: number
+  status?: string | null
+  dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PaymentsCreateOrConnectWithoutBookingInput = {
+  where: Prisma.PaymentsWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput>
+}
+
+export type PaymentsCreateManyBookingInputEnvelope = {
+  data: Prisma.PaymentsCreateManyBookingInput | Prisma.PaymentsCreateManyBookingInput[]
+  skipDuplicates?: boolean
+}
+
+export type PaymentsUpsertWithWhereUniqueWithoutBookingInput = {
+  where: Prisma.PaymentsWhereUniqueInput
+  update: Prisma.XOR<Prisma.PaymentsUpdateWithoutBookingInput, Prisma.PaymentsUncheckedUpdateWithoutBookingInput>
+  create: Prisma.XOR<Prisma.PaymentsCreateWithoutBookingInput, Prisma.PaymentsUncheckedCreateWithoutBookingInput>
+}
+
+export type PaymentsUpdateWithWhereUniqueWithoutBookingInput = {
+  where: Prisma.PaymentsWhereUniqueInput
+  data: Prisma.XOR<Prisma.PaymentsUpdateWithoutBookingInput, Prisma.PaymentsUncheckedUpdateWithoutBookingInput>
+}
+
+export type PaymentsUpdateManyWithWhereWithoutBookingInput = {
+  where: Prisma.PaymentsScalarWhereInput
+  data: Prisma.XOR<Prisma.PaymentsUpdateManyMutationInput, Prisma.PaymentsUncheckedUpdateManyWithoutBookingInput>
+}
+
+export type PaymentsCreateManyUserPaymentDataInput = {
+  id?: string
+  paymentId: string
+  bookingId: string
+  billingType?: string | null
+  description?: string | null
+  invoiceUrl?: string | null
+  transactionReceiptUrl?: string | null
+  amount: number
+  status?: string | null
+  dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type PaymentsUpdateWithoutUserPaymentDataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  booking?: Prisma.BookingUpdateOneRequiredWithoutPaymentsNestedInput
 }
 
 export type PaymentsUncheckedUpdateWithoutUserPaymentDataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.StringFieldUpdateOperationsInput | string
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentsUncheckedUpdateManyWithoutUserPaymentDataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.StringFieldUpdateOperationsInput | string
   billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
-  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PaymentsCreateManyBookingInput = {
+  id?: string
+  paymentId: string
+  userPaymentDataId?: string | null
+  billingType?: string | null
+  description?: string | null
+  invoiceUrl?: string | null
+  transactionReceiptUrl?: string | null
+  amount: number
+  status?: string | null
+  dueDate?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PaymentsUpdateWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPaymentData?: Prisma.UserPaymentDataUpdateOneWithoutPaymentsNestedInput
+}
+
+export type PaymentsUncheckedUpdateWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  userPaymentDataId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PaymentsUncheckedUpdateManyWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
+  userPaymentDataId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionReceiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -863,120 +922,112 @@ export type PaymentsUncheckedUpdateManyWithoutUserPaymentDataInput = {
 export type PaymentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   paymentId?: boolean
+  bookingId?: boolean
   userPaymentDataId?: boolean
   billingType?: boolean
   description?: boolean
   invoiceUrl?: boolean
   transactionReceiptUrl?: boolean
-  userAmount?: boolean
   amount?: boolean
-  discount?: boolean
   status?: boolean
-  createdAt?: boolean
-  paidAt?: boolean
   dueDate?: boolean
+  paidAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
-  invoiceId?: boolean
-  invoiceStatus?: boolean
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }, ExtArgs["result"]["payments"]>
 
 export type PaymentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   paymentId?: boolean
+  bookingId?: boolean
   userPaymentDataId?: boolean
   billingType?: boolean
   description?: boolean
   invoiceUrl?: boolean
   transactionReceiptUrl?: boolean
-  userAmount?: boolean
   amount?: boolean
-  discount?: boolean
   status?: boolean
-  createdAt?: boolean
-  paidAt?: boolean
   dueDate?: boolean
+  paidAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
-  invoiceId?: boolean
-  invoiceStatus?: boolean
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }, ExtArgs["result"]["payments"]>
 
 export type PaymentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   paymentId?: boolean
+  bookingId?: boolean
   userPaymentDataId?: boolean
   billingType?: boolean
   description?: boolean
   invoiceUrl?: boolean
   transactionReceiptUrl?: boolean
-  userAmount?: boolean
   amount?: boolean
-  discount?: boolean
   status?: boolean
-  createdAt?: boolean
-  paidAt?: boolean
   dueDate?: boolean
+  paidAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
-  invoiceId?: boolean
-  invoiceStatus?: boolean
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }, ExtArgs["result"]["payments"]>
 
 export type PaymentsSelectScalar = {
   id?: boolean
   paymentId?: boolean
+  bookingId?: boolean
   userPaymentDataId?: boolean
   billingType?: boolean
   description?: boolean
   invoiceUrl?: boolean
   transactionReceiptUrl?: boolean
-  userAmount?: boolean
   amount?: boolean
-  discount?: boolean
   status?: boolean
-  createdAt?: boolean
-  paidAt?: boolean
   dueDate?: boolean
+  paidAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
-  invoiceId?: boolean
-  invoiceStatus?: boolean
 }
 
-export type PaymentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "paymentId" | "userPaymentDataId" | "billingType" | "description" | "invoiceUrl" | "transactionReceiptUrl" | "userAmount" | "amount" | "discount" | "status" | "createdAt" | "paidAt" | "dueDate" | "updatedAt" | "invoiceId" | "invoiceStatus", ExtArgs["result"]["payments"]>
+export type PaymentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "paymentId" | "bookingId" | "userPaymentDataId" | "billingType" | "description" | "invoiceUrl" | "transactionReceiptUrl" | "amount" | "status" | "dueDate" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payments"]>
 export type PaymentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }
 export type PaymentsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }
 export type PaymentsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  booking?: boolean | Prisma.BookingDefaultArgs<ExtArgs>
   userPaymentData?: boolean | Prisma.Payments$userPaymentDataArgs<ExtArgs>
 }
 
 export type $PaymentsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Payments"
   objects: {
+    booking: Prisma.$BookingPayload<ExtArgs>
     userPaymentData: Prisma.$UserPaymentDataPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    paymentId: string | null
+    paymentId: string
+    bookingId: string
     userPaymentDataId: string | null
     billingType: string | null
     description: string | null
     invoiceUrl: string | null
     transactionReceiptUrl: string | null
-    userAmount: number | null
     amount: number
-    discount: number | null
     status: string | null
-    createdAt: Date | null
-    paidAt: Date | null
     dueDate: Date | null
+    paidAt: Date | null
+    createdAt: Date
     updatedAt: Date
-    invoiceId: string | null
-    invoiceStatus: string | null
   }, ExtArgs["result"]["payments"]>
   composites: {}
 }
@@ -1371,6 +1422,7 @@ readonly fields: PaymentsFieldRefs;
  */
 export interface Prisma__PaymentsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  booking<T extends Prisma.BookingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BookingDefaultArgs<ExtArgs>>): Prisma.Prisma__BookingClient<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   userPaymentData<T extends Prisma.Payments$userPaymentDataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payments$userPaymentDataArgs<ExtArgs>>): Prisma.Prisma__UserPaymentDataClient<runtime.Types.Result.GetResult<Prisma.$UserPaymentDataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1403,21 +1455,18 @@ export interface Prisma__PaymentsClient<T, Null = never, ExtArgs extends runtime
 export interface PaymentsFieldRefs {
   readonly id: Prisma.FieldRef<"Payments", 'String'>
   readonly paymentId: Prisma.FieldRef<"Payments", 'String'>
+  readonly bookingId: Prisma.FieldRef<"Payments", 'String'>
   readonly userPaymentDataId: Prisma.FieldRef<"Payments", 'String'>
   readonly billingType: Prisma.FieldRef<"Payments", 'String'>
   readonly description: Prisma.FieldRef<"Payments", 'String'>
   readonly invoiceUrl: Prisma.FieldRef<"Payments", 'String'>
   readonly transactionReceiptUrl: Prisma.FieldRef<"Payments", 'String'>
-  readonly userAmount: Prisma.FieldRef<"Payments", 'Float'>
   readonly amount: Prisma.FieldRef<"Payments", 'Float'>
-  readonly discount: Prisma.FieldRef<"Payments", 'Float'>
   readonly status: Prisma.FieldRef<"Payments", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Payments", 'DateTime'>
-  readonly paidAt: Prisma.FieldRef<"Payments", 'DateTime'>
   readonly dueDate: Prisma.FieldRef<"Payments", 'DateTime'>
+  readonly paidAt: Prisma.FieldRef<"Payments", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Payments", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Payments", 'DateTime'>
-  readonly invoiceId: Prisma.FieldRef<"Payments", 'String'>
-  readonly invoiceStatus: Prisma.FieldRef<"Payments", 'String'>
 }
     
 

@@ -45,7 +45,7 @@ export async function roomDateAvailable({
   const conflict = await db.booking.findFirst({
     where: {
       roomId,
-      status: { in: ["PENDING", "CONFIRMED"] },
+      status: { in: ["BLOCKED", "CONFIRMED"] },
       AND: [{ checkIn: { lt: checkOut } }, { checkOut: { gt: checkIn } }],
     },
   });

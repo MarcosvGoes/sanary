@@ -11,6 +11,7 @@ import { getAllRooms } from "@/features/admin/actions/getAllRooms";
 import { Card } from "@/shared/components/ui/card";
 import Link from "next/link";
 import { mobilePhone } from "@/shared/utils/contacts";
+import { Spinner } from "@/shared/components/ui/spinner";
 
 interface RoomImage {
   id: string;
@@ -57,7 +58,7 @@ export default function RoomsPage() {
     fetchRooms();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Carregando quartos...</p>;
+  if (loading) return <p className="text-center my-10 mx-auto flex justify-center"><Spinner className="h-10 w-10" /></p>;
 
   if (rooms.length === 0)
     return <p className="text-center mt-10 text-[#14274A]/70">Nenhum quarto disponível no momento.</p>;

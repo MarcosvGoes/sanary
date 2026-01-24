@@ -110,21 +110,18 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const PaymentsScalarFieldEnum = {
   id: 'id',
   paymentId: 'paymentId',
+  bookingId: 'bookingId',
   userPaymentDataId: 'userPaymentDataId',
   billingType: 'billingType',
   description: 'description',
   invoiceUrl: 'invoiceUrl',
   transactionReceiptUrl: 'transactionReceiptUrl',
-  userAmount: 'userAmount',
   amount: 'amount',
-  discount: 'discount',
   status: 'status',
-  createdAt: 'createdAt',
-  paidAt: 'paidAt',
   dueDate: 'dueDate',
-  updatedAt: 'updatedAt',
-  invoiceId: 'invoiceId',
-  invoiceStatus: 'invoiceStatus'
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PaymentsScalarFieldEnum = (typeof PaymentsScalarFieldEnum)[keyof typeof PaymentsScalarFieldEnum]

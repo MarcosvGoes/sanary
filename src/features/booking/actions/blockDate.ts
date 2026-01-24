@@ -28,7 +28,7 @@ export async function blockRoomDates(values: {
 
   const block = await db.booking.create({
     data: {
-      userId: session.user.id, // admin
+      userId: session.user.id,
       roomId: values.roomId,
       checkIn: values.checkIn,
       checkOut: values.checkOut,

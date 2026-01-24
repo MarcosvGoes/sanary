@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { blockRoomDates } from "../actions/blockDate";
 import { useRouter } from "next/navigation";
+import { ptBR } from "date-fns/locale";
 
 type RoomOption = {
   id: string;
@@ -74,6 +75,7 @@ export default function CalendarBlock({ rooms }: { rooms: RoomOption[] }) {
 
       <Calendar
         mode="range"
+        locale={ptBR}
         selected={range}
         onSelect={setRange}
         disabled={(date) => date < new Date()}

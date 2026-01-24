@@ -132,17 +132,20 @@ export default function MyBookings({ session }: { session: any }) {
               <span className="text-[10px]">Id da reserva: {booking.id}</span>
             </div>
 
-            <div className={`flex items-center gap-x-2 font-medium ${statusConfig.text}`}>
-              <span
-                className={`
-                  w-2.5 h-2.5 rounded-full
-                  border-2
-                  ${statusConfig.dot}
-                  ${statusConfig.border}
-                `}
-              />
-              <span>{statusConfig.label}</span>
-            </div>
+            {booking.status !== "BLOCKED" && (
+              <div className={`flex items-center gap-x-2 font-medium ${statusConfig.text}`}>
+                <span
+                  className={`
+        w-2.5 h-2.5 rounded-full
+        border-2
+        ${statusConfig.dot}
+        ${statusConfig.border}
+      `}
+                />
+                <span>{statusConfig.label}</span>
+              </div>
+            )}
+
 
             <div className="flex gap-x-5 text-sm">
               <span>

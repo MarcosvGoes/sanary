@@ -9,6 +9,11 @@ export async function getBookingsCalendarMap() {
     throw new Error("Unauthorized");
   }
   const bookings = await db.booking.findMany({
+    where: {
+      status: {
+        in: ["CONFIRMED", "BLOCKED"],
+      },
+    },
     include: { room: true, user: true, guests: true },
   });
   const calendarMap: Record<string, typeof bookings> = {};

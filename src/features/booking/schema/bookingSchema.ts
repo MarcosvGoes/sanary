@@ -1,9 +1,14 @@
 import { Countrys } from "@/shared/utils/countrys";
+import isValidCPF from "@/shared/utils/cpfValidator";
 import { z } from "zod";
 
 export const bookingSchema = z.object({
-  checkIn: z.coerce.date({ error: "Campo obrigatório" }).min(1, { error: "Campo obrigatório" }),
-  checkOut: z.coerce.date({ error: "Campo obrigatório" }).min(1, { error: "Campo obrigatório" }),
+  checkIn: z.coerce
+    .date({ error: "Campo obrigatório" })
+    .min(1, { error: "Campo obrigatório" }),
+  checkOut: z.coerce
+    .date({ error: "Campo obrigatório" })
+    .min(1, { error: "Campo obrigatório" }),
 
   notes: z.string().optional(),
 
@@ -17,7 +22,8 @@ export const bookingSchema = z.object({
         name: z.string().min(1, { error: "Campo obrigatório" }),
         cpf: z
           .string({ error: "Campo obrigatório" })
-          .length(11, { error: "Mínimo de 11 caracteres" }),
+          .length(11, { error: "Mínimo de 11 caracteres" })
+          .refine(isValidCPF, { error: "CPF inválido" }),
         birthDate: z.coerce.date({ error: "Campo obrigatório" }),
         type: z.enum(["adult", "elderly", "child", "baby"]),
       }),
@@ -34,7 +40,8 @@ export const bookingSchema = z.object({
     phoneNumber: z.string({ error: "Campo obrigatório" }).min(8),
     cpf: z
       .string({ error: "Campo obrigatório" })
-      .length(11, { error: "Mínimo de 11 caracteres" }),
+      .length(11, { error: "Mínimo de 11 caracteres" })
+      .refine(isValidCPF, { error: "CPF inválido" }),
 
     documentNumber: z.string({ error: "Campo obrigatório" }),
     documentType: z.string({ error: "Campo obrigatório" }),
