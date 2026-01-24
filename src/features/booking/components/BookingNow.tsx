@@ -316,7 +316,6 @@ export default function BookingNow({ session }: { session: any }) {
         const selectedRoomId = data.roomId;
         const selectedRoomLocal = rooms.find((r) => r.id === selectedRoomId);
         const dailyPrice = selectedRoomLocal?.price ?? 0;
-
         const checkInDate = new Date(data.checkIn);
         const checkOutDate = new Date(data.checkOut);
         const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
