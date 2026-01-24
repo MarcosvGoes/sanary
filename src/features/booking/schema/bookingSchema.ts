@@ -2,12 +2,14 @@ import { Countrys } from "@/shared/utils/countrys";
 import { z } from "zod";
 
 export const bookingSchema = z.object({
-  checkIn: z.coerce.date({ error: "Campo obrigatório" }).min(1),
-  checkOut: z.coerce.date({ error: "Campo obrigatório" }).min(1),
+  checkIn: z.coerce.date({ error: "Campo obrigatório" }).min(1, { error: "Campo obrigatório" }),
+  checkOut: z.coerce.date({ error: "Campo obrigatório" }).min(1, { error: "Campo obrigatório" }),
 
   notes: z.string().optional(),
 
-  roomId: z.string(),
+  roomId: z
+    .string({ error: "Escolha um quarto" })
+    .min(1, { error: "Escolha um quarto" }),
 
   guests: z
     .array(

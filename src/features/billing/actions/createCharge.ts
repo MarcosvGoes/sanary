@@ -5,7 +5,7 @@ import { db } from "../../../../prisma";
 import { auth } from "@/features/auth/auth";
 import { headers } from "next/headers";
 
-export async function createCharge(userId: string, value: number) {
+export async function createCharge(userId: string, value: number, externalReference: string) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -33,6 +33,7 @@ export async function createCharge(userId: string, value: number) {
     value,
     dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split("T")[0],
     description: "Pousada Riviera Sanary",
+    externalReference,
   };
 
   const response = await fetch(`${asaasBaseUrl}/v3/payments`, {
@@ -57,7 +58,7 @@ export async function createCharge(userId: string, value: number) {
     );
   }
 
-  const userPaymentData = await db.userPaymentData.upsert({
+  await db.userPaymentData.upsert({
     where: { userId },
     update: {
       customerId: charge.customer,

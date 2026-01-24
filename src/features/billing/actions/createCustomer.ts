@@ -16,15 +16,13 @@ export async function createCustomer(session: any) {
 
   const userId = session.user.id;
 
-  // Busca se já existe customerId
   const paymentData = await db.userPaymentData.findUnique({
     where: { userId },
     select: { customerId: true },
   });
 
-  // Pega os dados do usuário
   const user = await db.user.findUnique({
-    where: { id: userId },
+    where: { id: session.user.id },
     select: {
       name: true,
       phoneNumber: true,
@@ -51,7 +49,6 @@ export async function createCustomer(session: any) {
     notificationDisabled: true,
   };
 
-  // Se já existe customerId, atualiza apenas se necessário
   if (paymentData?.customerId) {
     const response = await fetch(
       `${asaasBaseUrl}/v3/customers/${paymentData.customerId}`,
@@ -92,15 +89,11 @@ export async function createCustomer(session: any) {
         );
       }
 
-      console.log("Cliente atualizado no Asaas");
-    } else {
-      console.log("Cliente sem alterações, não atualizei");
-    }
+    } 
 
     return { id: paymentData.customerId };
   }
 
-  // Se não existe, cria novo cliente
   const response = await fetch(`${asaasBaseUrl}/v3/customers`, {
     method: "POST",
     headers: asaasHeaders,
@@ -118,14 +111,11 @@ export async function createCustomer(session: any) {
     );
   }
 
-  // Salva apenas o customerId no banco
   await db.userPaymentData.upsert({
     where: { userId },
     update: { customerId: customer.id },
     create: { userId, customerId: customer.id },
   });
-
-  console.log("Cliente criado no Asaas com sucesso:", customer);
 
   return customer;
 }

@@ -75,8 +75,8 @@ export default function AddRooms() {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="p-0">
-                <DialogHeader className="gap-0 m-4">
+            <DialogContent>
+                <DialogHeader>
                     <DialogTitle className="text-xl font-semibold">
                         Adicionar quarto
                     </DialogTitle>

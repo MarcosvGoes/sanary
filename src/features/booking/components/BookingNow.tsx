@@ -30,12 +30,9 @@ import {
   UserRoundMinus,
   User,
 } from "lucide-react";
-
 import { toast } from "sonner";
-
 import { BookingSchema, bookingSchema } from "../schema/bookingSchema";
 import { useZodForm } from "@/shared/hooks/useZodForm";
-
 import { formatCPF, maskCPF } from "@/shared/utils/cpfValidator";
 import { fetchAddressByCep } from "@/shared/utils/fetchAddressByCep";
 import { formatAndMaskPhoneNumber } from "@/shared/utils/formatAndMaskPhoneNumber";
@@ -49,6 +46,10 @@ import { createCustomer } from "@/features/billing/actions/createCustomer";
 import { getAllRooms } from "@/features/admin/actions/getAllRooms";
 import { getRoomUnavailableIntervals } from "../actions/roomDateAvailable";
 import { createBook } from "../actions/createBook";
+import { useRouter } from "next/navigation";
+import { checkCpfExists } from "@/features/profile/checkCpfExists";
+import { parseDateOnly } from "@/shared/utils/date";
+import { ptBR } from "date-fns/locale";
 
 type Room = { id: string; name: string; price: number };
 
@@ -56,17 +57,10 @@ export default function BookingNow({ session }: { session: any }) {
   const [step, setStep] = useState<number>(0);
   const [onSubmitting, setOnSubmitting] = useState<boolean>(false);
   const [charge, setCharge] = useState<any>(null);
-
   const [loadingRooms, setLoadingRooms] = useState<boolean>(true);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [disabledIntervals, setDisabledIntervals] = useState<{ from: string; to: string }[]>([]);
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined);
-
-  const getTodayISO = useCallback(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today.toISOString().split("T")[0];
-  }, []);
 
   const form = useZodForm(bookingSchema, {
     defaultValues: {
@@ -135,13 +129,24 @@ export default function BookingNow({ session }: { session: any }) {
   }, []);
 
   const disabledDays = useMemo(() => {
+
     const beforeToday = { before: new Date() };
-    const ranges = disabledIntervals.map((r) => ({ from: new Date(r.from), to: new Date(r.to) }));
-    return [beforeToday, ...ranges];
+
+    const ranges = disabledIntervals.map((r) => {
+      const fromDate = parseDateOnly(r.from);
+      const toDate = parseDateOnly(r.to);
+
+      return { from: fromDate, to: toDate };
+    });
+
+    const finalDisabled = [beforeToday, ...ranges];
+
+    return finalDisabled;
   }, [disabledIntervals]);
 
   useEffect(() => {
     const roomId = form.getValues("roomId");
+
     if (!roomId) {
       setDisabledIntervals([]);
       return;
@@ -152,16 +157,16 @@ export default function BookingNow({ session }: { session: any }) {
       try {
         const intervals = await getRoomUnavailableIntervals({ roomId });
         if (cancelled) return;
+
+
         setDisabledIntervals(intervals || []);
+
       } catch (err) {
-        console.error("Erro ao buscar datas indisponíveis:", err);
         setDisabledIntervals([]);
       }
     })();
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [form.watch("roomId")]);
 
   const handleSelectRange = useCallback(
@@ -200,13 +205,6 @@ export default function BookingNow({ session }: { session: any }) {
   }
 
   const totalValue = (selectedRoom?.price ?? 0) * numberOfDays;
-
-  const getMinCheckoutDate = useCallback(() => {
-    if (!checkIn) return "";
-    const date = new Date(checkIn);
-    date.setDate(date.getDate() + 1);
-    return date.toISOString().split("T")[0];
-  }, [checkIn]);
 
   useEffect(() => {
     const currentCheckOut = form.getValues("checkOut");
@@ -252,7 +250,7 @@ export default function BookingNow({ session }: { session: any }) {
   }, [watchCep, form]);
 
   const stepFields: Record<number, FieldPath<BookingSchema>[]> = {
-    0: ["checkIn", "checkOut", "guests", "notes"],
+    0: ["roomId", "checkIn", "checkOut", "guests", "notes"],
     1: [
       "user.name",
       "user.email",
@@ -284,32 +282,21 @@ export default function BookingNow({ session }: { session: any }) {
     setStep((prev) => Math.max(prev - 1, 0));
   }, []);
 
+  const router = useRouter()
+
   const onSubmit = useCallback(
     async (data: BookingSchema) => {
       setOnSubmitting(true);
       try {
-        // update user
-        const updateUserRes = await authClient.updateUser({
-          name: data.user.name,
-          phoneNumber: data.user.phoneNumber,
-          cpf: data.user.cpf,
-          documentNumber: data.user.documentNumber,
-          documentType: data.user.documentType,
-          ufEmitter: data.user.ufEmitter,
-          cep: data.user.cep,
-          street: data.user.street,
-          houseNumber: data.user.houseNumber,
-          complement: data.user.complement,
-          neighborhood: data.user.neighborhood,
-          city: data.user.city,
-          state: data.user.state,
-          birthDate: data.user.birthDate,
-          nacionality: data.user.nacionality,
-        });
 
-        if (!updateUserRes) {
-          throw new Error("Falha ao atualizar usuário");
+        const { cpfExists } = await checkCpfExists(data.user.cpf);
+        if (cpfExists && session.user.cpf !== data.user.cpf) {
+          toast.error("CPF já cadastrado!", { duration: 4000 });
+          setOnSubmitting(false);
+          return;
         }
+
+        const updateUserRes = await authClient.updateUser({ name: data.user.name, phoneNumber: data.user.phoneNumber, cpf: data.user.cpf, documentNumber: data.user.documentNumber, documentType: data.user.documentType, ufEmitter: data.user.ufEmitter, cep: data.user.cep, street: data.user.street, houseNumber: data.user.houseNumber, complement: data.user.complement, neighborhood: data.user.neighborhood, city: data.user.city, state: data.user.state, birthDate: data.user.birthDate, nacionality: data.user.nacionality, }); if (!updateUserRes) { throw new Error("Falha ao atualizar usuário"); }
 
         const processedData = {
           roomId: data.roomId,
@@ -337,13 +324,13 @@ export default function BookingNow({ session }: { session: any }) {
         const total = dailyPrice * numberOfNights;
 
         await createCustomer(session);
-        const createChargeRes = await createCharge(session.user.id, total);
-
-        await createBook(processedData);
+        const book = await createBook(processedData);
+        const createChargeRes = await createCharge(session.user.id, total, book.id);
 
         setCharge(createChargeRes);
         nextStep();
         toast.success("Reserva criada com sucesso!");
+        router.refresh();
       } catch (err: any) {
         console.error("Erro no onSubmit:", err);
         toast.error(err?.message || "Erro ao criar reserva");
@@ -375,9 +362,8 @@ export default function BookingNow({ session }: { session: any }) {
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className={`w-1/6 h-1 rounded-full transition-colors duration-200 ${
-                  i <= step ? "bg-blue-500" : "bg-muted-foreground"
-                }`}
+                className={`w-1/6 h-1 rounded-full transition-colors duration-200 ${i <= step ? "bg-blue-500" : "bg-muted-foreground"
+                  }`}
               />
             ))}
           </div>
@@ -432,6 +418,7 @@ export default function BookingNow({ session }: { session: any }) {
                       <FieldLabel>Período (selecione check-in e check-out)</FieldLabel>
                       <div className="border rounded-md p-3 grid">
                         <Calendar
+                          locale={ptBR}
                           className="border rounded-md mx-auto shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
                           mode="range"
                           selected={selectedRange}
@@ -906,7 +893,7 @@ export default function BookingNow({ session }: { session: any }) {
                   </div>
 
                   <Card className="my-2 p-5 gap-3">
-                    <span>
+                    <span className="text-xl font-semibold">
                       <p>{selectedRoom?.name ?? ""}</p>
                     </span>
 
@@ -916,10 +903,10 @@ export default function BookingNow({ session }: { session: any }) {
                         <p>
                           {form.watch("checkIn")
                             ? new Date(form.watch("checkIn")).toLocaleDateString("pt-BR", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              })
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            })
                             : "—"}
                         </p>
                       </span>
@@ -929,10 +916,10 @@ export default function BookingNow({ session }: { session: any }) {
                         <p>
                           {form.watch("checkOut")
                             ? new Date(form.watch("checkOut")).toLocaleDateString("pt-BR", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              })
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            })
                             : "—"}
                         </p>
                       </span>

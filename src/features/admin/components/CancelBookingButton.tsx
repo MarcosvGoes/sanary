@@ -18,7 +18,7 @@ export default function CancelBookingButton({ bookingId }: { bookingId: string }
             toast.success("Reserva cancelada com sucesso")
             router.refresh()
         } catch (e) {
-            console.log(e)
+            toast.error("Erro ao cancelar reserva")
         } finally {
             setCancelling(false)
         }

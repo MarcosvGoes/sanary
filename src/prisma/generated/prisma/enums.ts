@@ -22,7 +22,8 @@ export type GuestType = (typeof GuestType)[keyof typeof GuestType]
 export const BookingStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  CANCELED: 'CANCELED'
+  CANCELED: 'CANCELED',
+  BLOCKED: 'BLOCKED'
 } as const
 
 export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]

@@ -1266,6 +1266,7 @@ export const BookingScalarFieldEnum = {
   checkOut: 'checkOut',
   notes: 'notes',
   status: 'status',
+  paymentConfirmedAt: 'paymentConfirmedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

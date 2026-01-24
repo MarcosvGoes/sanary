@@ -20,7 +20,6 @@ interface SocialButtonSigninProps {
 export default function SocialButtonSignin({
     classNameLogged,
     classNameNotLogged,
-    roomId,
     showSignout,
 }: SocialButtonSigninProps) {
     const { data: session, isPending } = authClient.useSession()
@@ -44,7 +43,7 @@ export default function SocialButtonSignin({
                 },
             );
         } catch (e) {
-            console.log(e)
+            toast.error("Erro ao entrar com Google")
         } finally {
             setLoadingSocial(false)
         }

@@ -90,8 +90,9 @@ model Booking {
     checkIn  DateTime
     checkOut DateTime
 
-    notes  String?
-    status BookingStatus @default(PENDING)
+    notes              String?
+    status             BookingStatus @default(PENDING)
+    paymentConfirmedAt DateTime?
 
     guests Guest[]
 
@@ -196,6 +197,7 @@ enum BookingStatus {
     PENDING
     CONFIRMED
     CANCELED
+    BLOCKED
 }
 
 model RoomImage {

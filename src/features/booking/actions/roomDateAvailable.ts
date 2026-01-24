@@ -7,26 +7,25 @@ type Props = {
 };
 
 export async function getRoomUnavailableIntervals({ roomId }: Props) {
-  if (!roomId) {
-    throw new Error("roomId obrigatório");
-  }
+  if (!roomId) throw new Error("roomId obrigatório");
 
   const bookings = await db.booking.findMany({
     where: {
       roomId,
-      status: {
-        in: ["PENDING", "CONFIRMED"],
-      },
+      status: { in: ["CONFIRMED"] },
     },
-    select: {
-      checkIn: true,
-      checkOut: true,
-    },
+    select: { checkIn: true, checkOut: true },
   });
 
+  if (bookings.length === 0) {
+    return [];
+  }
+
+  bookings.forEach((b, idx) => {});
+
   const intervals = bookings.map((b) => ({
-    from: b.checkIn.toISOString(),
-    to: b.checkOut.toISOString(),
+    from: b.checkIn.toISOString().split("T")[0],
+    to: b.checkOut.toISOString().split("T")[0],
   }));
 
   return intervals;
