@@ -1,7 +1,7 @@
 import { getAllRooms } from "@/features/admin/actions/getAllRooms";
 import { getBookingsCalendarMap } from "@/features/admin/actions/getBookingsByDate";
 import AdminCalendar from "@/features/admin/components/AdminCalendar";
-import BlockDates from "@/features/booking/components/BlockDates";
+import CalendarBlock from "@/features/booking/components/CalendarBlock";
 
 export default async function Admin() {
   const calendarMap = await getBookingsCalendarMap();
@@ -15,7 +15,7 @@ export default async function Admin() {
       </div>
       <div className="grid gap-5">
         <h2 className="text-lg text-center font-semibold">Bloquear datas</h2>
-        <BlockDates rooms={rooms} />
+        <CalendarBlock rooms={rooms} />
       </div>
     </div>
   );

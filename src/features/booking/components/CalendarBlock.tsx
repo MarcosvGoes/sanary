@@ -1,4 +1,3 @@
-// BlockDates.tsx
 "use client";
 
 import { useState } from "react";
@@ -17,7 +16,7 @@ type RoomOption = {
   title: string;
 };
 
-export default function BlockDates({ rooms }: { rooms: RoomOption[] }) {
+export default function CalendarBlock({ rooms }: { rooms: RoomOption[] }) {
   const [roomId, setRoomId] = useState<string | null>(null);
   const [range, setRange] = useState<DateRange | undefined>({
     from: new Date(),
