@@ -197,6 +197,7 @@ enum BookingStatus {
     PENDING
     CONFIRMED
     CANCELED
+    REFUNDED
     BLOCKED
 }
 

@@ -12,7 +12,7 @@ export async function getRoomUnavailableIntervals({ roomId }: Props) {
   const bookings = await db.booking.findMany({
     where: {
       roomId,
-      status: { in: ["CONFIRMED"] },
+      status: { in: ["CONFIRMED", "BLOCKED"] },
     },
     select: { checkIn: true, checkOut: true },
   });
