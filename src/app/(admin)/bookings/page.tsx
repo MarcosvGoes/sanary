@@ -11,7 +11,7 @@ import { ptBR } from "date-fns/locale"
 import { Mail } from "lucide-react"
 import Image from "next/image"
 
-type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED"
+type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED" | "BLOCKED"
 
 const bookingStatusConfig: Record<
   BookingStatus,
@@ -45,6 +45,12 @@ const bookingStatusConfig: Record<
     dot: "bg-blue-600",
     border: "border-blue-300",
     text: "text-blue-600",
+  },
+  BLOCKED: {
+    label: "Reserva bloqueada",
+    dot: "bg-gray-600",
+    border: "border-gray-300",
+    text: "text-gray-600",
   },
 }
 

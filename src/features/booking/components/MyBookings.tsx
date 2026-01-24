@@ -9,7 +9,7 @@ import { Spinner } from "@/shared/components/ui/spinner"
 import { Guest, GuestType } from "@/prisma/generated/prisma/client"
 import { redirect } from "next/navigation"
 
-type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED"
+type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELED" | "REFUNDED" | "BLOCKED"
 
 type Booking = {
   id: string
@@ -51,6 +51,12 @@ const bookingStatusConfig: Record<
     dot: "bg-blue-600",
     border: "border-blue-300",
     text: "text-blue-600",
+  },
+  BLOCKED: {
+    label: "Reserva bloqueada",
+    dot: "bg-gray-600",
+    border: "border-gray-300",
+    text: "text-gray-600",
   },
 }
 
