@@ -54,7 +54,6 @@ const bookingStatusConfig: Record<
   },
 }
 
-
 export default async function Bookings() {
   const bookings = await getAllBookings()
   return (
